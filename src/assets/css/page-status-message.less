@@ -1,0 +1,50 @@
+@import "variables.less";
+
+.page-status-message-container {
+    width: 100%;
+    height: auto;
+    min-height: calc(100lvh - 100px);
+    padding: 50px 0;
+    z-index: 998;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-color);
+
+    .page-status-message {
+        width: 500px;
+        max-width: calc(100% - 20px);
+
+        & h1 {
+            margin: 0 0 0.25rem;
+            font-size: 2rem;
+            letter-spacing: 0.3px;
+            line-height: 2.2rem;
+        }
+
+        & p {
+            margin-top: 0.5rem;
+            color: red;
+            font-weight: 600;
+        }
+
+        & svg {
+            width: 120px;
+            height: 120px;
+            stroke: var(--muted-text-color);
+        }
+
+        & .actions {
+            width: 100%;
+            padding-top: 10px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+
+            & svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+}

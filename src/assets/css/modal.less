@@ -1,0 +1,348 @@
+@import "variables.less";
+
+/*#region MODALS */
+
+/* --- Keyframes --- */
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Modal Container --- */
+#modal {
+    position: fixed;
+    width: 100%;
+    height: 100lvh;
+    z-index: 1002;
+    overflow: hidden;
+    display: none; /* hidden by default */
+
+    &.open {
+        display: block; /* only visible when open */
+    }
+    /* Overlay background */
+    & .close-modal-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        z-index: 1000;
+        background-color: var(--modal-background-color);
+        pointer-events: auto;
+
+        &.active {
+            animation: fade-in 0.3s forwards;
+            pointer-events: auto;
+        }
+
+        &:not(.active) {
+            animation: fade-out 0.3s forwards;
+            pointer-events: none; /* click-through when overlay is inactive */
+        }
+    }
+    /* Inner modal container */
+    & .inner-modal {
+        height: 100%;
+        position: absolute;
+        right: 0;
+        margin: 0 auto;
+        z-index: 1002;
+        transition: all 0.9s ease;
+
+        @media @smallDevice {
+            width: 100%;
+            max-width: @min-width;
+        }
+
+        @media @largeDevice {
+            width: @min-width;
+            max-width: 100%;
+
+            &.expand {
+                width: 100%;
+            }
+        }
+    }
+    /* Modal contents */
+
+    & .modal-contents {
+        position: absolute;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color);
+        box-shadow: rgba(0,0,0,0.15) 0px 4px 12px;
+        transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+        overflow: hidden;
+        /* Top modal (active) */
+        &.top {
+            /*  transform: scale(1);*/
+            /*  filter: none;*/
+            /*  opacity: 1;*/
+            z-index: 1005;
+        }
+        /* Background modals (stacked underneath) */
+
+        &.background {
+            /*transform: scale(0.95);*/ /* slightly smaller */
+            /*filter: blur(2px);*/ /* subtle blur */
+            /* opacity: 0.7; */ /* dimmed */
+            z-index: 1000; /* lower than top */
+        }
+        /* Animations */
+
+        &.enter {
+            animation: slide-in 0.9s forwards;
+        }
+
+        &.leave {
+            animation: slide-out 0.9s forwards;
+        }
+        /* Header */
+        & .modal-header {
+            height: 50px;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 2003;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--background-color);
+
+            & .inner-modal-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: @mid-width;
+                max-width: calc(100% - 20px);
+                margin: 0 auto;
+                height: 100%;
+            }
+
+            & button.close {
+                font-family: @font-family;
+                display: flex;
+                align-items: center;
+                height: 100%;
+                color: var(--text-color);
+                text-transform: uppercase;
+                border-bottom: 2px solid transparent;
+
+                & span {
+                    margin-left: 5px;
+                }
+
+                &:hover {
+                    border-bottom-color: var(--border-color);
+                }
+            }
+
+            & .modal-header-menu {
+                display: flex;
+                height: 100%;
+
+                & button {
+                    width: 50px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--text-color);
+                    border-bottom: 2px solid transparent;
+
+                    &.maximize, &.minimize {
+                        @media @smallDevice {
+                            display: none;
+                        }
+                    }
+
+                    &:hover {
+                        border-bottom-color: var(--border-color);
+                    }
+                }
+            }
+        }
+        /* Body */
+
+        & .modal-body {
+            height: calc(100lvh - 50px);
+            width: calc(100% - 20px);
+            margin: 0 auto;
+            /*  display: flex;
+            justify-content: center;*/
+            overflow-y: auto;
+            padding: 20px 0 120px 0;
+            scrollbar-color: rgb(136,136,136);
+            scrollbar-width: thin;
+         
+            &::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgb(136,136,136);
+                border-radius: 25px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: rgb(100,100,100);
+            }
+
+            &::-webkit-scrollbar-thumb:active {
+                background-color: rgb(68,68,68);
+            }
+        }
+
+        & .inner-modal-body {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            width: @mid-width;
+            max-width: calc(100% - 20px);
+            margin: 0 auto;
+
+
+            & nav {
+                height: auto;
+                width: 100%;
+
+                & ul {
+
+                    &:first-child {
+
+                        a {
+                            display: inline-block;
+                            color: var(--text-color);
+                            font-weight: 500;
+                            transition: color 0.3s;
+                            text-transform: uppercase;
+                            font-size: 1.25rem;
+                            line-height: 1.5rem;
+                            padding: 12px 0;
+
+                            &:hover {
+                                color: @link-color;
+                            }
+                        }
+                    }
+
+                    &:last-child {
+
+                        & .search {
+                            width: 200px;
+                            margin-top: 20px;
+                            justify-content: center;
+
+                            & span {
+                                text-align: center;
+                                padding: 0 12px;
+                            }
+
+                            & svg {
+
+                                & path {
+                                    fill: none;
+                                    stroke: @link-color;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 48px
+                                }
+
+                                & line {
+                                    fill: none;
+                                    stroke: @link-color;
+                                    stroke-linecap: round;
+                                    stroke-miterlimit: 10;
+                                    stroke-width: 48px
+                                }
+                            }
+
+                            &:hover {
+
+                                & svg {
+
+                                    & path {
+                                        stroke: var(--text-color);
+                                    }
+
+                                    & line {
+                                        stroke: var(--text-color);
+                                    }
+                                }
+                            }
+                        }
+
+                        & .link {
+                            width: 200px;
+                            justify-content: center;
+                            margin-top: 0.5rem;
+                        }
+                    }
+
+                    & hr {
+                        width: 25px;
+                        height: 2px;
+                        background-color: @link-color;
+                        border: none;
+                        margin-top: 0.25rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*#endregion */
+

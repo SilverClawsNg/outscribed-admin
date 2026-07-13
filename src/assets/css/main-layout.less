@@ -1,0 +1,399 @@
+@import "variables.less";
+
+/*#outer-page {
+    height: auto;
+    min-height: 100lvh;
+    margin: 0;
+    width: 100%;
+    border-top: 3px solid #DD1539;
+    background-image: url(/images/index-background.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+#page {
+    height: auto;
+    margin: 0 auto;
+    max-width: var(--max-width);
+}
+
+headersss {
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+
+    & .logo {
+        display: flex;
+
+        @media @tablet {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media @laptop {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media @desktop {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        & img {
+            height: auto;
+
+            @media @phone {
+                width: 40px;
+            }
+
+            @media @phablet {
+                width: 40px;
+            }
+
+            @media @tablet {
+                width: 50px;
+            }
+
+            @media @laptop {
+                width: 70px;
+            }
+
+            @media @desktop {
+                width: 70px;
+            }
+        }
+
+        & h1 {
+            color: var(--text-color);
+            font-family: Chomsky;
+            font-size: clamp(1.4rem, 3vw + 1rem, 2.6rem);
+            line-height: clamp(1.4rem, 3vw + 1rem, 2.6rem);
+        }
+    }
+
+
+    & .navigation-opener {
+        position: relative;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        height: 40px;
+        width: 60px;
+        padding: 0 10px;
+        border-radius: 6px;
+        border: 1px solid @black-color;
+
+        @media @tablet {
+            display: none !important;
+        }
+
+        @media @largeDevice {
+            display: none !important;
+        }
+
+        &:hover {
+            background-color: @white-color;
+        }
+
+        & div {
+            width: 100%;
+            height: 3px;
+            background-color: @black-color;
+            margin: 3px 0;
+            transition: 0.4s;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    @media @phone {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h-sp);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media @phablet {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h-sp);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media @tablet {
+        height: var(--header-h-t);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    @media @laptop {
+        height: var(--header-h-dl);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    @media @desktop {
+        height: var(--header-h-dl);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+}
+
+#container {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--gap);
+
+    @media @phone {
+        grid-template-areas:
+            "main" "aside";
+        grid-template-columns: 1fr;
+    }
+
+    @media @phablet {
+        grid-template-areas:
+            "main" "aside";
+        grid-template-columns: 1fr;
+    }
+
+    @media @tablet {
+        grid-template-columns: var(--nav-w) 1fr;
+        grid-template-areas:
+            "nav main" "nav aside";
+    }
+
+    @media @laptop {
+        grid-template-columns: var(--nav-w) minmax(0, 1fr) var(--aside-w);
+        grid-template-areas: "nav main aside";
+    }
+
+    @media @desktop {
+        grid-template-columns: var(--aside-w) minmax(0, 1fr) var(--aside-w);
+        grid-template-areas: "nav main aside";
+    }
+
+    aside {
+        height: 100lvh;
+        overflow-y: hidden;
+        padding: 20px 0;
+        -ms-overflow-style: none;*/ /* IE and Edge */
+        /*scrollbar-width: none;*/ /* Firefox */
+        /*::-webkit-scrollbar {
+            display: none;*/ /* Chrome, Safari, Opera */
+        /*}
+
+        @media @laptop {
+            position: sticky;
+            top: 0;
+            height: 100lvh;
+        }
+
+        @media @desktop {
+            position: sticky;
+            top: 0;
+            height: 100lvh;
+        }
+    }
+
+    aside.navigation {
+        @media @tablet {
+            position: sticky;
+        }
+    }
+
+    main {
+        height: auto;
+        position: relative;
+        padding-top: 20px;
+    }
+}*/
+
+
+#main-container{
+    width:100%;
+    margin: 0 auto;
+    height: auto;
+    min-height: 100lvh;
+}
+
+header {
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+  
+
+
+    & .logo {
+        display: flex;
+
+        @media @tablet {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media @laptop {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media @desktop {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        & img {
+            height: auto;
+
+            @media @phone {
+                width: 40px;
+            }
+
+            @media @phablet {
+                width: 40px;
+            }
+
+            @media @tablet {
+                width: 50px;
+            }
+
+            @media @laptop {
+                width: 70px;
+            }
+
+            @media @desktop {
+                width: 70px;
+            }
+        }
+
+        & h1 {
+            color: var(--text-color);
+            font-family: Chomsky;
+            font-size: clamp(1.4rem, 3vw + 1rem, 2.6rem);
+            line-height: clamp(1.4rem, 3vw + 1rem, 2.6rem);
+        }
+    }
+
+
+    & .navigation-opener {
+        position: relative;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        height: 40px;
+        width: 60px;
+        padding: 0 10px;
+        border-radius: 6px;
+        border: 1px solid @black-color;
+
+        @media @tablet {
+            display: none !important;
+        }
+
+        @media @largeDevice {
+            display: none !important;
+        }
+
+        &:hover {
+            background-color: @white-color;
+        }
+
+        & div {
+            width: 100%;
+            height: 3px;
+            background-color: @black-color;
+            margin: 3px 0;
+            transition: 0.4s;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    @media @phone {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h-sp);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media @phablet {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--header-h-sp);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media @tablet {
+        height: var(--header-h-t);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    @media @laptop {
+        height: var(--header-h-dl);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+
+    @media @desktop {
+        height: var(--header-h-dl);
+        justify-content: center;
+        margin-bottom: 50px;
+    }
+}
+
+nav {
+    width: 1060px;
+    margin: 0 auto;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   /* border-top: 1px solid var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+    padding-top: 5px;
+    padding-bottom: 5px;*/
+
+    & ul{
+        display: flex;
+        width: auto;
+        font-size: 15px;
+
+        & li{
+            margin-right: 15px;
+
+            &:last-child{
+                margin-right: 0;
+            }
+        }
+
+    }
+}

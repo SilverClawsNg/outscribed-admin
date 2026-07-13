@@ -1,0 +1,67 @@
+@import "variables.less";
+
+.rich__text {
+    
+    /* 1. Skip paragraphs that are empty or only contain a <br> */
+    & p:not(:empty):first-of-type::first-letter,
+    & div:not(:empty):first-of-type::first-letter {
+        font-size: 1.5rem; /* Bold and Large */
+        line-height: 1.8rem; /* Keeps the text flow tight */
+        padding: 0 3px;
+        font-family: 'Serif', Georgia, Times; /* Fiction looks best in Serif */
+        font-weight: 600;
+    }
+    /* 2. Specialized fix for Quill's <p><br></p> structure */
+    & p:has(br):first-child::first-letter {
+        all: unset; /* Don't apply drop cap to a line break */
+    }
+
+    & h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 18px;
+        margin: 15px 0;
+        text-align: left;
+    }
+
+    & p {
+        margin-top: 1rem;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:has(br:only-child) {
+            margin-bottom: 0; /* Kill the margin for empty lines */
+            line-height: 1; /* Collapse the height */
+        }
+
+        & > br {
+            display: none;
+        }
+    }
+
+    & b,
+    & strong {
+        font-weight: 600;
+    }
+
+    & i,
+    & em {
+        font-style: italic;
+    }
+
+    li {
+        list-style-type: unset;
+        padding-left: 0;
+    }
+
+    & ol {
+        list-style: decimal;
+    }
+
+    & ul {
+        list-style: square;
+    }
+}

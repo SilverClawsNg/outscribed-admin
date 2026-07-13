@@ -1,0 +1,368 @@
+@import "variables.less";
+
+.form-container {
+   
+    &.boxed {
+       
+        & fieldset {
+            background-color: var(--background-color);
+            border-radius: 99999px;
+            padding: 0 0.6rem;
+            height: 2rem;
+            border: none;
+        }
+
+        & .otp-input-group {
+
+            & input.otp-box {
+                border: none;
+                background-color: var(--background-color);
+            }
+        }
+
+        & .form-progress-overlay .btn.primary{
+            border-color: var(--background-color);
+        }
+    }
+
+    & h1 {
+        text-transform: capitalize;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+        line-height: 1;
+        letter-spacing: 0.3px;
+        text-align: center;
+
+        & span {
+            font-size: smaller;
+        }
+    }
+
+    & h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    form {
+        height: auto;
+        width: 100%;
+    }
+
+    &::placeholder {
+        color: var(--muted-text-color);
+        opacity: 1;
+        letter-spacing: 2.25px;
+        font-size: 0.9rem;
+        line-height: 1;
+    }
+
+    & .validation-message {
+        color: red;
+        font-size: 0.8rem;
+        padding: 0.1rem 0;
+    }
+
+    & fieldset {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 0.5rem;
+        background-color: inherit;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding: 0.5rem 0;
+
+        &.password-box {
+            position: relative;
+
+            & .show-password {
+                margin-left: 5px;
+                position: absolute;
+                top: 0;
+                right: 5px;
+                z-index: 100;
+                height: 100%;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+
+                    &:before {
+                        color: var(--hover-color);
+                    }
+                }
+            }
+
+            & input.form-field {
+                padding-right: 30px;
+            }
+        }
+
+        &.social {
+            justify-content: flex-start;
+
+            & span {
+                color: var(--muted-text-color);
+                font-size: 0.9rem;
+                width: auto;
+            }
+
+            & input.form-field {
+                width: auto;
+                flex-grow: 1;
+            }
+        }
+    }
+
+    & input.form-field,
+    & textarea.form-field {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 0.9rem;
+        line-height: 1;
+        border: 0;
+        color: var(--text-color);
+        opacity: 1;
+        z-index: 1;
+        padding: 0;
+        -moz-appearance: none !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        background-color: inherit !important;
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            -webkit-transition-delay: 5000s;
+            -webkit-transition: color 5000s ease-out, background-color 5000s ease-out;
+            transition: background-color 5000s ease-in-out 0s;
+            color: var(--muted-text-color) !important;
+            background-color: inherit !important;
+        }
+
+        &:disabled {
+            background-color: inherit !important;
+            cursor: text;
+            color: var(--muted-text-color);
+        }
+
+        &:focus,
+        &:active {
+            background-color: inherit !important;
+            outline: none !important;
+            color: var(--muted-text-color);
+        }
+    }
+
+    & textarea.form-field {
+        height: 100px;
+    }
+
+    & input.form-field {
+        height: 30px;
+    }
+    & .otp-input-group {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+
+        & input.otp-box {
+            width: calc((100% - 50px) /6);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1rem;
+            line-height: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: inherit;
+            color: var(--text-color);
+
+            &:focus {
+                border-color: @success-color;
+                outline: none;
+                box-shadow: 0 0 8px rgba(0,123,255,0.25);
+            }
+        }
+    }
+
+    input[type="date"] {
+        background-color: var(--backgroun-color) !important;
+        font-family: @font-family;
+        font-size: 0.9rem;
+        color: var(--text-color);
+        border:none;
+        outline: none;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    input[type="date"]:focus {
+         background-color: var(--backgroun-color) !important;
+         outline: none !important;
+    }
+
+
+    & select.form-field {
+        width: 100%;
+        height: 30px;
+        -moz-appearance: none !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        color: var(--text-color);
+        opacity: 1;
+        font-family: @font-family;
+        font-size: 0.9rem;
+        line-height: 1;
+        padding: 0;
+        background-color: var(--backgroun-color) !important;
+
+        & option:first-child {
+            color: @form-text-color;
+        }
+
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+            -webkit-transition-delay: 5000s;
+            -webkit-transition: color 5000s ease-out, background-color 5000s ease-out;
+            transition: background-color 5000s ease-in-out 0s;
+            color: var(--muted-text-color) !important;
+            background-color: var(--backgroun-color) !important;
+        }
+
+        &:disabled {
+            background-color: var(--backgroun-color) !important;
+            cursor: text;
+        }
+
+        &:focus,
+        &:active {
+            background-color: var(--backgroun-color) !important;
+            outline: none !important;
+        }
+    }
+
+    & label {
+        color: var(--muted-text-color);
+        opacity: 1;
+        letter-spacing: 2.25px;
+        z-index: 1;
+    }
+
+    & .button-holder {
+        position: relative;
+        width: auto;
+        height: auto;
+    }
+
+    & .filter-buttons {
+        display: flex;
+        column-gap: 0.5rem;
+
+        & button.btn.primary,
+        & button.btn.secondary {
+            margin-top: 0;
+            width: 50%;
+            justify-content: center;
+        }
+    }
+
+    & button.btn.primary {
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: center;
+        z-index: 1;
+
+        &.active {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    }
+
+    & button.btn.contrast {
+        width: 100%;
+        justify-content: center;
+
+        &.active {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    }
+
+    & .ticks {
+        
+        &.date{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            
+         & label{
+            margin-left: 0;
+            margin-right: 0.5rem;
+
+        }
+        }
+
+        & label{
+            margin-left: 0.5rem;
+        }
+
+
+        &.read-only-check {
+            cursor: pointer;
+
+            & input {
+                pointer-events: none;
+                transform: scale(1.2);
+            }
+        }
+
+        & p {
+            margin-bottom: 1rem;
+
+            & input {
+                accent-color: #ff6347;
+            }
+
+            & label {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    & .form-options {
+        margin: 1rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 0.25rem;
+        flex-wrap: wrap;
+
+        & a,
+        & button {
+            color: var(--text-color);
+            font-size: 0.85rem;
+
+            &:hover {
+                color: var(--hover-color);
+            }
+        }
+    }
+
+    
+.qr-container{
+    margin-bottom: 0.5rem;
+    background-color:inherit !important;
+}
+
+}

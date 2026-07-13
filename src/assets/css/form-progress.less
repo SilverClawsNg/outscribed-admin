@@ -1,0 +1,61 @@
+@import "variables.less";
+
+.form-loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    height: 2.5rem;
+}
+
+.form-message-contents {
+    padding: 1rem 0;
+    font-size: 0.85rem;
+    line-height: 1rem;
+    margin-bottom:0.5rem;
+
+    &.boxed{
+        width: 350px;
+        max-width: 100%;
+
+        & .btn.primary{
+            border-color: var(--background-color);
+        }
+    }
+
+    & h3 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    & p {
+        &.error {
+            color: red;
+        }
+    }
+
+    & button {
+        margin-top: 0.5rem;
+    }
+}
+
+.form-message-icon {
+    font-size: 0.85rem;
+    margin-right: 2px;
+    border: none;
+}
+
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 var(--pulse-color);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}

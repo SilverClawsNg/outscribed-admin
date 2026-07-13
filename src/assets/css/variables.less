@@ -1,0 +1,56 @@
+@font-family: "Gotham", sans-serif;
+@font-family: 'Trebuchet MS';
+@font-family: -apple-system, Nunito, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+/*@font-family: 'Palatino Linotype';*/
+@font-family: "Cormorant Garamond";
+@font-family: Rubik, Rubik-bold-fallback, Arial, sans-serif;
+@font-family: TNYAdobeCaslonPro, Times New Roman, Times, serif;
+
+@base-font-size: 18px;
+@base-line-height: 1.3rem;
+
+@white-color: #FFFFFF;
+@black-color: #000000;
+@black-alt-color: rgba(0,0,0,0.5);
+
+@header-background-color: #004A4A;
+
+@form-text-color: #777777;
+
+@link-color: #007C7C;
+@link-alt-color: #63ACAC;
+
+@danger-color: #F44336;
+
+@danger-color: #F8D7DA;
+@warning-color: #FFF3CD;
+@success-color: #D4EDD9;
+@info-color: #D1ECF1;
+@fatal-color: #F44336;
+
+
+@box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
+
+@phone: ~ "only screen and (max-width : 619.98px)";
+@phablet: ~ "only screen and (min-width: 620px) and (max-width: 768.98px)";
+@tablet: ~ "only screen and (min-width: 769px) and (max-width: 990.98px)";
+@laptop: ~ "only screen and (min-width: 991px) and (max-width: 1299.98px)";
+@desktop: ~ "only screen and (min-width: 1300px)";
+
+@smallDevice: ~ "only screen and (max-width : 990.98px)";
+@largeDevice: ~ "only screen and (min-width : 991px)";
+
+@shadow-color: rgba(0, 0, 0, 0.1);
+@max-width: 1300px;
+@mid-width: 750px;
+@min-width: 450px;
+
+.box-shadow(@x: 0, @y: 0, @blur: 5px, @color: @shadow-color) {
+    box-shadow: @x @y @blur @color;
+}
+
+
+.transition(@property: all, @duration: 0.3s, @timing: ease) {
+    transition: @property @duration @timing;
+}
+

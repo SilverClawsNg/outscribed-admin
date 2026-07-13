@@ -1,0 +1,83 @@
+@import "variables.less";
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a, img, ul, li, form, label, input, textarea, button, select {
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+ol,ul {
+    list-style: none;
+}
+
+a {
+    -webkit-transition-duration: 0.5s; /* Safari */
+    transition-duration: 0.5s;
+    text-decoration: none;
+    outline: none;
+    user-select: none;
+    color: var(--text-color);
+    cursor:pointer;
+
+    &:hover {
+        text-decoration: none;
+        outline: none;
+        color:@link-color;
+    }
+
+    &.disabled {
+        pointer-events: none;
+        cursor: vertical-text;
+    }
+
+    &:focus {
+        text-decoration: none;
+        outline: none;
+    }
+}
+
+img, picture, svg, video, canvas, object {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &.full-width {
+        width: 100%;
+    }
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    line-height: 0;
+    user-select: none;
+    -moz-appearance: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    outline: none;
+    background: none;
+
+    &.disabled {
+        pointer-events: none;
+        cursor: vertical-text;
+    }
+}

@@ -1,0 +1,84 @@
+@import "variables.less";
+
+.btn {
+    width: auto;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.6rem;
+    border-radius: 99999px;
+    text-transform: capitalize;
+    color: var(--text-color);
+    border: 2px solid transparent;
+    min-width: 100px;
+
+    @media @smallDevice {
+        font-size: 0.85rem;
+    }
+
+    @media @largeDevice {
+        font-size: 0.9rem;
+    }
+
+    &.primary {
+        background-color: inherit;
+        border-color: var(--hero-background-color);
+        //border-color: var(--hero-background-color);
+        /*&:hover {
+            box-shadow: var(--hightlight-shadow-color);
+        }*/
+        &:hover {
+            /*box-shadow: var(--hightlight-shadow-color);*/
+            box-shadow: @box-shadow;
+        }
+        
+    }
+
+    &.secondary {
+        background-color: var(--hero-background-color);
+        border-color: var(--secondary-button-border-color);
+        border-color: var(--hero-background-color);
+ border-color: var(--native-background-color);
+        &:hover {
+            /*box-shadow: var(--hightlight-shadow-color);*/
+            box-shadow: @box-shadow;
+        }
+    }
+
+    &.contrast {
+        background-color: var(--text-color);
+        color: var(--background-color);
+        border-color: var(--text-color);
+
+        &:hover {
+            /*box-shadow: var(--hightlight-shadow-color);*/
+            background-color: var(--hover-color);
+        }
+    }
+}
+
+.btn-group {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.25rem;
+
+    &.bordered {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+}
+
+.btn-holder {
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+
+    & .btn{
+        width: 100%;
+    }
+}

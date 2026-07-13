@@ -1,0 +1,136 @@
+@import "variables.less";
+
+
+/* 2. Wrap all runtime dynamic Quill items inside a deep block */
+.form-editor {
+  width: 100%;
+  height: auto;
+  position: relative;
+  font-family: @font-family;
+  min-height: 300px;
+
+  // 🌟 FORCE styles to penetrate into dynamically generated elements
+  :deep(.ql-editor.ql-blank::before) {
+    font-size: 16px;
+    font-style: normal;
+    color: #777777;
+  }
+
+  :deep(.ql-tooltip) {
+    left: 5% !important; 
+    width: 90% !important;
+    border-radius: 6px !important;
+    background-color: var(--background-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: @box-shadow;
+    z-index: 1000 !important;
+
+    /* 🌟 Style the Link Input Box specifically when it appears */
+    input[type="text"] {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-color);
+        padding: 4px;
+        width: 70%;
+        font-size: 14px;
+        outline: none;
+
+        &:focus {
+            border-bottom-color: var(--hover-color);
+        }
+    }
+
+
+    &:not(.ql-flip) .ql-tooltip-arrow {
+      border-bottom: 6px solid var(--border-color);
+    }
+
+    & .ql-toolbar button {
+      font-weight: 600;
+
+      & .ql-fill {
+        fill: var(--text-color) !important;
+      }
+
+      & .ql-stroke {
+        stroke: var(--text-color) !important;
+      }
+
+      &:hover {
+        & .ql-stroke {
+          stroke: var(--hover-color) !important;
+        }
+        & .ql-fill {
+          fill: var(--hover-color) !important;
+        }
+      }
+    }
+  }
+
+  :deep(.ql-bubble) {
+    position: relative;
+
+    & .ql-editor {
+      padding: 0;
+      height: auto;
+      min-height: 300px;
+
+      & * {
+        font-size: @base-font-size;
+        line-height: @base-line-height;
+      }
+
+      & h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        line-height: 1.3rem;
+        margin: 0.75rem 0;
+        text-align: left;
+      }
+
+      & b, & strong {
+        font-weight: 600;
+      }
+
+      & i, & em {
+        font-style: italic;
+      }
+
+      li {
+        list-style-type: unset;
+        padding-left: 0;
+      }
+
+      & ol {
+        list-style: decimal;
+        list-style-position: inside;
+      }
+
+      & ul {
+        list-style: square;
+        list-style-position: inside;
+      }
+    }
+  }
+
+  :deep(.ql-container.ql-snow) {
+    border: none;
+  }
+
+  data-placeholder {
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--muted-text-color);
+  }
+
+  :deep(.ql-editor.ql-blank::before) {
+    color: var(--text-color);
+    left: 0;
+    right: 0;
+    font-size: @base-font-size;
+    line-height: @base-line-height;
+  }
+}

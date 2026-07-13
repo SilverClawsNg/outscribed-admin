@@ -1,0 +1,208 @@
+@import "variables.less";
+
+/*#region PROFILE PAGE */
+
+.user-details-container {
+    height: auto;
+    /* width: 500px;*/
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 30px 0;
+
+
+    .user-profile-image {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+
+        & .image-holder {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            border-radius: 8px;
+
+            & img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 8px;
+                position: absolute;
+                z-index: 2;
+            }
+
+            & .placeholder {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+
+                & .placeholder-text {
+                    color: @form-text-color;
+                }
+
+                & svg {
+                    path {
+                        fill: @form-text-color;
+                    }
+
+                    circle {
+                        fill: @form-text-color;
+                    }
+                }
+            }
+        }
+    }
+
+    .user-profile-text {
+        margin-bottom: 20px;
+        width: 100%;
+        height: auto;
+        text-align: center;
+
+        & h1 {
+            font-size: 1.6rem;
+            letter-spacing: 0.3px;
+        }
+
+        h2 {
+            color: var(--muted-text-color);
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        h3 {
+            letter-spacing: 0.3px;
+        }
+    }
+
+    .user-profile-bio {
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .user-profile-link {
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+    }
+
+    .user-profile-stats {
+        font-size: 15px;
+        line-height: 25.6px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+
+        & p {
+            margin-right: 20px;
+
+            &.skeleton {
+                width: 30%;
+                margin-right: 10px;
+                height: 35px;
+            }
+
+            & span {
+                font-weight: 600;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .user-profile-contacts {
+        margin-bottom: 20px;
+
+        & .contact-item {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 20px;
+
+            & .contact-item-header {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+
+                & p {
+                    font-weight: 600;
+
+                    &.facebook {
+                        color: #1877F2;
+                    }
+
+                    &.twitter {
+                        color: #1DA1F2;
+                    }
+
+                    &.linkedin {
+                        color: #0A66C2;
+                    }
+
+                    &.email {
+                        color: #EF4444;
+                    }
+                }
+
+                & svg {
+                    width: 24px;
+                    height: 24px;
+                }
+
+                & button:hover {
+
+                    & svg {
+
+                        path {
+                            color: @link-color;
+                        }
+
+                        line {
+                            color: @link-color;
+                        }
+                    }
+                }
+            }
+
+            & .contact-item-definition {
+                -ms-word-break: break-all;
+                word-break: break-all;
+
+                &.not-available {
+                    font-style: italic;
+                }
+            }
+        }
+    }
+
+    .user-profile-mode {
+        width: 100%;
+        border-radius: 4px;
+        padding: 6px;
+        text-align: center;
+        font-size: smaller;
+        margin-bottom: 10px;
+        color: @black-color;
+
+        &.enabled {
+            background-color: @success-color;
+        }
+
+        &.disabled {
+            background-color: @warning-color;
+        }
+    }
+}
+
+
+/*#endregion */

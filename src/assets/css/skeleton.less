@@ -1,0 +1,42 @@
+@import "variables.less";
+
+
+.skeleton {
+    background-color: var(--skeleton-background-color);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient( 90deg, transparent 0%, var(--skeleton-shimmer-color) 40%, var(--skeleton-shimmer-color) 60%, transparent 100% );
+        background-size: 200% 100%; /* wide enough for smooth sweep */
+        animation: shimmer 0.5s infinite ease-in-out;
+    }
+}
+
+h1.skeleton,
+h2.skeleton,
+h3.skeleton,
+h4.skeleton,
+h5.skeleton,
+h6.skeleton,
+p.skeleton,
+dt.skeleton,
+dd.skeleton,
+tr.skeleton{
+    height: 50px;
+    border: 0;
+    margin-bottom: 10px;
+}
+
+div.skeleton {
+    height: 200px;
+    margin-bottom: 10px;
+    border: 0;
+}
+
+form.skeleton {
+    height: 200px;
+}

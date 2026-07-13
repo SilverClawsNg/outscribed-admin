@@ -1,0 +1,79 @@
+@import "variables.less";
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --background-color: #F0F4F8;
+        --background-color: #F0F0F0;
+        --native-background-color: @white-color;
+
+        --hero-background-color: #E9EDF6;
+        --hero-background-color: #00DDFF;
+
+        --hero-background-color: #D3E3FD;
+        --hero-background-color: #9ACFE8;
+        --hero-background-color: #82D0F1;
+        --hero-background-color: #a6def6;
+        --hero-background-color: #9ECEE5;
+
+        
+        --header-border-background-color: #F0F3F6;
+
+        --secondary-button-border-color: #71AECC;
+
+        --text-color: @black-color;
+        --hover-color: lighten(@black-color, 25%);
+        --background-hover-color: lighten(@black-color, 5%);
+        --box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
+        --header-gradient: linear-gradient( to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7) );
+        --hightlight-shadow-color: 0 0 8px rgba(0,0,0,0.25);
+        --muted-text-color: #080614;
+        --border-color: #CFD8E6;
+        --hero-border-color: #8C97A1;
+        --skeleton-shimmer-color: @white-color;
+        --skeleton-background-color: #E9E9E8;
+        --loading-background-color: rgba(255,255,255,0.5);
+        --date-text-color: #4B4A4A;
+        --modal-background-color: rgba(0, 0, 0, 0.08);
+        --nav-border-color: #DCE2E8;
+        --contrast-background-color: @black-color;
+        --contrast-text-color: @white-color;
+        --header-box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #090E18;
+        --background-color: #0E111B;
+        --background-color: #0A0D17;
+
+        --native-background-color: @black-color;
+
+        --hero-background-color: #141A24;
+        --hero-background-color: #151A28;
+        --hero-background-color: #080E1F;
+
+        --secondary-button-border-color: #121A2D;
+
+        --box-shadow: rgba(255, 255, 255, 0.1) 0px 2px 4px 0px;
+        --header-gradient: linear-gradient( to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7) );
+        --text-color: @white-color;
+        --hover-color: darken(@white-color, 25%);
+        --background-hover-color: darken(@white-color, 5%);
+        --hightlight-shadow-color: 0 0 8px rgba(255,255,255,0.25);
+        --muted-text-color: #E5E6E7;
+        --border-color: #152038;
+        --border-color: #34394C;
+        --hero-border-color: #4C4864;
+        --skeleton-shimmer-color: #010F1D;
+        --skeleton-background-color: #000102;
+        --loading-background-color: rgba(16, 13, 31, 0.5);
+        --date-text-color: #AAA7B4;
+        --modal-background-color: rgba(255, 255, 255, 0.08);
+        --nav-border-color: #03010A;
+        --contrast-background-color: @white-color;
+        --contrast-text-color: @white-color;
+        --header-box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
+        --header-box-shadow: rgba(43, 42, 51, 0.25) 0px 54px 55px, rgba(43, 42, 51, 0.12) 0px -12px 30px, rgba(43, 42, 51, 0.12) 0px 4px 6px, rgba(43, 42, 51, 0.17) 0px 12px 13px, rgba(43, 42, 51, 0.09) 0px -3px 5px;
+    }
+}

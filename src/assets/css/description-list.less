@@ -1,0 +1,82 @@
+@import "variables";
+
+.description-lists {
+    margin: 0 auto;
+    position: relative;
+    width: @mid-width;
+    width: calc(100% - 20px);
+
+    @media @smallDevice {
+        padding: 30px 0;
+    }
+
+    @media @largeDevice {
+        padding: 50px 0;
+    }
+
+    & hr {
+        height: 1px;
+        background-color: var(--border-color);
+        border: none;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+}
+
+dl {
+    margin-bottom: 1.5rem;
+
+    & dt {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--muted-text-color);
+        font-family: 'Global Monospace';
+
+        &.skeleton {
+            width: 150px;
+        }
+    }
+
+    & dd {
+        font-size: 1.25rem;
+        line-height: 1.65rem;
+
+        & a,
+        & button{
+           margin-left: 0.25rem;
+           font-size: 0.9rem;
+        }
+
+        & img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        &.small-photo {
+
+            & img {
+                width: auto;
+            }
+        }
+
+        & ol {
+            list-style: decimal-leading-zero;
+            list-style-position: inside;
+            padding-left: 0.5rem;
+            
+        }
+
+          & ul {
+            list-style: square;
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+
+
+    }
+}
+

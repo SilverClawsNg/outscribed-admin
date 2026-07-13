@@ -1,0 +1,24 @@
+@import "variables.less";
+
+.form-page {
+    height: auto;
+    min-height: 100lvh;
+    background-color: var(--background-color);
+    width: 100%;
+    position: relative;
+    z-index: 999;
+
+    &.boxed {
+        max-width: calc(100% - 20px);
+    }
+
+    @media @smallDevice {
+        padding-top: 2rem;
+    }
+
+    @media @largeDevice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
