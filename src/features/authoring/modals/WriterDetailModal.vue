@@ -2,13 +2,9 @@
 import { ref, computed, onMounted } from 'vue';
 import PageMessageStatus from '@/components/PageMessageStatus.vue';
 import { useWriterStore } from '../stores/WriterStore';
-import { type WriterDetailDto } from '../types/AuthoringTypes';
-import { formatAddendum, formatCounts } from '@/utils/stringHelpers'
 import { toLongDate } from '@/utils/dateExtensions'
 import { APIError } from '@/api/apiTypes';
-import { useRoute, useRouter } from 'vue-router';
 import { useModalStore } from '@/stores/modalStore';
-import { getMediaUrl } from '@/utils/mediaHelper'
 import { CountryDescriptions, WriterStatusDescriptions } from '@/utils/descriptors'
 
 const props = defineProps<{
