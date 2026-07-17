@@ -152,6 +152,13 @@ const router = createRouter({
   ]
 })
 
+router.onError((error, to) => {
+  if (error.message.includes('Failed to fetch dynamically imported module') || 
+      error.message.includes('error loading dynamically imported module')) {
+    // Force a reload to grab the newest Vite asset hashes
+    window.location.href = to.fullPath;
+  }
+});
 
 // src/router/index.ts
 router.beforeEach((to, from) => {
