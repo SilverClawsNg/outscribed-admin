@@ -3,13 +3,15 @@
 import { watch } from 'vue'
 
 import { useRouter } from 'vue-router'
-import { useVoteListFilterStore } from '../stores/VoteListFilterStore'
+import { useMyAdminTaskListFilterStore } from '../stores/MyAdminTaskListFilterStore'
 import { useModalStore } from '@/stores/modalStore'
-import { GeneralSortTypeSelectItems, LimitedContentTypeSelectItems, VoteTypeSelectItems } from '@/utils/selectItemHelper'
+import { SortTypeSelectItems, LimitedContentTypeSelectItems } from '@/utils/selectItemHelper'
+import { useGatekeeperStore } from '@/features/gatekeeper/stores/GatekeeperStore'; 
 
 const router = useRouter()
-const filterStore = useVoteListFilterStore()
+const filterStore = useMyAdminTaskListFilterStore()
 const modalStore = useModalStore()
+const gatekeeperStore = useGatekeeperStore()
 
 function applyFilter() {
   // 🔗 Vue Router handles translating the filter state straight to the browser url parameters footprint
@@ -81,14 +83,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
                     </option>
                 </select>
             </fieldset>
-             <fieldset>
-                <select v-model="filterStore.type"  class="form-field">
-                    <option value="-1">-- by vote type --</option>
-                    <option v-for="item in VoteTypeSelectItems" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                    </option>
-                </select>
-            </fieldset>
+            
         <fieldset>
           <div class="ticks">
              <p>
@@ -165,6 +160,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         </fieldset>
             </template>
 
+
         <fieldset>
           <div class="ticks">
             <p>
@@ -186,7 +182,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         <fieldset>
                 <select v-model="filterStore.sort"  class="form-field">
                     <option value="-1">-- sort by --</option>
-                    <option v-for="item in GeneralSortTypeSelectItems" :key="item.value" :value="item.value">
+                    <option v-for="item in SortTypeSelectItems" :key="item.value" :value="item.value">
                     {{ item.label }}
                     </option>
                 </select>

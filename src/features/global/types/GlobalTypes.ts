@@ -27,7 +27,6 @@ export interface AdminTaskListDto {
     flagsCount: number | 0;
     sharesCount: number | 0;
     adminsCount: number | 0;
-    faqsCount: number | 0;
     tagsCount: number | 0;
     inquiriesCount: number | 0;
     verificationsCount: number | 0;

@@ -284,14 +284,6 @@ export type CommentStatus =
   | 'ActiveToArchivedByCreator'
   | 'CertifiedToArchivedByCreator'
 
-export type FaqCategory = 
-  'General' 
-  | 'Account' 
-  | 'Tale'
-  | 'Insight' 
-  | 'Engagement'
-  | 'Moderation'
-
 // 🎯 Content Type Semantics
 export type WriterStatus = 
   'None' 
@@ -409,19 +401,21 @@ export type TaleStatus =
 
 // 1. Core domain enumeration 
 export type Category =
-  'PoliticsGovernance'
-  | 'Sports'
-  | 'FashionEntertainment'
-  | 'Education'
+ 'Tributuary'
+  | 'PoliticsGovernance'
+  | 'SportsGaming'
   | 'ScienceTechnology'
+  | 'Education'
   | 'BusinessEconomy'
+  | 'ArtsEntertainment'
   | 'MedicineHealthcare'
   | 'LawOrder'
-  | 'HumanInterestLifestyle'
+  | 'SocietalNormsValues'
   | 'HistoryCulture'
-  | 'TheEnvironment'
+  | 'EnvironmentClimate'
+  | 'ReligionSpirituality'
+  | 'FamilyRelationships'
   | 'Miscellaneous'
-
 
 // 🎯 Content Type Semantics
 export type AccountStatus = 
@@ -448,6 +442,7 @@ export type LimitedContentType =
   'Tale' 
   | 'Insight' 
   | 'Comment'
+  | 'Account'
   
 // 🎯 Content Type Semantics
 export type FlagType = 

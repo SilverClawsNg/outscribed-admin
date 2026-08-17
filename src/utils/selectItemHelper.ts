@@ -1,11 +1,11 @@
 import { ContentTypeDescriptions, CountryDescriptions, TaleStatusDescriptions, InsightStatusDescriptions,
   GeneralSortTypeDescriptions, SortTypeDescriptions, RoleTypeDescriptions, CommentStatusDescriptions,
   AccountStatusDescriptions, LimitedContentTypeDescriptions, FlagTypeDescriptions, ContactTypeDescriptions,
-  VoteTypeDescriptions, CategoryDescriptions, FaqCategoryDescriptions, InquiryStatusDescriptions,
+  VoteTypeDescriptions, CategoryDescriptions, InquiryStatusDescriptions,
   WriterStatusDescriptions
  } from '../utils/descriptors' // 🎯 Import your clean semantics
 import type { ContentType, Country, SortType, GeneralSortType, RoleType, TaleStatus, InsightStatus, AccountStatus,
-  CommentStatus, LimitedContentType, FlagType, ContactType, VoteType, Category, FaqCategory, InquiryStatus,
+  CommentStatus, LimitedContentType, FlagType, ContactType, VoteType, Category, InquiryStatus,
   WriterStatus
  } from '../utils/enumHelper' // 🎯 Import your clean semantics
 
@@ -130,11 +130,4 @@ export const ContactTypeSelectItems = (
 ).map((key): SelectItem<ContactType> => ({
   value: key,
   label: ContactTypeDescriptions[key]
-}))
-
-export const FaqCategorySelectItems = (
-  Object.keys(FaqCategoryDescriptions) as FaqCategory[]
-).map((key): SelectItem<FaqCategory> => ({
-  value: key,
-  label: FaqCategoryDescriptions[key]
 }))

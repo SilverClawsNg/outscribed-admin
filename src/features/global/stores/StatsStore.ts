@@ -43,10 +43,18 @@ export const useStatsStore = defineStore('statsStore', () => {
       );
 
       // Consideration 2: Reconcile updates if data was retrieved
-      if (outcome.isSuccess && outcome.value) {
+      if (outcome.isSuccess) {
 
-        stats.value = outcome.value;
-        lastFetched.value = outcome.value.lastUpdatedAt;
+        if(outcome.value){
+            stats.value = outcome.value;
+            lastFetched.value = outcome.value.lastUpdatedAt;
+        } else{
+           return { 
+            success: false, 
+            error: new APIError(204, 'No data', 'No data was found!') 
+          };
+        }
+      
       } else {
         // Clear store list if server explicitly returned nothing/null to prevent stale state bleed
         stats.value = null

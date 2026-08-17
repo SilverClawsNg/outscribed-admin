@@ -75,7 +75,6 @@ async function initPage() {
 
 }
 
-
 // --- DEFINE PAGE FUNCTIONS ---
 function redirectToRegister() {
   router.push(`/register?returnUrl=${currentPath}`)

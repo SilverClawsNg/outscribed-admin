@@ -1,6 +1,6 @@
 @import "variables.less";
 
-.rich__text {
+:deep(.shared__rich-text) {
     
     /* 1. Skip paragraphs that are empty or only contain a <br> */
     & p:not(:empty):first-of-type::first-letter,
@@ -53,15 +53,19 @@
     }
 
     li {
-        list-style-type: unset;
-        padding-left: 0;
+        padding-left: 0.75em;           
+        text-indent: -0.75em;  
     }
 
     & ol {
         list-style: decimal;
+        list-style-position: inside;
     }
 
     & ul {
         list-style: square;
+        list-style-position: inside;
     }
+
+   
 }

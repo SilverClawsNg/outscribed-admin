@@ -121,10 +121,12 @@ onMounted(async () => {
      
     </dl>
 
-       <dt>Handle</dt>
+     <dl>
+        <dt>Handle</dt>
         <dd>
         {{ shareStore.share.handle }}
       </dd>
+     </dl>
 
   </template>
 

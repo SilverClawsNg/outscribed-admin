@@ -24,7 +24,7 @@ function handleLogoutSubmission() {
   // without using 'await'. The browser handles the request asynchronously.
   authStore.logout({
     closeAll: formData.value.closeAll,
-    type: 1 // FrontendType.Web
+    type: 1 // FrontendType.Admin
   })
 
   // 4. INSTANT UI RESET: Dismiss modal layout stack and go home

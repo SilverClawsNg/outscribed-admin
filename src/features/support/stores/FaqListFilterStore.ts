@@ -2,7 +2,7 @@
 // -- IMPORTS --
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getValidGeneralSortType, getValidDateScope, getValidFaqCategory
+import { getValidGeneralSortType, getValidDateScope
 } from '@/utils/validators'; 
 
 export const useFaqListFilterStore = defineStore('faqListFilter', () => {
@@ -11,7 +11,6 @@ export const useFaqListFilterStore = defineStore('faqListFilter', () => {
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
-const category = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
@@ -28,7 +27,6 @@ function parseValue(value: any): string | null {
 
 function reset() {
   sort.value = '-1'
-  category.value = '-1'
   startdate.value = ''
   enddate.value = ''
   scope.value = '-1'
@@ -74,11 +72,6 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     if(!validatedSort) wasClean = false
   }
 
-  if(queryParameters.category){
-    const validatedCategory = getValidFaqCategory(queryParameters.category)
-    category.value = validatedCategory || '-1'
-    if(!validatedCategory) wasClean = false
-  }
 
 }
 
@@ -94,7 +87,6 @@ function getAsDictionary(): Record<string, string> {
       keyword: keyword.value,
       startdate: startdate.value,
       bypasscache:bypasscache.value,
-      category: category.value,
       enddate: enddate.value,
       scope: scope.value,
       sort: sort.value,
@@ -138,9 +130,6 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-       if (category.value && category.value !== '-1') 
-      urlParams.append('category', category.value);
-
        if (scope.value && scope.value !== '-1') {
         
       const realValue = scope.value == 'On' ? 'Between' : scope.value
@@ -173,7 +162,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, category, bypasscache,
+    sort, startdate, enddate, scope, keyword, pointer, bypasscache,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

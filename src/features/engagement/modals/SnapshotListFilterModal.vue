@@ -3,12 +3,12 @@
 import { watch } from 'vue'
 
 import { useRouter } from 'vue-router'
-import { useVoteListFilterStore } from '../stores/VoteListFilterStore'
+import { useSnapshotListFilterStore } from '../stores/SnapshotListFilterStore'
 import { useModalStore } from '@/stores/modalStore'
-import { GeneralSortTypeSelectItems, LimitedContentTypeSelectItems, VoteTypeSelectItems } from '@/utils/selectItemHelper'
+import { GeneralSortTypeSelectItems, LimitedContentTypeSelectItems } from '@/utils/selectItemHelper'
 
 const router = useRouter()
-const filterStore = useVoteListFilterStore()
+const filterStore = useSnapshotListFilterStore()
 const modalStore = useModalStore()
 
 function applyFilter() {
@@ -58,15 +58,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
             placeholder="-- enter keyword --" 
           />
         </fieldset>
-         <fieldset>
-          <input 
-            v-model="filterStore.username" 
-            type="text" 
-            id="Username" 
-            class="form-field" 
-            placeholder="-- enter username --" 
-          />
-        </fieldset>
+       
       </section>
 
    <!-- 2. Dataset Result Record Filtering Parameters -->
@@ -81,14 +73,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
                     </option>
                 </select>
             </fieldset>
-             <fieldset>
-                <select v-model="filterStore.type"  class="form-field">
-                    <option value="-1">-- by vote type --</option>
-                    <option v-for="item in VoteTypeSelectItems" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                    </option>
-                </select>
-            </fieldset>
+           
         <fieldset>
           <div class="ticks">
              <p>

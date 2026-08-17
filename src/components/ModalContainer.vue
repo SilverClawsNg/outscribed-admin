@@ -19,6 +19,8 @@ import FaqListFilterModal from '@/features/support/modals/FaqListFilterModal.vue
 import InquiryListFilterModal from '@/features/support/modals/InquiryListFilterModal.vue'
 import TagListFilterModal from '@/features/tagging/modals/TagListFilterModal.vue'
 import WriterListFilterModal from '@/features/authoring/modals/WriterListFilterModal.vue'
+import SnapshotListFilterModal from '@/features/engagement/modals/SnapshotListFilterModal.vue'
+
 
 import AnalyticsDetailModal from '@/features/analytics/modals/AnalyticsDetailModal.vue'
 import TaleDetailModal from '@/features/tales/modals/TaleDetailModal.vue'
@@ -30,6 +32,8 @@ import FavoriteDetailModal from '@/features/engagement/modals/FavoriteDetailModa
 import ShareDetailModal from '@/features/engagement/modals/ShareDetailModal.vue'
 import UserDetailModal from '@/features/identity/modals/UserDetailModal.vue'
 import WriterDetailModal from '@/features/authoring/modals/WriterDetailModal.vue'
+import SnapshotDetailModal from '@/features/engagement/modals/SnapshotDetailModal.vue'
+import SnapshotListModal from '@/features/engagement/modals/SnapshotListModal.vue'
 
 import SuspendWriterModal from '@/features/authoring/modals/SuspendWriterModal.vue'
 import ReinstateWriterModal from '@/features/authoring/modals/ReinstateWriterModal.vue'
@@ -57,10 +61,6 @@ import DeactivateRoleModal from '@/features/gatekeeper/modals/DeactivateRoleModa
 import ResetSecurityStatusModal from '@/features/gatekeeper/modals/ResetSecurityStatusModal.vue'
 
 import AdminDetailModal from '@/features/gatekeeper/modals/AdminDetailModal.vue'
-
-import FaqDetailModal from '@/features/support/modals/FaqDetailModal.vue'
-import CreateFaqModal from '@/features/support/modals/CreateFaqModal.vue'
-import UpdateFaqModal from '@/features/support/modals/UpdateFaqModal.vue'
 
 import InquiryDetailModal from '@/features/support/modals/InquiryDetailModal.vue'
 import AnswerInquiryModal from '@/features/support/modals/AnswerInquiryModal.vue'
@@ -123,9 +123,7 @@ ActivateRole: ActivateRoleModal,
 DeactivateRole: DeactivateRoleModal,
 ResetSecurityStatus: ResetSecurityStatusModal,
 AdminDetail: AdminDetailModal,
-FaqDetail: FaqDetailModal,
-CreateFaq: CreateFaqModal,
-UpdateFaq: UpdateFaqModal,
+SnapshotDetail: SnapshotDetailModal,
 InquiryDetail: InquiryDetailModal,
 AnswerInquiry: AnswerInquiryModal,
 AnalyticsDetail: AnalyticsDetailModal,
@@ -134,7 +132,9 @@ TagDetail: TagDetailModal,
 ProblemDefinition: ProblemDefinitionModal,
 Register: RegisterModal,
 Challenge: ChallengeModal,
-Login: LoginModal
+Login: LoginModal,
+SnapshotListFilter: SnapshotListFilterModal,
+SnapshotList: SnapshotListModal
 }
 
 // Helper getter to deliver the raw payload directly without flattening

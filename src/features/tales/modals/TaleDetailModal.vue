@@ -112,6 +112,13 @@ onMounted(async () => {
           </button>
         </template>
       </template>
+       <button 
+            class="btn secondary" 
+            @click="modalStore.push('SnapshotList', 'Tale Metrics', taleStore.tale.taleId)"
+          >
+            Metrics
+          </button>
+       
     </div>
 
     <dl>

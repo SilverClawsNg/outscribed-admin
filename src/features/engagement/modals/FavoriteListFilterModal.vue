@@ -74,7 +74,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         <h3 class="form-heading">Filter</h3>
 
          <fieldset>
-                <select v-model="filterStore.content"  class="form-field">
+                <select v-model="filterStore.contenttype"  class="form-field">
                     <option value="-1">-- by content type --</option>
                     <option v-for="item in LimitedContentTypeSelectItems" :key="item.value" :value="item.value">
                     {{ item.label }}

@@ -116,10 +116,12 @@ onMounted(async () => {
      
     </dl>
 
-       <dt>Vote Type</dt>
+    <dl>
+         <dt>Vote Type</dt>
         <dd>
           {{ VoteTypeDescriptions[voteStore.vote.voteType] }}
       </dd>
+    </dl>
 
   </template>
 

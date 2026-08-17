@@ -1,5 +1,5 @@
 import type{ ContentType, AdminTaskType, SortType, GeneralSortType, Country, DateScope,
-  RoleType, VoteType, FaqCategory, TaleStatus, InsightStatus, Category, ContactType, CommentStatus,
+  RoleType, VoteType, TaleStatus, InsightStatus, Category, ContactType, CommentStatus,
   AccountStatus, ActivityType, LimitedContentType, FlagType, InquiryStatus, WriterStatus, AdminSecurityStatus
 } from './enumHelper'
 
@@ -38,7 +38,8 @@ export const FlagTypeDescriptions: Record<FlagType, string> = {
 export const LimitedContentTypeDescriptions: Record<LimitedContentType, string> = {
   Tale: 'Tales',
   Insight: 'Insights',
-  Comment: 'Comments'
+  Comment: 'Comments',
+  Account: 'Accounts'
 } as const;
 
 
@@ -331,16 +332,6 @@ export const RoleTypeDescriptions: Record<RoleType, string> = {
 } as const;
 
 
-  export const FaqCategoryDescriptions: Record<FaqCategory, string> = {
-  General: 'General',
-  Account: 'Account',
-  Tale: 'Tale',
-  Insight: 'Insight',
-  Engagement: 'Engagement',
-  Moderation: 'Moderation'
- 
-} as const;
-
   export const TaleStatusDescriptions: Record<TaleStatus, string> = {
   Created: 'Created',
   LaunchedByCreator: 'Published',
@@ -377,21 +368,25 @@ export const RoleTypeDescriptions: Record<RoleType, string> = {
   SuspendedByAdmin: 'Suspended',
   BannedByAdmin: 'Banned'
 } as const;
-
+  
   export const CategoryDescriptions: Record<Category, string> = {
+  Tributuary: 'Tributuary',
   PoliticsGovernance: 'Politics & Government',
-  Sports: 'Sports',
-  FashionEntertainment: 'Fashion & Entertainment',
+  SportsGaming: 'Sports & Gaming',
+  ScienceTechnology: 'Science & Technology',
   Education: 'Education',
-  ScienceTechnology : 'Science & Technology',
-  BusinessEconomy : 'Business & Ecconomy',
+  BusinessEconomy : 'Business & Economy',
+  ArtsEntertainment : 'Arts & Entertainment',
   MedicineHealthcare: 'Medicine & Healthcare',
   LawOrder: 'Law & Order',
-  HumanInterestLifestyle: 'Human Interest & Lifestyle',
+  SocietalNormsValues: 'Societal Norms & Values',
   HistoryCulture: 'History & Culture',
-  TheEnvironment : 'The Environment',
+  EnvironmentClimate : 'Environment & Climate',
+  ReligionSpirituality: 'Religion & Spirituality',
+  FamilyRelationships: 'Family & Relationships',
   Miscellaneous : 'Miscellaneous'
 } as const;
+
 
   export const CommentStatusDescriptions: Record<CommentStatus, string> = {
   Active: 'Active',

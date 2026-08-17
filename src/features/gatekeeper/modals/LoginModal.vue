@@ -5,10 +5,13 @@ import { ref, computed, onMounted } from 'vue';
 
 const modalStore = useModalStore()
 
-// Read arbitrary state data passed down into the modal layout manager on instantiation
+// --- DEFINE FORM DATA ---
 const props = defineProps<{
-  modalContext: { accountId: string }
+  payload: unknown // Arrives untouched as the raw string AccountId from your container
 }>()
+
+const accountId = computed(() => props.payload as string)
+
 
 onMounted(async () => {
   // 🧰 Clear the scan view, step down the stack, and load the OTP token box view
@@ -28,7 +31,7 @@ function handleFallback() {
 <template>
   <div class="admin-modal-reauth">
     <LoginComponent 
-      :account-id="modalContext.accountId" 
+      :account-id="accountId" 
       :is-boxed="false"
       @success="handleSuccess"
       @fallback="handleFallback"

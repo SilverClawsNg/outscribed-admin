@@ -3,18 +3,19 @@
 // --- IMPORTS ---
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useFaqStore } from '../stores/FaqStore';
-import { useFaqListFilterStore } from '../stores/FaqListFilterStore'; 
+import { useSnapshotStore } from '../stores/SnapshotStore';
+import { useSnapshotListFilterStore } from '../stores/SnapshotListFilterStore'; 
 import DisplayComponent from '@/components/DisplayTable.vue';
 import InfiniteScroller from '@/components/InfiniteScroller.vue';
 import PageStatusMessage from '@/components/PageMessageStatus.vue';
 import { APIError } from '@/api/apiTypes';
 import { useModalStore } from '@/stores/modalStore'
-import { toLongDate } from '@/utils/dateExtensions'
+import { toShortDate } from '@/utils/dateExtensions'
+import {ContentTypeDescriptions } from '@/utils/descriptors'
 
 // --- INITIALIZE STORES ---
-const faqStore = useFaqStore();
-const faqFilterStore = useFaqListFilterStore();
+const snapshotStore = useSnapshotStore();
+const snapshotFilterStore = useSnapshotListFilterStore();
 const modalStore = useModalStore()
 const route = useRoute();
 const router = useRouter();
@@ -25,13 +26,14 @@ const loadingError = ref<APIError | null>(null)
 const wasCleaned = ref(false)
 const currentPath = encodeURIComponent(route.fullPath)
 
+
 // --- DEFINE PAGE INITIALIZATION ---
 async function initPage() {
 
   console.log('🚀 [Tale Lists View]: Presence verified via hint. Dispatching data fetch...')
 
   // 1. Hydrate and check if the incoming URL string was pristine
-  const { isClean } = faqFilterStore.rehydrate(route.query);
+  const { isClean } = snapshotFilterStore.rehydrate(route.query);
 
   // 2. 🛑 INTERCEPT TRASH: If parameters were stripped, update browser bar and halt!
   if (!isClean) {
@@ -41,7 +43,7 @@ async function initPage() {
 
     await router.replace({
       path: route.path,
-      query: faqFilterStore.getAsDictionary()
+      query: snapshotFilterStore.getAsDictionary()
     })
     
     // Abort this execution flow completely! 
@@ -50,10 +52,10 @@ async function initPage() {
   }
 
    // Build api path from a guarnateed clean filter store
-  const cleanApiPath = faqFilterStore.buildApiPath(faqStore.baseRoute);
+  const cleanApiPath = snapshotFilterStore.buildApiPath(snapshotStore.baseRoute);
 
   // 3. Fetch from store
-  const { success, error } = await faqStore.loadFaqs(cleanApiPath)
+  const { success, error } = await snapshotStore.loadSnapshots(cleanApiPath)
 
   if (!success) {
     if (error) {
@@ -63,7 +65,7 @@ async function initPage() {
     loadingError.value = new APIError(
         500,
         'Unknown Error!',
-        'Unknown error occured while retrieving faqs. Refresh page and try again.'
+        'Unknown error occured while retrieving snapshots. Refresh page and try again.'
       );
   }
   }
@@ -93,38 +95,36 @@ watch(() => route.query, () => {
 
 // inside your HomeView.vue
 onUnmounted(() => {
-  faqStore.abort();
+  snapshotStore.abort();
 });
 
 
-const openModal = (faqId: string) => {
-  faqStore.viewedRows.add(faqId);
-  modalStore.push('FaqDetail', 'FAQ Details', faqId)
+const openModal = (id: string) => {
+  snapshotStore.viewedRows.add(id);
+  modalStore.push('SnapshotDetail', 'Snapshot Details', id)
 };
 
 const handleKeyPress = (event: KeyboardEvent, item: any) => {
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
-    openModal(item.faqId);
+    openModal(item.id);
   }
 };
 
-
 const reset = async () => {
-  // 1. Wipe out any loaded faq arrays or pagination tokens from your main store
-   faqStore.reset();
+  // 1. Wipe out any loaded snapshot arrays or pagination tokens from your main store
+   snapshotStore.reset();
 
   // 2. Instruct the filter store to reset its internal states to defaults
-  faqFilterStore.reset();
+  snapshotFilterStore.reset();
 
   // 3. Push the clean, default dictionary parameters straight into the browser bar
   // This satisfies your firewall's `isClean` condition on the next cycle!
   await router.push({
     path: route.path,
-    query: faqFilterStore.getAsDictionary()
+    query: snapshotFilterStore.getAsDictionary()
   });
 };
-
 
 </script>
 
@@ -133,7 +133,7 @@ const reset = async () => {
  <template v-if="isLoading">
 
    <div class="shared__page-title">
-    <h1>Loading Faqs... </h1>
+    <h1>Loading Snapshots... </h1>
       <p class="shared__loader"></p>
     </div>
 
@@ -151,14 +151,13 @@ const reset = async () => {
 
   </template>
 
-  <template v-else-if="!faqStore.faqs || faqStore.faqs.length === 0">
+  <template v-else-if="!snapshotStore.snapshots || snapshotStore.snapshots.length === 0">
 
     <PageStatusMessage 
     title="No Content!"
-    message="Sorry. No faq were found matching your filter requirements.">
+    message="Sorry. No snapshot were found matching your filter requirements.">
        <template #actions>
       <button class="btn primary" @click="reset">Reset</button>
-       <button class="btn secondary" @click="modalStore.push('CreateFaq', 'New FAQ')">Create</button>
     </template>
     </PageStatusMessage>
 
@@ -167,40 +166,37 @@ const reset = async () => {
   <template v-else>
 
     <div class="shared__page-title">
-      <h1>Faqs</h1>
-      <p>
-         <button @click="modalStore.push('CreateFaq', 'New FAQ')">Create FAQ</button>
-      </p>
-        <button class="btn primary" @click="modalStore.push('FaqListFilter', 'Filter Faq')">Filter</button>
+      <h1>Snapshots</h1>
+        <button class="btn primary" @click="modalStore.push('SnapshotListFilter', 'Filter Snapshot')">Filter</button>
     </div>
 
       <InfiniteScroller
-        :has-next="faqStore.hasNext"
-        :is-fetching="faqStore.isFetchingMore"
-        :error="faqStore.loadMoreError"
-        @load-more="faqStore.loadMoreFaqs"
-        @retry="faqStore.loadMoreFaqs">
+        :has-next="snapshotStore.hasNext"
+        :is-fetching="snapshotStore.isFetchingMore"
+        :error="snapshotStore.loadMoreError"
+        @load-more="snapshotStore.loadMoreSnapshots"
+        @retry="snapshotStore.loadMoreSnapshots">
 
       <DisplayComponent
-        :items="faqStore.faqs"
-        :item-key="(item) => item.faqId"
-        :is-row-highlighted="(item) => faqStore.viewedRows.has(item.faqId)"
-        @row-click="(item: any) => openModal(item.faqId)"
+        :items="snapshotStore.snapshots"
+        :item-key="(item) => item.id"
+        :is-row-highlighted="(item) => snapshotStore.viewedRows.has(item.id)"
+        @row-click="(item: any) => openModal(item.id)"
         @row-key-down="handleKeyPress">
 
         <template #header>
-               <th>Date</th>
-              <th>Category</th>
-              <th>Question</th>
+             <th>Date</th>
+              <th>Content</th>
+              <th>Counts</th>
         </template>
 
         <template #row="{ item }">
-          <td>{{ toLongDate(item.lastUpdatedAt) }}</td>
-           <td>{{ item.question }}</td>
+          <td>{{ toShortDate(item.date) }}</td>
+          <td>{{ ContentTypeDescriptions[item.contentType] }}</td>
+           <td>{{ item.totalCount }}</td>
         </template>
       </DisplayComponent>
     </InfiniteScroller>
   </template>
-
 
 </template>

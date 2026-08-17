@@ -13,7 +13,7 @@ const scope = ref<string | null>(null)
 const contact = ref<string | null>(null)
 const contentid = ref<string | null>(null)
 const sharerid = ref<string | null>(null)
-const content = ref<string | null>(null)
+const contenttype = ref<string | null>(null)
 const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const keyword = ref<string | null>(null);
@@ -32,7 +32,7 @@ function parseValue(value: any): string | null {
 function reset() {
   sort.value = '-1'
   contact.value = '-1'
-  content.value = '-1'
+  contenttype.value = '-1'
   contentid.value = ''
   sharerid.value = ''
   username.value = ''
@@ -93,11 +93,12 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     if(!validatedSort) wasClean = false
   }
 
-  if(queryParameters.content){
-    const validatedContent = getValidLimitedContentType(queryParameters.content)
-    content.value = validatedContent || '-1'
+ if(queryParameters.contenttype){
+    const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
+    contenttype.value = validatedContent || '-1'
     if(!validatedContent) wasClean = false
   }
+
 
   if(queryParameters.contact){
     const validatedContact = getValidContactType(queryParameters.contact)
@@ -122,7 +123,7 @@ function getAsDictionary(): Record<string, string> {
       username: username.value,
       contentid: contentid.value,
       sharerid: sharerid.value,
-      content: content.value,
+      contenttype: contenttype.value,
       contact: contact.value,
       enddate: enddate.value,
       scope: scope.value,
@@ -167,8 +168,8 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-     if (content.value && content.value !== '-1') 
-      urlParams.append('content', content.value);
+     if (contenttype.value && contenttype.value !== '-1') 
+      urlParams.append('contenttype', contenttype.value);
 
        if (contact.value && contact.value !== '-1') 
       urlParams.append('contact', contact.value);
@@ -214,7 +215,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, content, sharerid, contentid, contact,
+    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, contenttype, sharerid, contentid, contact,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

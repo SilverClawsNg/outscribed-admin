@@ -1,11 +1,11 @@
 import type{ ContentType, AdminTaskType, SortType, GeneralSortType, Country, DateScope, RoleType,
-  ActivityType, TaleStatus, InsightStatus, CommentStatus, AccountStatus, VoteType, FaqCategory,
+  ActivityType, TaleStatus, InsightStatus, CommentStatus, AccountStatus, VoteType, 
   LimitedContentType, FlagType, ContactType, Category, InquiryStatus, WriterStatus
 } from './enumHelper'
 import { ContentTypeDescriptions, AdminTaskTypeDescriptions, SortTypeDescriptions, GeneralSortTypeDescriptions,
   CountryDescriptions, DateScopeDescriptions, RoleTypeDescriptions, AccountStatusDescriptions, TaleStatusDescriptions,
   InsightStatusDescriptions, CommentStatusDescriptions, ActivityTypeDescriptions, VoteTypeDescriptions, 
-  FaqCategoryDescriptions, LimitedContentTypeDescriptions, FlagTypeDescriptions, ContactTypeDescriptions,
+  LimitedContentTypeDescriptions, FlagTypeDescriptions, ContactTypeDescriptions,
 CategoryDescriptions, InquiryStatusDescriptions, WriterStatusDescriptions
 } from './descriptors'
 
@@ -227,19 +227,6 @@ export function getValidVoteType(code: string | null | undefined): VoteType | nu
   if (!code || code === '-1') return null
 
   const keys = Object.keys(VoteTypeDescriptions) as VoteType[]
-  
-  // Look for the element where the lowercase strings align perfectly
-  const matchedKey = keys.find(key => key.toLowerCase() === code.toLowerCase())
-  
-  // Returns 'Account' (PascalCase) even if the browser sent 'account' (lowercase)
-  return matchedKey || null
-}
-
-// 🌟 FIX: Find the correct PascalCase value case-insensitively
-export function getValidFaqCategory(code: string | null | undefined): FaqCategory | null {
-  if (!code || code === '-1') return null
-
-  const keys = Object.keys(FaqCategoryDescriptions) as FaqCategory[]
   
   // Look for the element where the lowercase strings align perfectly
   const matchedKey = keys.find(key => key.toLowerCase() === code.toLowerCase())

@@ -2,26 +2,23 @@
 // -- IMPORTS --
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getValidSortType, getValidDateScope, getValidCommentStatus, getValidLimitedContentType } from '@/utils/validators'; 
+import { getValidGeneralSortType, getValidDateScope, getValidLimitedContentType } from '@/utils/validators'; 
 
-export const useCommentListFilterStore = defineStore('commentListFilter', () => {
+export const useSnapshotListFilterStore = defineStore('snapshotListFilter', () => {
   
 // State
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
-const status = ref<string | null>(null)
 const contentid = ref<string | null>(null)
-const commentatorid = ref<string | null>(null)
 const contenttype = ref<string | null>(null)
-const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
 const pointer = ref<string | number>('1');
 
-   // --- 3. HELPER UTILITIES ---
-  // Pure parsing helper: returns null if missing, empty, or placeholder
+// --- 3. HELPER UTILITIES ---
+// Pure parsing helper: returns null if missing, empty, or placeholder
 function parseValue(value: any): string | null {
   if (value === undefined || value === null || value === '') {
     return null
@@ -31,11 +28,8 @@ function parseValue(value: any): string | null {
 
 function reset() {
   sort.value = '-1'
-  status.value = '-1'
   contenttype.value = '-1'
   contentid.value = ''
-  commentatorid.value = ''
-  username.value = ''
   startdate.value = ''
   enddate.value = ''
   scope.value = '-1'
@@ -57,16 +51,8 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     startdate.value = parseValue(queryParameters.startdate)
   }
 
-  if(queryParameters.username){
-    username.value = parseValue(queryParameters.username)
-  }
-
   if(queryParameters.contentid){
     contentid.value = parseValue(queryParameters.contentid)
-  }
-
-  if(queryParameters.commentatorid){
-    commentatorid.value = parseValue(queryParameters.commentatorid)
   }
 
   if(queryParameters.enddate){
@@ -88,27 +74,22 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
   }
 
   if(queryParameters.sort){
-    const validatedSort = getValidSortType(queryParameters.sort)
+    const validatedSort = getValidGeneralSortType(queryParameters.sort)
     sort.value = validatedSort || '-1'
     if(!validatedSort) wasClean = false
   }
-
+ 
  if(queryParameters.contenttype){
     const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
     contenttype.value = validatedContent || '-1'
     if(!validatedContent) wasClean = false
   }
 
-  if(queryParameters.status){
-    const validatedStatus = getValidCommentStatus(queryParameters.status)
-    status.value = validatedStatus || '-1'
-    if(!validatedStatus) wasClean = false
-  }
-
 }
 
     return { isClean: wasClean }
 }
+
   
 function getAsDictionary(): Record<string, string> {
   
@@ -118,11 +99,8 @@ function getAsDictionary(): Record<string, string> {
       keyword: keyword.value,
       startdate: startdate.value,
       bypasscache:bypasscache.value,
-      username: username.value,
       contentid: contentid.value,
-      commentatorid: commentatorid.value,
       contenttype: contenttype.value,
-      status: status.value,
       enddate: enddate.value,
       scope: scope.value,
       sort: sort.value,
@@ -169,9 +147,6 @@ function getAsDictionary(): Record<string, string> {
      if (contenttype.value && contenttype.value !== '-1') 
       urlParams.append('contenttype', contenttype.value);
 
-       if (status.value && status.value !== '-1') 
-      urlParams.append('status', status.value);
-
        if (scope.value && scope.value !== '-1') {
         
       const realValue = scope.value == 'On' ? 'Between' : scope.value
@@ -193,14 +168,25 @@ function getAsDictionary(): Record<string, string> {
       if (enddate.value && enddate.value.trim() !== '') 
       urlParams.append('enddate', enddate.value);
 
-        if (username.value && username.value.trim() !== '') 
-      urlParams.append('username', username.value);
-
          if (contentid.value && contentid.value.trim() !== '') 
       urlParams.append('contentid', contentid.value);
 
-          if (commentatorid.value && commentatorid.value.trim() !== '') 
-      urlParams.append('commentatorid', commentatorid.value);
+    const currentPointer = overridePointer ? String(overridePointer) : String(pointer.value);
+      urlParams.append('pointer', currentPointer);
+
+        if (anchor) 
+      urlParams.append('anchor', anchor);
+
+    const queryString = urlParams.toString();
+    return queryString ? `${baseRoute}?${queryString}` : baseRoute;
+  }
+
+  function buildModalApiPath(baseRoute: string, contentid: string, overridePointer?: string | number, anchor?: string | null): string {
+    
+    const urlParams = new URLSearchParams();
+
+    if (contentid && contentid.trim() !== '') 
+      urlParams.append('contentid', contentid);
 
     const currentPointer = overridePointer ? String(overridePointer) : String(pointer.value);
       urlParams.append('pointer', currentPointer);
@@ -213,7 +199,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, contenttype, commentatorid, contentid, status,
-    reset, rehydrate, getAsDictionary, buildApiPath
+    sort, startdate, enddate, scope, keyword, pointer, bypasscache, contenttype, contentid,
+    reset, rehydrate, getAsDictionary, buildApiPath, buildModalApiPath
   };
 });

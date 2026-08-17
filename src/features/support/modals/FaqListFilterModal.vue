@@ -5,8 +5,7 @@ import { watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFaqListFilterStore } from '../stores/FaqListFilterStore'
 import { useModalStore } from '@/stores/modalStore'
-import { GeneralSortTypeSelectItems, FaqCategorySelectItems
- } from '@/utils/selectItemHelper'
+import { GeneralSortTypeSelectItems} from '@/utils/selectItemHelper'
 
 const router = useRouter()
 const filterStore = useFaqListFilterStore()
@@ -64,17 +63,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
 
    <!-- 2. Dataset Result Record Filtering Parameters -->
       <section>
-        <h3 class="form-heading">Filter</h3>
-
-         <fieldset>
-                <select v-model="filterStore.category"  class="form-field">
-                    <option value="-1">-- by category --</option>
-                    <option v-for="item in FaqCategorySelectItems" :key="item.value" :value="item.value">
-                    {{ item.label }}
-                    </option>
-                </select>
-            </fieldset>
-            
+      
         <fieldset>
           <div class="ticks">
              <p>

@@ -23,6 +23,12 @@ const router = createRouter({
           component: () => import('@/features/global/views/AdminTaskListView.vue'),
           meta: { requiresAuth: true }
         },
+         {
+          path: 'my/tasks', // Renders at outscribed.com/tasks
+          name: 'MyAdminTasksList',
+          component: () => import('@/features/global/views/MyAdminTaskListView.vue'),
+          meta: { requiresAuth: true }
+        },
           {
           path: 'logs', // Renders at outscribed.com/logs
           name: 'LogLists',
@@ -63,6 +69,12 @@ const router = createRouter({
           path: 'shares', // Renders at outscribed.com/shares
           name: 'ShareLists',
           component: () => import('@/features/engagement/views/ShareListView.vue'),
+          meta: { requiresAuth: true }
+        },
+          {
+          path: 'snapshots', // Renders at outscribed.com/snapshots
+          name: 'SnapshotLists',
+          component: () => import('@/features/engagement/views/SnapshotListView.vue'),
           meta: { requiresAuth: true }
         },
           {

@@ -2,131 +2,127 @@
 // -- IMPORTS --
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getValidGeneralSortType, getValidDateScope, getValidVoteType, getValidLimitedContentType } from '@/utils/validators'; 
+import { getValidContentType, getValidAdminTaskType, getValidGeneralSortType } from '@/utils/validators'; 
 
-export const useVoteListFilterStore = defineStore('voteListFilter', () => {
+export const useMyAdminTaskListFilterStore = defineStore('myAdminTaskListFilter', () => {
   
 // State
+const type = ref<string | null>(null);
+
+const contentid = ref<string | null>(null)
+const contenttype = ref<string | null>(null)
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
-const type = ref<string | null>(null)
-const contentid = ref<string | null>(null)
-const voterid = ref<string | null>(null)
-const contenttype = ref<string | null>(null)
-const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
+
+const username = ref<string | null>(null);
 const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
-const pointer = ref<string | number>('1');
 
-   // --- 3. HELPER UTILITIES ---
+  const pointer = ref<string | number>('1');
+
+  // --- 3. HELPER UTILITIES ---
   // Pure parsing helper: returns null if missing, empty, or placeholder
-function parseValue(value: any): string | null {
-  if (value === undefined || value === null || value === '') {
-    return null
+  function parseValue(value: any): string | null {
+    if (value === undefined || value === null || value === '') {
+      return null
+    }
+    return String(value).trim()
   }
-  return String(value).trim()
-}
 
-function reset() {
-  sort.value = '-1'
-  type.value = '-1'
-  contenttype.value = '-1'
-  contentid.value = ''
-  voterid.value = ''
-  username.value = ''
-  startdate.value = ''
-  enddate.value = ''
-  scope.value = '-1'
-  bypasscache.value = ''
-  keyword.value = '';
-  pointer.value = '1';
-}
+  function reset() {
+    sort.value = null
+    type.value = null
+    contentid.value = null
+    contenttype.value = null
+    bypasscache.value = null
+    startdate.value = null
+    enddate.value = null
+    scope.value = null
+
+    keyword.value = null;
+    username.value = null;
+    pointer.value = '1';
+  }
 
   // 1. Rehydrate from URL parameters object
 function rehydrate(queryParameters: Record<string, any>): { isClean: boolean }{
    
-reset(); // Evict current filters to cleanly build the fresh reality
+    reset(); // Evict current filters to cleanly build the fresh reality
 
-let wasClean = true
+    let wasClean = true
 
 if (queryParameters && Object.keys(queryParameters).length > 0) {
 
-  if(queryParameters.startdate){
-    startdate.value = parseValue(queryParameters.startdate)
-  }
-
   if(queryParameters.username){
     username.value = parseValue(queryParameters.username)
+  }
+
+  if(queryParameters.content){
+      const validatedContent = getValidContentType(queryParameters.contenttype)
+      contenttype.value = validatedContent || null
+        if(!validatedContent) wasClean = false
+  }
+
+  if(queryParameters.type){
+      const validatedType = getValidAdminTaskType(queryParameters.type)
+      type.value = validatedType || null
+      if(!validatedType) wasClean = false
   }
 
   if(queryParameters.contentid){
     contentid.value = parseValue(queryParameters.contentid)
   }
 
-  if(queryParameters.voterid){
-    voterid.value = parseValue(queryParameters.voterid)
+  if(queryParameters.bypasscache){
+    bypasscache.value = parseValue(queryParameters.bypasscache)
   }
+
+  if(queryParameters.startdate){
+    startdate.value = parseValue(queryParameters.startdate)
+  }
+
 
   if(queryParameters.enddate){
     enddate.value = parseValue(queryParameters.enddate)
   }
 
-  if(queryParameters.bypasscache){
-    bypasscache.value = parseValue(queryParameters.bypasscache)
+
+  if(queryParameters.scope){
+    scope.value = parseValue(queryParameters.scope)
   }
 
   if(queryParameters.keyword){
     keyword.value = parseValue(queryParameters.keyword)
   }
 
-  if(queryParameters.scope){
-    const validatedDateScope = getValidDateScope(queryParameters.scope)
-    scope.value = validatedDateScope || '-1'
-    if(!validatedDateScope) wasClean = false
-  }
-
   if(queryParameters.sort){
     const validatedSort = getValidGeneralSortType(queryParameters.sort)
-    sort.value = validatedSort || '-1'
+    sort.value = validatedSort || null
     if(!validatedSort) wasClean = false
-  }
-
- if(queryParameters.contenttype){
-    const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
-    contenttype.value = validatedContent || '-1'
-    if(!validatedContent) wasClean = false
-  }
-
-
-  if(queryParameters.type){
-    const validatedType = getValidVoteType(queryParameters.type)
-    type.value = validatedType || '-1'
-    if(!validatedType) wasClean = false
   }
 
 }
 
     return { isClean: wasClean }
 }
-
   
 function getAsDictionary(): Record<string, string> {
   
   // 1. Collect all raw state values into a temporary workspace object
   const rawValues: Record<string, any> = {
-   
-      keyword: keyword.value,
-      startdate: startdate.value,
-      bypasscache:bypasscache.value,
-      username: username.value,
-      contentid: contentid.value,
-      voterid: voterid.value,
-      contenttype: contenttype.value,
+    username: username.value,
       type: type.value,
+      contentid: contentid.value,
+      keyword: keyword.value,
+      contenttype: contenttype.value,
+      bypasscache:bypasscache.value,
+
+      startdate: startdate.value,
       enddate: enddate.value,
       scope: scope.value,
+
       sort: sort.value,
       pointer: '1'
   }
@@ -168,41 +164,32 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-     if (contenttype.value && contenttype.value !== '-1') 
-      urlParams.append('contenttype', contenttype.value);
-
-       if (type.value && type.value !== '-1') 
+    if (type.value && type.value !== '-1') 
       urlParams.append('type', type.value);
 
-       if (scope.value && scope.value !== '-1') {
-        
-      const realValue = scope.value == 'On' ? 'Between' : scope.value
-      urlParams.append('scope', realValue);
+    if (contenttype.value && contenttype.value !== '-1') 
+      urlParams.append('contenttype', contenttype.value);
 
-      if (scope.value == 'On' && startdate.value && startdate.value.trim() !== '') 
-      urlParams.append('enddate', startdate.value);
-     }
+    if (keyword.value && keyword.value.trim() !== '') 
+      urlParams.append('keyword', keyword.value);
+
+    if (username.value && username.value.trim() !== '') 
+      urlParams.append('username', username.value);
+
+    if (contentid.value && contentid.value.trim() !== '') 
+      urlParams.append('contentid', contentid.value);
 
      if (startdate.value && startdate.value.trim() !== '') 
       urlParams.append('startdate', startdate.value);
 
-      if (bypasscache.value && bypasscache.value.trim() !== '') 
-      urlParams.append('bypasscache', bypasscache.value);
-
-       if (keyword.value && keyword.value.trim() !== '') 
-      urlParams.append('keyword', keyword.value);
-
       if (enddate.value && enddate.value.trim() !== '') 
       urlParams.append('enddate', enddate.value);
 
-        if (username.value && username.value.trim() !== '') 
-      urlParams.append('username', username.value);
+      if (bypasscache.value && bypasscache.value.trim() !== '') 
+      urlParams.append('bypasscache', bypasscache.value);
 
-         if (contentid.value && contentid.value.trim() !== '') 
-      urlParams.append('contentid', contentid.value);
-
-          if (voterid.value && voterid.value.trim() !== '') 
-      urlParams.append('voterid', voterid.value);
+       if (scope.value && scope.value.trim() !== '') 
+      urlParams.append('scope', scope.value);
 
     const currentPointer = overridePointer ? String(overridePointer) : String(pointer.value);
       urlParams.append('pointer', currentPointer);
@@ -215,7 +202,8 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, contenttype, voterid, contentid, type,
+    sort, startdate, enddate, scope, contentid, username, type, contenttype, keyword, pointer, bypasscache,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
+
 });

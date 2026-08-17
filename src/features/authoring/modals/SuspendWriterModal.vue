@@ -85,8 +85,11 @@ watch(
     if (!isValid) {
       setWarning('Ensure all fields are filled out correctly before submission.')
     } else {
-      // Clear warning and clean up state immediately when compliance is met
-      resetProgress()
+     // Clear warning and clean up state immediately when compliance is met
+      // 🎯 Only reset if we are clearing a warning!
+      if (progressState.value.type === 'Warning') {
+        resetProgress()
+      }
     }
   }, 
   { immediate: true }

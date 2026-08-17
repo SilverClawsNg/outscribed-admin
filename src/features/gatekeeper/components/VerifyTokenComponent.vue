@@ -87,7 +87,5 @@ function handleKeyDown(e: KeyboardEvent, index: number) {
 </template>
 
 <style lang="less" scoped>
-/* You can safely drop your layout timeline.less or unique home rules down here */
 @import "@/assets/css/form-input.less";
-
 </style>

@@ -16,6 +16,21 @@
     color: #777777;
   }
 
+ /* Remove numbers from bullet lists */
+:deep(.ql-editor ol li[data-list="bullet"]) {
+  list-style-type: disc;   /* show bullets */
+}
+
+:deep(.ql-editor ol li[data-list="bullet"]::marker) {
+  content: "• ";           /* force bullet marker */
+}
+
+/* Prevent double markers (numbers + bullets) */
+:deep(.ql-editor ol[data-checked]), 
+:deep(.ql-editor ol li[data-list="bullet"]) {
+  counter-reset: list;     /* reset numbering so numbers don't show */
+}
+
   :deep(.ql-tooltip) {
     left: 5% !important; 
     width: 90% !important;

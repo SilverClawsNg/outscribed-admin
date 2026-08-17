@@ -184,3 +184,36 @@ export interface VoteListDto {
       notes: string
       confirm: boolean
   }
+
+  export interface SnapshotListDto{
+    id: string
+    contentId: string, 
+    contentType: ContentType
+    date: string
+    totalCount: number
+  }
+
+  export interface GetSnapshotListResponse {
+  snapshots: SnapshotListDto[];
+  hasNext: boolean;
+  anchor: string | null;
+  pointer: string | number; 
+ }
+ 
+export interface SnapshotDetailDto {
+   id: string
+    contentId: string, 
+    contentType: ContentType
+    date: string
+    viewsCount: number
+    authViewsCount: number
+    sharesCount: number
+    commentsCount: number
+    upvotesCount: number
+    downvotesCount: number
+    flagsCount: number
+    favoritesCount: number
+    talesCount: number
+    insightsCount: number
+    totalCounts: number
+}

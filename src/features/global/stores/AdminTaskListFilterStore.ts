@@ -10,8 +10,7 @@ export const useAdminTaskListFilterStore = defineStore('adminTaskListFilter', ()
 const type = ref<string | null>(null);
 
 const contentid = ref<string | null>(null)
-const content = ref<string | null>(null)
-const all = ref<string | null>(null)
+const contenttype = ref<string | null>(null)
 const adminid = ref<string | null>(null)
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
@@ -37,8 +36,7 @@ const bypasscache = ref<string | null>(null)
     sort.value = null
     type.value = null
     contentid.value = null
-    all.value = null
-     content.value = null
+     contenttype.value = null
     bypasscache.value = null
     startdate.value = null
     enddate.value = null
@@ -63,9 +61,9 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     username.value = parseValue(queryParameters.username)
   }
 
-  if(queryParameters.content){
-      const validatedContent = getValidContentType(queryParameters.content)
-      content.value = validatedContent || null
+  if(queryParameters.contenttype){
+      const validatedContent = getValidContentType(queryParameters.contenttype)
+      contenttype.value = validatedContent || null
         if(!validatedContent) wasClean = false
   }
 
@@ -77,10 +75,6 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
 
   if(queryParameters.contentid){
     contentid.value = parseValue(queryParameters.contentid)
-  }
-
-  if(queryParameters.all){
-    all.value = parseValue(queryParameters.all)
   }
 
   if(queryParameters.bypasscache){
@@ -129,9 +123,8 @@ function getAsDictionary(): Record<string, string> {
     username: username.value,
       type: type.value,
       contentid: contentid.value,
-      all: all.value,
       keyword: keyword.value,
-      content: content.value,
+      contenttype: contenttype.value,
       bypasscache:bypasscache.value,
 
       startdate: startdate.value,
@@ -183,8 +176,8 @@ function getAsDictionary(): Record<string, string> {
     if (type.value && type.value !== '-1') 
       urlParams.append('type', type.value);
 
-    if (content.value && content.value !== '-1') 
-      urlParams.append('content', content.value);
+    if (contenttype.value && contenttype.value !== '-1') 
+      urlParams.append('contenttype', contenttype.value);
 
     if (keyword.value && keyword.value.trim() !== '') 
       urlParams.append('keyword', keyword.value);
@@ -207,9 +200,6 @@ function getAsDictionary(): Record<string, string> {
        if (scope.value && scope.value.trim() !== '') 
       urlParams.append('scope', scope.value);
 
-        if (all.value && all.value.trim() !== '') 
-      urlParams.append('all', all.value);
-
          if (adminid.value && adminid.value.trim() !== '') 
       urlParams.append('adminid', adminid.value);
 
@@ -224,7 +214,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, all, adminid, contentid, username, type, content, keyword, pointer, bypasscache,
+    sort, startdate, enddate, scope,  adminid, contentid, username, type, contenttype, keyword, pointer, bypasscache,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

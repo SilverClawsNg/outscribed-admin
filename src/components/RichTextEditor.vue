@@ -20,7 +20,7 @@ onMounted(() => {
       editorRef.value,
       toolbarRef.value,
       false,
-      "Answer...",
+      "Type in details here...",
       "bubble"
     )
 
@@ -80,9 +80,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-/* 🌟 Import Quill's native core and bubble theme styles directly from node_modules */
 @import 'quill/dist/quill.core.css';
 @import 'quill/dist/quill.bubble.css';
 @import "@/assets/css/form-editor.less";
-
 </style>

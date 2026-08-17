@@ -33,6 +33,11 @@ async function initPage() {
   const { success, error, comment } = await commentStore.loadComment(commentId.value)
 
   if (!success) {
+    loadingError.value = error ?? new APIError(500, 'Unknwon Error', 'Unknown error occured while retrieving comments. Refresh page and try again.')
+    return
+  }
+
+  if (!success) {
     if (error) {
     loadingError.value = error
   }
@@ -113,6 +118,12 @@ onMounted(async () => {
           </button>
         </template>
       </template>
+        <button 
+            class="btn secondary" 
+            @click="modalStore.push('SnapshotList', 'Tale Metrics', localComment.commentId)"
+          >
+            Metrics
+          </button>
     </div>
 
     <dl>
@@ -173,7 +184,8 @@ onMounted(async () => {
     </dl>
    
       <template v-if="localComment.addendum">
-       <dt>Addendum</dt>
+      <dl>
+         <dt>Addendum</dt>
         <dd>
          <ol>
           <li v-for="(addendum, index) in formatAddendum(localComment.addendum)" :key="index">
@@ -181,6 +193,7 @@ onMounted(async () => {
           </li>
         </ol>
       </dd>
+      </dl>
       </template>
 
     <h3 class="modal-page-heading">

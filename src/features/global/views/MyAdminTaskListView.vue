@@ -3,19 +3,23 @@
 // --- IMPORTS ---
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useFaqStore } from '../stores/FaqStore';
-import { useFaqListFilterStore } from '../stores/FaqListFilterStore'; 
+import { useMyAdminTaskStore } from '../stores/MyAdminTaskStore';
+import { useMyAdminTaskListFilterStore } from '../stores/MyAdminTaskListFilterStore'; 
 import DisplayComponent from '@/components/DisplayTable.vue';
 import InfiniteScroller from '@/components/InfiniteScroller.vue';
 import PageStatusMessage from '@/components/PageMessageStatus.vue';
 import { APIError } from '@/api/apiTypes';
 import { useModalStore } from '@/stores/modalStore'
 import { toLongDate } from '@/utils/dateExtensions'
+import { AdminTaskTypeDescriptions, ContentTypeDescriptions } from '@/utils/descriptors'
+import { useGatekeeperStore } from '@/features/gatekeeper/stores/GatekeeperStore'; 
 
 // --- INITIALIZE STORES ---
-const faqStore = useFaqStore();
-const faqFilterStore = useFaqListFilterStore();
+const taskStore = useMyAdminTaskStore();
+const taskFilterStore = useMyAdminTaskListFilterStore();
 const modalStore = useModalStore()
+const gatekeeperStore = useGatekeeperStore()
+
 const route = useRoute();
 const router = useRouter();
 
@@ -31,7 +35,7 @@ async function initPage() {
   console.log('🚀 [Tale Lists View]: Presence verified via hint. Dispatching data fetch...')
 
   // 1. Hydrate and check if the incoming URL string was pristine
-  const { isClean } = faqFilterStore.rehydrate(route.query);
+  const { isClean } = taskFilterStore.rehydrate(route.query);
 
   // 2. 🛑 INTERCEPT TRASH: If parameters were stripped, update browser bar and halt!
   if (!isClean) {
@@ -41,7 +45,7 @@ async function initPage() {
 
     await router.replace({
       path: route.path,
-      query: faqFilterStore.getAsDictionary()
+      query: taskFilterStore.getAsDictionary()
     })
     
     // Abort this execution flow completely! 
@@ -50,10 +54,10 @@ async function initPage() {
   }
 
    // Build api path from a guarnateed clean filter store
-  const cleanApiPath = faqFilterStore.buildApiPath(faqStore.baseRoute);
+  const cleanApiPath = taskFilterStore.buildApiPath(taskStore.baseRoute);
 
   // 3. Fetch from store
-  const { success, error } = await faqStore.loadFaqs(cleanApiPath)
+  const { success, error } = await taskStore.loadTasks(cleanApiPath)
 
   if (!success) {
     if (error) {
@@ -63,7 +67,7 @@ async function initPage() {
     loadingError.value = new APIError(
         500,
         'Unknown Error!',
-        'Unknown error occured while retrieving faqs. Refresh page and try again.'
+        'Unknown error occured while retrieving tasks. Refresh page and try again.'
       );
   }
   }
@@ -93,35 +97,40 @@ watch(() => route.query, () => {
 
 // inside your HomeView.vue
 onUnmounted(() => {
-  faqStore.abort();
+  taskStore.abort();
 });
 
 
-const openModal = (faqId: string) => {
-  faqStore.viewedRows.add(faqId);
-  modalStore.push('FaqDetail', 'FAQ Details', faqId)
+const openModal = (adminTaskId: string) => {
+  taskStore.viewedRows.add(adminTaskId);
+  modalStore.push('AdminTaskDetail', 'Admin Task Details', adminTaskId)
 };
 
 const handleKeyPress = (event: KeyboardEvent, item: any) => {
   if (event.key === 'Enter' || event.key === ' ') {
     event.preventDefault();
-    openModal(item.faqId);
+    openModal(item.adminTaskId);
   }
 };
 
+const triggerFilterModal = async () => {
+  // Push your modal filter criteria layout...
+  // Then smoothly update the route parameters:
+  // router.push({ query: { ...newFilters } })
+};
 
 const reset = async () => {
-  // 1. Wipe out any loaded faq arrays or pagination tokens from your main store
-   faqStore.reset();
+  // 1. Wipe out any loaded task arrays or pagination tokens from your main store
+   taskStore.reset();
 
   // 2. Instruct the filter store to reset its internal states to defaults
-  faqFilterStore.reset();
+  taskFilterStore.reset();
 
   // 3. Push the clean, default dictionary parameters straight into the browser bar
   // This satisfies your firewall's `isClean` condition on the next cycle!
   await router.push({
     path: route.path,
-    query: faqFilterStore.getAsDictionary()
+    query: taskFilterStore.getAsDictionary()
   });
 };
 
@@ -133,7 +142,7 @@ const reset = async () => {
  <template v-if="isLoading">
 
    <div class="shared__page-title">
-    <h1>Loading Faqs... </h1>
+    <h1>Loading Tasks... </h1>
       <p class="shared__loader"></p>
     </div>
 
@@ -151,14 +160,13 @@ const reset = async () => {
 
   </template>
 
-  <template v-else-if="!faqStore.faqs || faqStore.faqs.length === 0">
+  <template v-else-if="!taskStore.tasks || taskStore.tasks.length === 0">
 
     <PageStatusMessage 
     title="No Content!"
-    message="Sorry. No faq were found matching your filter requirements.">
+    message="Sorry. No tasks were found matching your filter requirements. ">
        <template #actions>
       <button class="btn primary" @click="reset">Reset</button>
-       <button class="btn secondary" @click="modalStore.push('CreateFaq', 'New FAQ')">Create</button>
     </template>
     </PageStatusMessage>
 
@@ -167,40 +175,39 @@ const reset = async () => {
   <template v-else>
 
     <div class="shared__page-title">
-      <h1>Faqs</h1>
-      <p>
-         <button @click="modalStore.push('CreateFaq', 'New FAQ')">Create FAQ</button>
-      </p>
-        <button class="btn primary" @click="modalStore.push('FaqListFilter', 'Filter Faq')">Filter</button>
+      <h1>Tasks </h1>
+      <button class="btn secondary" @click="triggerFilterModal">Filter</button>
     </div>
 
       <InfiniteScroller
-        :has-next="faqStore.hasNext"
-        :is-fetching="faqStore.isFetchingMore"
-        :error="faqStore.loadMoreError"
-        @load-more="faqStore.loadMoreFaqs"
-        @retry="faqStore.loadMoreFaqs">
+        :has-next="taskStore.hasNext"
+        :is-fetching="taskStore.isFetchingMore"
+        :error="taskStore.loadMoreError"
+        @load-more="taskStore.loadMoreTasks"
+        @retry="taskStore.loadMoreTasks">
 
       <DisplayComponent
-        :items="faqStore.faqs"
-        :item-key="(item) => item.faqId"
-        :is-row-highlighted="(item) => faqStore.viewedRows.has(item.faqId)"
-        @row-click="(item: any) => openModal(item.faqId)"
+        :items="taskStore.tasks"
+        :item-key="(item) => item.adminTaskId"
+        :is-row-highlighted="(item) => taskStore.viewedRows.has(item.adminTaskId)"
+        @row-click="(item: any) => openModal(item.adminTaskId)"
         @row-key-down="handleKeyPress">
 
         <template #header>
-               <th>Date</th>
-              <th>Category</th>
-              <th>Question</th>
+          <th>Date</th>
+          <th>Admin</th>
+          <th>Task</th>
+          <th>Content Type</th>
         </template>
 
         <template #row="{ item }">
-          <td>{{ toLongDate(item.lastUpdatedAt) }}</td>
-           <td>{{ item.question }}</td>
+          <td>{{ toLongDate(item.completedAt) }}</td>
+          <td>{{ item.adminUsername }}</td>
+          <td>{{ AdminTaskTypeDescriptions[item.adminTaskType] }}</td>
+          <td>{{ ContentTypeDescriptions[item.contentType] }}</td>
         </template>
       </DisplayComponent>
     </InfiniteScroller>
   </template>
-
 
 </template>

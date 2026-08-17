@@ -1,48 +1,46 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { APIError } from '@/api/apiTypes';
-import type {FaqListDto, GetFaqListResponse, FaqDetailDto, CreateFaqRequest, CreateFaqResponse, UpdateFaqRequest} from '../types/SupportTypes'
-import { useFaqListFilterStore } from './FaqListFilterStore'
+import type {SnapshotDetailDto, SnapshotListDto, GetSnapshotListResponse} from '../types/EngagementTypes'
+import { useSnapshotListFilterStore } from './SnapshotListFilterStore'
 import { getAsync } from '@/api/apiGetServices'
-import { postAsync } from '@/api/apiPostServices';
 
 // Native JS Set wrapper implementation shortcut
 class HashSetOrSet extends Set<string> {}
 
-export const useFaqStore = defineStore('faqStore', () => {
+export const useSnapshotStore = defineStore('snapshotStore', () => {
 
    // State
-  const faqs = ref<FaqListDto[]>([]);
-  const faq = ref<FaqDetailDto | null>(null);
+  const snapshots = ref<SnapshotListDto[]>([]);
+  const snapshot = ref<SnapshotDetailDto | null>(null);
 
   //Filter
-  const filterStore = useFaqListFilterStore()
+  const filterStore = useSnapshotListFilterStore()
 
    // Loading and Tracking flags matching your C# states
   const isFetchingMore = ref<boolean>(false);
   const hasNext = ref<boolean>(false);
   const pointer = ref<string | number>('1');
   const anchor = ref<string | null>(null);
-  const baseRoute = ref<string>('/api/faqs/checklist'); 
+  const baseRoute = ref<string>('/api/snapshots/checklist'); 
   const loadMoreError = ref<APIError | null>(null)
   const viewedRows = ref<Set<string>>(new Set());
 
   // Cancellation
   let feedController: AbortController | null = null;
 
-
   // 1. Initial Load Path
-  async function loadFaqs(apiPathWithFilters: string): Promise<{ success: boolean; error: APIError | null }> {
+  async function loadSnapshots(apiPathWithFilters: string): Promise<{ success: boolean; error: APIError | null }> {
 
     try {
 
-      reset()
-      
+       reset()
+
         // Spawn a fresh controller instance for this specific execution pass
           feedController = new AbortController();
 
       // Note: Assuming getAsync is part of your API client layer
-      const outcome = await getAsync<GetFaqListResponse>(apiPathWithFilters, true, {} as GetFaqListResponse,
+      const outcome = await getAsync<GetSnapshotListResponse>(apiPathWithFilters, true, {} as GetSnapshotListResponse,
         feedController.signal
       );
 
@@ -52,14 +50,14 @@ export const useFaqStore = defineStore('faqStore', () => {
       }
       
       // Consideration 2: Reconcile updates if data was retrieved
-      if (outcome.isSuccess && outcome.value?.faqs?.length) {
+      if (outcome.isSuccess && outcome.value?.snapshots?.length) {
 
         // Commit clean data to store state
         hasNext.value = outcome.value.hasNext;
         pointer.value = outcome.value.pointer;
         anchor.value = outcome.value.anchor;
 
-        faqs.value = outcome.value.faqs;
+        snapshots.value = outcome.value.snapshots;
 
       } 
 
@@ -76,7 +74,7 @@ export const useFaqStore = defineStore('faqStore', () => {
   }
 
   // 2. Infinite Scroll Path (LoadMore)
-  async function loadMoreFaqs() {
+  async function loadMoreSnapshots() {
 
     if (isFetchingMore.value || !hasNext.value) return;
 
@@ -89,7 +87,7 @@ export const useFaqStore = defineStore('faqStore', () => {
 
         const nextPageUrl = filterStore.buildApiPath(baseRoute.value, pointer.value, anchor.value)
 
-        const outcome = await getAsync<GetFaqListResponse>(nextPageUrl, true, {} as GetFaqListResponse,
+        const outcome = await getAsync<GetSnapshotListResponse>(nextPageUrl, true, {} as GetSnapshotListResponse,
           feedController.signal
         )
 
@@ -101,7 +99,7 @@ export const useFaqStore = defineStore('faqStore', () => {
                 loadMoreError.value = new APIError(
                     500,
                     'Unknown Error!',
-                    'Unknown error occured while retrieving faq. Refresh page and try again.'
+                    'Unknown error occured while retrieving snapshot. Refresh page and try again.'
                 );
             }
 
@@ -109,7 +107,7 @@ export const useFaqStore = defineStore('faqStore', () => {
         }
 
     // Consideration 2: Reconcile updates if data was retrieved
-         if (outcome.isSuccess && outcome.value?.faqs?.length) {
+         if (outcome.isSuccess && outcome.value?.snapshots?.length) {
           // Reconcile updates against incoming block (handles slower message brokers)
           
           // Commit clean data to store state
@@ -117,12 +115,12 @@ export const useFaqStore = defineStore('faqStore', () => {
           pointer.value = outcome.value.pointer;
           
           // Filter duplicates already caught by state or top navigation creations
-          const existingIds = new HashSetOrSet(faqs.value.map(t => t.faqId));
+          const existingIds = new HashSetOrSet(snapshots.value.map(t => t.id));
           // 1. Filter out duplicates and immediately shape the raw inputs into valid DTO structures
-          const freshItems = outcome.value.faqs
-            .filter((t: any) => !existingIds.has(t.faqId));
+          const freshItems = outcome.value.snapshots
+            .filter((t: any) => !existingIds.has(t.id));
 
-           faqs.value.push(...freshItems);
+           snapshots.value.push(...freshItems);
       
         } else{ 
           // stop infinite scrolling by setting has next to false
@@ -139,17 +137,17 @@ export const useFaqStore = defineStore('faqStore', () => {
   }
 
     // 1. Initial Load Path
-  async function loadFaq(faqId: string): Promise<{ success: boolean; error: APIError | null }> {
+  async function loadSnapshot(id: string): Promise<{ success: boolean; error: APIError | null }> {
   
     try {
   
-      faq.value = null
+      snapshot.value = null
   
         // Spawn a fresh controller instance for this specific execution pass
           feedController = new AbortController();
   
       // Note: Assuming getAsync is part of your API client layer
-      const outcome = await getAsync<FaqDetailDto>(`api/faqs/checklist/${faqId}`, true, {} as FaqDetailDto, feedController.signal);
+      const outcome = await getAsync<SnapshotDetailDto>(`api/snapshots/checklist/${id}`, true, {} as SnapshotDetailDto, feedController.signal);
   
       // Consideration 1: Check if any error and immediately return to caller
       if (outcome.isFailure) {
@@ -163,14 +161,14 @@ export const useFaqStore = defineStore('faqStore', () => {
         const error = new APIError(
           404,
           'Not Found!',
-          'Sorry. Sorry. We could not find the faq you requested. It may have been removed, hidden, or archived.'
+          'Sorry. Sorry. We could not find the snapshot you requested. It may have been removed, hidden, or archived.'
         )
         
             return { success: false, error: error }
       }
   
-     faq.value = outcome.value;
-
+     snapshot.value = outcome.value;
+  
       // Success! The caller handles toggling its loading state and grabbing data from the store reactively.
       return { success: true, error: null };
   
@@ -183,79 +181,10 @@ export const useFaqStore = defineStore('faqStore', () => {
     }
   }
 
-  
-  // Unified creation logic matching CreateInsightModal.vue expectation
-  async function createFaq(payload: CreateFaqRequest) {
-   
-    try {
-      const outcome = await postAsync<CreateFaqResponse>('/api/faqs/create', payload, true);
-      
-      if (outcome.isFailure) {
-        return { success: false, error: outcome.error };
-      }
-
-      if (!outcome.value) {
-        const error = new APIError(
-          500,
-          'Blank Response',
-          'Request may have succeeded but server response blank. Refresh page before retrying'
-        );
-        return { success: false, error: error };
-      } 
-
-      const newFaq: FaqListDto = {
-        faqId: outcome.value.id,
-        lastUpdatedAt: new Date().toISOString(),
-        question: payload.question
-      };
-      
-      faqs.value.unshift(newFaq);
-
-      return { success: true, error: null };
-    } catch (err: any) {
-      return { 
-        success: false, 
-        error: err?.error || new APIError(500, 'Internal Client Error', err.message || 'An unexpected error occurred.') 
-      };
-    }
-  }
-
-        async function updateFaq(payload: UpdateFaqRequest) {
-      
-          try {
-      
-            const outcome = await postAsync('/api/faqs/update', payload, true);
-      
-            if (outcome.isFailure) return { success: false, error: outcome.error };
-
-            if(outcome.value){
-  
-          //Update user within collection
-          const index = faqs.value.findIndex(t => t.faqId === payload.faqId);
-          if (index !== -1) {
-            const faq = faqs.value[index];
-            if (faq) {
-              faq.question = payload.question;
-            }
-          }
-
-          if(faq.value){
-            faq.value.question = payload.question;
-  
-          }
-
-            }
-          
-            return { success: true, error: null };
-          } catch (err: any) {
-            return { success: false, error: err?.error || new APIError(500, 'Internal Client Error', err.message || 'An unexpected error occurred.') };
-          }
-        }
-
   // 3. Reset State
  function reset() {
-    faqs.value = [];
-    faq.value = null;
+    snapshots.value = [];
+    snapshot.value = null;
     pointer.value = '1';
     hasNext.value = false;
     anchor.value = null;
@@ -265,7 +194,7 @@ export const useFaqStore = defineStore('faqStore', () => {
 
    // 4. Sets the target tale before a modal opens
   function setBaseRoute(apiUrl: any) {
-    // We clone it using spread operator so the faq doesn't alter 
+    // We clone it using spread operator so the user doesn't alter 
     // the background list until they actually hit 'Save'
     baseRoute.value = apiUrl;
   }
@@ -280,8 +209,8 @@ export const useFaqStore = defineStore('faqStore', () => {
       
   }
    return {
-    faqs, faq, isFetchingMore, loadMoreError,hasNext, pointer, baseRoute, viewedRows,
-    setBaseRoute, loadFaqs, loadFaq, loadMoreFaqs, createFaq, updateFaq, reset, abort
+    snapshots, snapshot, isFetchingMore, loadMoreError,hasNext, pointer, baseRoute, viewedRows,
+    setBaseRoute, loadSnapshots, loadMoreSnapshots, loadSnapshot, reset, abort
   };
 
 });

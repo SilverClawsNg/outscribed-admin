@@ -7,10 +7,7 @@ import FormProgress from '@/components/FormProgress.vue'
 import { useFormProgress } from '@/composables/useFormProgress'
 import type { CreateFaqRequest } from '../types/SupportTypes'
 import { useModalStore } from '@/stores/modalStore'
-import { getValidFaqCategory } from '@/utils/validators'; 
-import { FaqCategorySelectItems } from '@/utils/selectItemHelper'
 import RichTextEditor from '@/components/RichTextEditor.vue'
-import { useRoute, useRouter } from 'vue-router';
 
 // --- INITIALIZE STORES ---
 const faqStore = useFaqStore()
@@ -19,8 +16,7 @@ const modalStore = useModalStore()
 // --- INITIALIZE FORM DATA FROM STORE ---
 const formData = ref<CreateFaqRequest>({
    question: '',
-  answer: '',
-  category: '-1'
+  answer: ''
 })
 
 // --- UI TRANSACTION STATES ---
@@ -42,19 +38,14 @@ const validationErrors = computed(() => {
 
 const questionText = formData.value.question || '';
 const answerText = formData.value.answer || '';
-const parsedCategory = getValidFaqCategory(formData.value.category);
 
   return {
      question: questionText === '' || questionText.length < 10 || questionText.length > 128
       ? 'Question must be between 10 and 128 characters'
       : '',
       
-    answer: answerText === '' || answerText.length < 10 || answerText.length > 2048 || answerText === '<p></p>'
-      ? 'Answer must be between 10 and 2048 characters'
-      : '',
-
-    type: !parsedCategory
-      ? 'You must select a category' 
+    answer: answerText === '' || answerText.length < 10 || answerText.length > 6144 || answerText === '<p></p>'
+      ? 'Answer must be between 10 and 6144 characters'
       : ''
   }
 })
@@ -76,7 +67,10 @@ watch(
       setWarning('Ensure all fields are filled out correctly before submission.')
     } else {
       // Clear warning and clean up state immediately when compliance is met
-      resetProgress()
+      // 🎯 Only reset if we are clearing a warning!
+      if (progressState.value.type === 'Warning') {
+        resetProgress()
+      }
     }
   }, 
   { immediate: true }
@@ -121,21 +115,7 @@ async function handleFormSubmission() {
 
    <FormProgress :progress="progressState" />
 
-
     <form @submit.prevent="handleFormSubmission" autocomplete="off">
-
-    <fieldset :disabled="progressState.type === 'Loading'">
-         <select v-model="formData.category" class="form-field">
-            <option value="-1">-- select category --</option>
-            <option v-for="item in FaqCategorySelectItems" :key="item.value" :value="item.value">
-              {{ item.label }}
-            </option>
-          </select>
-      </fieldset>
-        <!-- Only shows after submission attempt, disappears immediately when valid -->
-      <span v-if="formSubmitted && validationErrors.type" class="validation-message">
-        {{ validationErrors.type }}
-      </span>
 
          <fieldset :disabled="progressState.type === 'Loading'">
           <textarea 

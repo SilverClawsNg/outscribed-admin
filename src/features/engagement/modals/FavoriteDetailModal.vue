@@ -116,10 +116,13 @@ onMounted(async () => {
      
     </dl>
 
+    <dl>
+      
        <dt>Is Active</dt>
         <dd>
         {{ favoriteStore.favorite.isActive }}
       </dd>
+    </dl>
 
   </template>
 

@@ -10,6 +10,7 @@ const props = defineProps<{
   qrCodeUri: string
 }>()
 
+
 // 🎯 Emitted when the user finishes scanning and is ready to enter a token
 const emit = defineEmits<{
   (e: 'success'): void

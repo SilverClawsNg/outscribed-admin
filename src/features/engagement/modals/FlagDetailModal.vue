@@ -122,10 +122,12 @@ onMounted(async () => {
     </dl>
 
       <template v-if="flagStore.flag.notes">
-       <dt>Notes</dt>
+    <dl>
+         <dt>Notes</dt>
         <dd>
         {{ flagStore.flag.notes }}
       </dd>
+    </dl>
       </template>
 
   </template>

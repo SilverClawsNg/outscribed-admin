@@ -41,7 +41,7 @@ const closeMenu = () => {
 
         <div class="main-header__top-navigation-right">
           <RouterLink 
-            to="/tasks?self=true" 
+            to="/my/tasks" 
             class="btn primary" 
             title="My Tasks Stats"
             @click="closeMenu"

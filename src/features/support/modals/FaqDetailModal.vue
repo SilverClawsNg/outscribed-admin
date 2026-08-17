@@ -106,7 +106,7 @@ onMounted(async () => {
 
      <dl>
       <dt>Answer</dt>
-            <dd class="rich__text" v-html="sanitizeHtml(faqStore.faq.answer)"></dd>
+            <dd class="shared__rich-text" v-html="sanitizeHtml(faqStore.faq.answer)"></dd>
     </dl>
 
     <dl>
@@ -147,5 +147,5 @@ onMounted(async () => {
 
 <style lang="less" scoped>
 @import "@/assets/css/description-list";
-
+@import "@/assets/css/rich-text.less";
 </style>

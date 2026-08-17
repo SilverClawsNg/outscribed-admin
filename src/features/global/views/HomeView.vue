@@ -17,6 +17,8 @@ const loadingError = ref<APIError | null>(null)
 // --- DEFINE PAGE INITIALIZATION ---
 async function initPage() {
 
+    console.log('🚀 [Home Stats View]: Initi page...')
+
   // 3. Fetch from store
   const { success, error } = await statsStore.loadStats()
 
@@ -90,7 +92,7 @@ onMounted(async () => {
   <div class="admin-menu-containers">
 
      <RouterLink 
-          to="/" 
+          to="/tasks" 
           class="btn primary index-link" 
           exact-active-class="active" 
           title="Admin Tasks" 
@@ -161,15 +163,9 @@ onMounted(async () => {
           
         </RouterLink>
         
-        <RouterLink to="/engagements" class="btn primary index-link" title="Engagements Stats">
+        <RouterLink to="/snapshots" class="btn primary index-link" title="Engagements Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.snapshotsCount) }}</span>
          <span class="field">SnapShots</span>
-          
-        </RouterLink>
-        
-        <RouterLink to="/faqs" class="btn primary index-link" title="Faqs Stats">
-             <span class="value">{{ formatFullCounts(statsStore.stats.readStats.faqsCount) }}</span>
-         <span class="field">FAQs</span>
           
         </RouterLink>
         

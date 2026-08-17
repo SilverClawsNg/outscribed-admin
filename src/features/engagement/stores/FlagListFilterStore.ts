@@ -13,7 +13,7 @@ const scope = ref<string | null>(null)
 const flagtype = ref<string | null>(null)
 const contentid = ref<string | null>(null)
 const flaggerid = ref<string | null>(null)
-const content = ref<string | null>(null)
+const contenttype = ref<string | null>(null)
 const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const keyword = ref<string | null>(null);
@@ -32,7 +32,7 @@ function parseValue(value: any): string | null {
 function reset() {
   sort.value = '-1'
   flagtype.value = '-1'
-  content.value = '-1'
+  contenttype.value = '-1'
   contentid.value = ''
   flaggerid.value = ''
   username.value = ''
@@ -93,11 +93,12 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     if(!validatedSort) wasClean = false
   }
 
-  if(queryParameters.content){
-    const validatedContent = getValidLimitedContentType(queryParameters.content)
-    content.value = validatedContent || '-1'
+ if(queryParameters.contenttype){
+    const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
+    contenttype.value = validatedContent || '-1'
     if(!validatedContent) wasClean = false
   }
+
 
   if(queryParameters.flagtype){
     const validatedType = getValidFlagType(queryParameters.flagtype)
@@ -122,7 +123,7 @@ function getAsDictionary(): Record<string, string> {
       username: username.value,
       contentid: contentid.value,
       flaggerid: flaggerid.value,
-      content: content.value,
+      contenttype: contenttype.value,
       flagtype: flagtype.value,
       enddate: enddate.value,
       scope: scope.value,
@@ -167,8 +168,8 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-     if (content.value && content.value !== '-1') 
-      urlParams.append('content', content.value);
+     if (contenttype.value && contenttype.value !== '-1') 
+      urlParams.append('contenttype', contenttype.value);
 
        if (flagtype.value && flagtype.value !== '-1') 
       urlParams.append('flagtype', flagtype.value);
@@ -214,7 +215,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, content, flaggerid, contentid, flagtype,
+    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, contenttype, flaggerid, contentid, flagtype,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

@@ -76,7 +76,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         <h3 class="form-heading">Filter</h3>
 
          <fieldset>
-                <select v-model="filterStore.content"  class="form-field">
+                <select v-model="filterStore.contenttype"  class="form-field">
                     <option value="-1">-- by content type --</option>
                     <option v-for="item in LimitedContentTypeSelectItems" :key="item.value" :value="item.value">
                     {{ item.label }}
@@ -160,21 +160,6 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         </fieldset>
             </template>
 
-            <template v-if="gatekeeperStore.role === 'SuperAdmin'">
-
-        <fieldset>
-          <div class="ticks">
-            <p>
-              <input 
-                type="checkbox" 
-                id="All" 
-                v-model="filterStore.all" 
-              />
-              <label for="All">View All</label>
-            </p>
-          </div>
-        </fieldset>
-            </template>
 
         <fieldset>
           <div class="ticks">

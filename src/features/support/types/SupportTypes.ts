@@ -1,10 +1,9 @@
-import type { FaqCategory, InquiryStatus } from "@/utils/enumHelper";
+import type {InquiryStatus } from "@/utils/enumHelper";
 
 export interface FaqListDto {
   faqId: string;
   lastUpdatedAt: string;
   question: string;
-  category: FaqCategory;
  }
  
 export interface FaqDetailDto {
@@ -13,7 +12,6 @@ export interface FaqDetailDto {
   lastUpdatedAt: string;
   question: string;
   answer: string;
-  category: FaqCategory;
   updater: UpdaterDto;
   upvotes: number;
   downvotes: number
@@ -61,14 +59,12 @@ export interface InquiryDetailDto {
    export interface CreateFaqRequest{
            question: string;
            answer: string;
-           category: FaqCategory | '-1'
    }  
       
    export interface UpdateFaqRequest{
      faqId: string;
            question: string | '';
            answer: string | '';
-           category: FaqCategory | '-1'
    }  
 
  export interface CreateFaqResponse{

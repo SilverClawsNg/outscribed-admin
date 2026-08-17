@@ -13,7 +13,7 @@ const scope = ref<string | null>(null)
 const isactive = ref<string | null>(null)
 const contentid = ref<string | null>(null)
 const favoriterid = ref<string | null>(null)
-const content = ref<string | null>(null)
+const contenttype = ref<string | null>(null)
 const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const keyword = ref<string | null>(null);
@@ -32,7 +32,7 @@ function parseValue(value: any): string | null {
 function reset() {
   sort.value = '-1'
   isactive.value = ''
-  content.value = '-1'
+  contenttype.value = '-1'
   contentid.value = ''
   favoriterid.value = ''
   username.value = ''
@@ -97,11 +97,12 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     if(!validatedSort) wasClean = false
   }
 
-  if(queryParameters.content){
-    const validatedContent = getValidLimitedContentType(queryParameters.content)
-    content.value = validatedContent || '-1'
+ if(queryParameters.contenttype){
+    const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
+    contenttype.value = validatedContent || '-1'
     if(!validatedContent) wasClean = false
   }
+
 
 }
 
@@ -120,7 +121,7 @@ function getAsDictionary(): Record<string, string> {
       username: username.value,
       contentid: contentid.value,
       favoriterid: favoriterid.value,
-      content: content.value,
+      contenttype: contenttype.value,
       isactive: isactive.value,
       enddate: enddate.value,
       scope: scope.value,
@@ -165,8 +166,8 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-     if (content.value && content.value !== '-1') 
-      urlParams.append('content', content.value);
+     if (contenttype.value && contenttype.value !== '-1') 
+      urlParams.append('contenttype', contenttype.value);
 
        if (scope.value && scope.value !== '-1') {
         
@@ -212,7 +213,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, content, favoriterid, contentid, isactive,
+    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, contenttype, favoriterid, contentid, isactive,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });
