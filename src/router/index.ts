@@ -48,6 +48,12 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
           {
+          path: 'verifications', // Renders at outscribed.com/verifications
+          name: 'VerificationLists',
+          component: () => import('@/features/gatekeeper/views/VerificationListView.vue'),
+          meta: { requiresAuth: true }
+        },
+          {
           path: 'comments', // Renders at outscribed.com/comments
           name: 'CommentLists',
           component: () => import('@/features/engagement/views/CommentListView.vue'),

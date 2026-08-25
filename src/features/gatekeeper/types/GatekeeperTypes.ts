@@ -84,3 +84,30 @@ tasks: AdminTaskBriefListDto[]
           authenticationId: string | null;
           confirm: boolean
   }  
+
+  
+  export interface VerificationListDto {
+    verificationId: string;
+    createdAt: string;
+    emailAddress: string;
+    isAbandoned: boolean;
+    isRegistered: boolean;
+   }
+   
+   export interface GetVerificationListResponse {
+    verifications: VerificationListDto[];
+    hasNext: boolean;
+    anchor: string | null;
+    pointer: string | number; 
+   }
+   
+  export interface VerificationDetailDto {
+    verificationId: string;
+    createdAt: string;
+    emailAddress: string;
+    isAbandoned: boolean;
+    isRegistered: boolean;
+    lastUpdatedAt: string;
+    totalResendsCounter: number;
+    totalAttemptsCounter: number;
+   }

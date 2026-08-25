@@ -7,6 +7,7 @@ import SvgIcons from '@/components/SvgIcons.vue'
 import LogListFilterModal from '@/features/logging/modals/LogListFilterModal.vue'
 import AnalyticsListFilterModal from '@/features/analytics/modals/AnalyticsListFilterModal.vue'
 import AdminListFilterModal from '@/features/gatekeeper/modals/AdminListFilterModal.vue'
+import VerificationListFilterModal from '@/features/gatekeeper/modals/VerificationListFilterModal.vue'
 import CommentListFilterModal from '@/features/engagement/modals/CommentListFilterModal.vue'
 import FavoriteListFilterModal from '@/features/engagement/modals/FavoriteListFilterModal.vue'
 import FlagListFilterModal from '@/features/engagement/modals/FlagListFilterModal.vue'
@@ -61,6 +62,8 @@ import DeactivateRoleModal from '@/features/gatekeeper/modals/DeactivateRoleModa
 import ResetSecurityStatusModal from '@/features/gatekeeper/modals/ResetSecurityStatusModal.vue'
 
 import AdminDetailModal from '@/features/gatekeeper/modals/AdminDetailModal.vue'
+import VerificationDetailModal from '@/features/gatekeeper/modals/VerificationDetailModal.vue'
+
 
 import InquiryDetailModal from '@/features/support/modals/InquiryDetailModal.vue'
 import AnswerInquiryModal from '@/features/support/modals/AnswerInquiryModal.vue'
@@ -82,6 +85,7 @@ const componentMap: Record<string, any> = {
 LogListFilter: LogListFilterModal,
 AnalyticsListFilter: AnalyticsListFilterModal,
 AdminListFilter: AdminListFilterModal,
+VerificationListFilter: VerificationListFilterModal,
 CommentListFilter: CommentListFilterModal,
 FavoriteListFilter: FavoriteListFilterModal,
 FlagListFilter: FlagListFilterModal,
@@ -123,6 +127,7 @@ ActivateRole: ActivateRoleModal,
 DeactivateRole: DeactivateRoleModal,
 ResetSecurityStatus: ResetSecurityStatusModal,
 AdminDetail: AdminDetailModal,
+VerificationDetail: VerificationDetailModal,
 SnapshotDetail: SnapshotDetailModal,
 InquiryDetail: InquiryDetailModal,
 AnswerInquiry: AnswerInquiryModal,
