@@ -56,6 +56,7 @@ export const authApiClient = axios.create({
 // 🎯 APPLIED EXCLUSIVELY TO RESOURCE API CALLS, NOT AUTH CALLS
 axiosRetry(apiClient, {
   retries: 3,
+  shouldResetTimeout: true,
   retryDelay: axiosRetry.exponentialDelay,
   retryCondition: (error: AxiosError) => {
     const isIdempotent = axiosRetry.isNetworkOrIdempotentRequestError(error)

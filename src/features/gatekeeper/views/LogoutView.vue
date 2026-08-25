@@ -46,20 +46,24 @@ onMounted(() => {
 
     <form @submit.prevent="handleLogoutSubmission" autocomplete="off">
      
-        <div class="ticks">
-          <input 
-            type="checkbox" 
-            id="CloseAll" 
-            v-model="formData.closeAll" 
-          />
-          
-          <label for="CloseAll">
-            {{ formData.closeAll 
-              ? 'Untick to log out of current device only' 
-              : 'Tick to log out of all devices' 
-            }}
-          </label>
+
+      <fieldset class="expanded">
+      <div class="ticks">
+              <input 
+                type="checkbox" 
+                id="CloseAll" 
+                v-model="formData.closeAll" 
+              />
+              
+              <label for="CloseAll">
+                {{ formData.closeAll 
+                  ? 'Untick to log out of current device only' 
+                  : 'Tick to log out of all devices' 
+                }}
+              </label>
         </div>
+      </fieldset>
+      
 
         <div class="button-holder">
           <button 
