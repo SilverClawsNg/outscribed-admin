@@ -186,9 +186,9 @@ const reset = async () => {
 
         <template #header>
             <th>Date</th>
-            <th>Role</th>
-            <th>Username</th>
-            <th>Is Active</th>
+            <th>Email Address</th>
+            <th>Registered</th>
+            <th>Abandoned</th>
         </template>
 
         <template #row="{ item }">
