@@ -15,7 +15,6 @@ const username = ref<string | null>(null)
 const authenticationid = ref<string | null>(null)
 const role = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
-const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
 const pointer = ref<string | number>('1');
 
@@ -38,7 +37,6 @@ function reset() {
   enddate.value = ''
   scope.value = '-1'
   bypasscache.value = ''
-  keyword.value = '';
   pointer.value = '1';
 }
 
@@ -65,10 +63,6 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
 
   if(queryParameters.bypasscache){
     bypasscache.value = parseValue(queryParameters.bypasscache)
-  }
-
-  if(queryParameters.keyword){
-    keyword.value = parseValue(queryParameters.keyword)
   }
 
   if(queryParameters.authenticationid){
@@ -110,7 +104,6 @@ function getAsDictionary(): Record<string, string> {
   // 1. Collect all raw state values into a temporary workspace object
   const rawValues: Record<string, any> = {
    
-      keyword: keyword.value,
       startdate: startdate.value,
       bypasscache:bypasscache.value,
       username: username.value,
@@ -184,9 +177,6 @@ function getAsDictionary(): Record<string, string> {
      if (authenticationid.value && authenticationid.value.trim() !== '') 
       urlParams.append('authenticationid', authenticationid.value);
 
-       if (keyword.value && keyword.value.trim() !== '') 
-      urlParams.append('keyword', keyword.value);
-
       if (enddate.value && enddate.value.trim() !== '') 
       urlParams.append('enddate', enddate.value);
 
@@ -204,7 +194,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, username, bypasscache, country, role,
+    sort, startdate, enddate, scope, pointer, username, bypasscache, country, role,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

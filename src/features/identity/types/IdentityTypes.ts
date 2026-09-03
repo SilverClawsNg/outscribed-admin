@@ -9,9 +9,24 @@ export interface UserListDto {
   country: Country;
   moderationScore: number;
  }
+
+ export interface UserSuspensionListDto{
+    id: string;
+    suspendedAt: string;
+    hasAppealed: boolean;
+    isResolved: boolean;
+    username: string;
+ }
  
  export interface GetUserListResponse {
   users: UserListDto[];
+  hasNext: boolean;
+  anchor: | null;
+  pointer: | number; 
+ }
+
+ export interface GetUserSuspensionListResponse {
+  suspensions: UserSuspensionListDto[];
   hasNext: boolean;
   anchor: | null;
   pointer: | number; 
@@ -23,7 +38,6 @@ export interface UserListDto {
 }
  
  export interface UserDetailDto {
-   
  accountId: string
  registeredAt: string
  username: string
@@ -56,8 +70,18 @@ export interface UserListDto {
  insightSharesCount: number
  followersCount: number
  followingsCount: number
-        
   }
+
+  export interface UserSuspensionDetailDto{
+    id: string;
+    accountId: string;
+    suspendedAt: string;
+    appealedAt: string;
+    resolvedAt: string;
+    reason: AccountStatus;
+    appeal: string;
+    username: string
+ }
     
   export interface AssignRoleRequest{
           accountId: string;

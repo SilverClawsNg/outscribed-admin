@@ -2,7 +2,8 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { APIError } from '@/api/apiTypes';
 import type {UserListDto, GetUserListResponse, UserDetailDto, AssignRoleRequest, 
-  ConfirmRequest} from '../types/IdentityTypes'
+  ConfirmRequest,
+  UserSuspensionDetailDto} from '../types/IdentityTypes'
 import { useUserListFilterStore } from './UserListFilterStore'
 import { getAsync } from '@/api/apiGetServices'
 import { postAsync } from '@/api/apiPostServices'
@@ -15,6 +16,7 @@ export const useUserStore = defineStore('userStore', () => {
    // State
   const users = ref<UserListDto[]>([]);
   const user = ref<UserDetailDto | null>(null);
+  const suspension = ref<UserSuspensionDetailDto | null>(null);
 
   //Filter
   const filterStore = useUserListFilterStore()
@@ -184,6 +186,51 @@ export const useUserStore = defineStore('userStore', () => {
     }
   }
 
+    // 1. Initial Load Path
+  async function loadSuspension(userId: string): Promise<{ success: boolean; error: APIError | null }> {
+  
+    try {
+  
+      user.value = null
+  
+        // Spawn a fresh controller instance for this specific execution pass
+          feedController = new AbortController();
+  
+      // Note: Assuming getAsync is part of your API client layer
+      const outcome = await getAsync<UserSuspensionDetailDto>(`api/users/suspensionlist/${userId}`, true, {} as UserSuspensionDetailDto, feedController.signal);
+  
+      // Consideration 1: Check if any error and immediately return to caller
+      if (outcome.isFailure) {
+        return { success: false, error: outcome.error || null };
+      }
+      
+      // Inside profileStore.ts fallback block
+      if (!outcome.value) {
+        
+        // 🎯 Instantiate your exact class blueprint with matching parameters
+        const error = new APIError(
+          404,
+          'Not Found!',
+          'Sorry. Sorry. We could not find the user you requested. It may have been removed, hidden, or archived.'
+        )
+        
+            return { success: false, error: error }
+      }
+  
+     suspension.value = outcome.value;
+  
+      // Success! The caller handles toggling its loading state and grabbing data from the store reactively.
+      return { success: true, error: null };
+  
+    } catch (err: any) {
+      // Fail-safe catch-all wrapper
+      return { 
+        success: false, 
+        error: err?.error || new APIError(500, 'Internal Client Error', err.message || 'An unexpected error occurred.') 
+      };
+    }
+  }
+
       async function assignRole(payload: AssignRoleRequest) {
     
         try {
@@ -300,6 +347,7 @@ export const useUserStore = defineStore('userStore', () => {
  function reset() {
     users.value = [];
     user.value = null;
+    suspension.value = null;
     pointer.value = '1';
     hasNext.value = false;
     anchor.value = null;
@@ -324,8 +372,8 @@ export const useUserStore = defineStore('userStore', () => {
       
   }
    return {
-    users, user, isFetchingMore, loadMoreError,hasNext, pointer, baseRoute, viewedRows,
-    setBaseRoute, loadUsers, loadMoreUsers, loadUser, assignRole, suspendUser, reinstateUser, banUser, reset, abort
+    users, user, suspension, isFetchingMore, loadMoreError,hasNext, pointer, baseRoute, viewedRows,
+    setBaseRoute, loadUsers, loadMoreUsers, loadUser, loadSuspension, assignRole, suspendUser, reinstateUser, banUser, reset, abort
   };
 
 });

@@ -48,15 +48,6 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
       <!-- 1. Text Searching Content Inputs -->
       <section>
         <h3 class="form-heading">Search</h3>
-        <fieldset>
-          <input 
-            v-model="filterStore.keyword" 
-            type="text" 
-            id="Keyword" 
-            class="form-field" 
-            placeholder="-- enter keyword --" 
-          />
-        </fieldset>
          <fieldset>
           <input 
             v-model="filterStore.username" 

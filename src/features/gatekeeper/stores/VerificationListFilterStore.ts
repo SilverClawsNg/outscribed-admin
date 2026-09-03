@@ -13,7 +13,7 @@ const scope = ref<string | null>(null)
 const isabandoned = ref<string | null>(null)
 const isregistered = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
-const keyword = ref<string | null>(null);
+const emailaddress = ref<string | null>(null);
 const sort = ref<string | null>(null)
 const pointer = ref<string | number>('1');
 
@@ -34,7 +34,7 @@ function reset() {
   enddate.value = ''
   scope.value = '-1'
   bypasscache.value = ''
-  keyword.value = '';
+  emailaddress.value = '';
   pointer.value = '1';
 }
 
@@ -67,8 +67,8 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     bypasscache.value = parseValue(queryParameters.bypasscache)
   }
 
-  if(queryParameters.keyword){
-    keyword.value = parseValue(queryParameters.keyword)
+  if(queryParameters.emailaddress){
+    emailaddress.value = parseValue(queryParameters.emailaddress)
   }
 
   if(queryParameters.scope){
@@ -94,7 +94,7 @@ function getAsDictionary(): Record<string, string> {
   // 1. Collect all raw state values into a temporary workspace object
   const rawValues: Record<string, any> = {
    
-      keyword: keyword.value,
+      emailaddress: emailaddress.value,
       startdate: startdate.value,
       bypasscache:bypasscache.value,
       isregistered: isregistered.value,
@@ -160,8 +160,8 @@ function getAsDictionary(): Record<string, string> {
       if (bypasscache.value && bypasscache.value.trim() !== '') 
       urlParams.append('bypasscache', bypasscache.value);
 
-       if (keyword.value && keyword.value.trim() !== '') 
-      urlParams.append('keyword', keyword.value);
+       if (emailaddress.value && emailaddress.value.trim() !== '') 
+      urlParams.append('emailaddress', emailaddress.value);
 
       if (enddate.value && enddate.value.trim() !== '') 
       urlParams.append('enddate', enddate.value);
@@ -180,7 +180,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, isregistered, bypasscache, isabandoned,
+    sort, startdate, enddate, scope, emailaddress, pointer, isregistered, bypasscache, isabandoned,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

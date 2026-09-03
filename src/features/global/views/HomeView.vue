@@ -186,6 +186,12 @@ onMounted(async () => {
          <span class="field">Verifications</span>
           
         </RouterLink>
+
+          <RouterLink to="/suspensions" class="btn primary index-link" title="Verifications Stats">
+             <span class="value">{{ formatFullCounts(statsStore.stats.readStats.suspensionsCount) }}</span>
+         <span class="field">Suspensions</span>
+          
+        </RouterLink>
         
         <RouterLink to="/logs" class="btn primary index-link" title="Logs Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.logsCount) }}</span>

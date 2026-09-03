@@ -42,6 +42,11 @@ export const useStatsStore = defineStore('statsStore', () => {
         feedController.signal
       );
 
+       // Consideration 1: Check if any error and immediately return to caller
+      if (outcome.isFailure) {
+        return { success: false, error: outcome.error || null };
+      }
+
       // Consideration 2: Reconcile updates if data was retrieved
       if (outcome.isSuccess) {
 

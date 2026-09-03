@@ -13,6 +13,7 @@ const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
 const status = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
+const emailaddress = ref<string | null>(null);
 const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
 const pointer = ref<string | number>('1');
@@ -33,6 +34,7 @@ function reset() {
   enddate.value = ''
   scope.value = '-1'
   bypasscache.value = ''
+  emailaddress.value = '';
   keyword.value = '';
   pointer.value = '1';
 }
@@ -58,9 +60,13 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     bypasscache.value = parseValue(queryParameters.bypasscache)
   }
 
-  if(queryParameters.keyword){
-    keyword.value = parseValue(queryParameters.keyword)
-  }
+    if(queryParameters.keyword){
+      keyword.value = parseValue(queryParameters.keyword)
+    }
+
+    if(queryParameters.emailaddress){
+      emailaddress.value = parseValue(queryParameters.emailaddress)
+    }
 
   if(queryParameters.scope){
     const validatedDateScope = getValidDateScope(queryParameters.scope)
@@ -92,6 +98,7 @@ function getAsDictionary(): Record<string, string> {
   const rawValues: Record<string, any> = {
    
       keyword: keyword.value,
+      emailaddress: emailaddress.value,
       startdate: startdate.value,
       bypasscache:bypasscache.value,
       status: status.value,
@@ -159,6 +166,9 @@ function getAsDictionary(): Record<string, string> {
        if (keyword.value && keyword.value.trim() !== '') 
       urlParams.append('keyword', keyword.value);
 
+      if (emailaddress.value && emailaddress.value.trim() !== '') 
+      urlParams.append('emailaddress', emailaddress.value);
+
       if (enddate.value && enddate.value.trim() !== '') 
       urlParams.append('enddate', enddate.value);
 
@@ -173,7 +183,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, keyword, pointer, status, bypasscache,
+    sort, startdate, enddate, scope, keyword, pointer, status, bypasscache, emailaddress,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

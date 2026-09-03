@@ -51,11 +51,11 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
         <h3 class="form-heading">Search</h3>
         <fieldset>
           <input 
-            v-model="filterStore.keyword" 
+            v-model="filterStore.emailaddress" 
             type="text" 
-            id="Keyword" 
+            id="EmailAddress" 
             class="form-field" 
-            placeholder="-- enter keyword --" 
+            placeholder="-- enter email address --" 
           />
         </fieldset>
         

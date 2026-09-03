@@ -54,6 +54,12 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
           {
+          path: 'suspensions', // Renders at outscribed.com/suspensions
+          name: 'VerificationLists',
+          component: () => import('@/features/identity/views/UserSuspensionListView.vue'),
+          meta: { requiresAuth: true }
+        },
+          {
           path: 'comments', // Renders at outscribed.com/comments
           name: 'CommentLists',
           component: () => import('@/features/engagement/views/CommentListView.vue'),

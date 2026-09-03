@@ -3,12 +3,13 @@
 import { watch } from 'vue'
 
 import { useRouter } from 'vue-router'
-import { useSnapshotListFilterStore } from '../stores/SnapshotListFilterStore'
+import { useUserSuspensionListFilterStore } from '../stores/UserSuspensionListFilterStore'
 import { useModalStore } from '@/stores/modalStore'
-import { GeneralSortTypeSelectItems, LimitedContentTypeSelectItems } from '@/utils/selectItemHelper'
+import { GeneralSortTypeSelectItems, AccountStatusSelectItems,  CountrySelectItems
+ } from '@/utils/selectItemHelper'
 
 const router = useRouter()
-const filterStore = useSnapshotListFilterStore()
+const filterStore = useUserSuspensionListFilterStore()
 const modalStore = useModalStore()
 
 function applyFilter() {
@@ -46,20 +47,34 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
 
     <form @submit.prevent="applyFilter">
       
+      <!-- 1. Text Searching Content Inputs -->
+      <section>
+        <h3 class="form-heading">Search</h3>
+      
+         <fieldset>
+          <input 
+            v-model="filterStore.username" 
+            type="text" 
+            id="Username" 
+            class="form-field" 
+            placeholder="-- enter username --" 
+          />
+        </fieldset>
+      </section>
 
    <!-- 2. Dataset Result Record Filtering Parameters -->
       <section>
         <h3 class="form-heading">Filter</h3>
 
          <fieldset>
-                <select v-model="filterStore.contenttype"  class="form-field">
-                    <option value="-1">-- by content type --</option>
-                    <option v-for="item in LimitedContentTypeSelectItems" :key="item.value" :value="item.value">
+                <select v-model="filterStore.status"  class="form-field">
+                    <option value="-1">-- by status --</option>
+                    <option v-for="item in AccountStatusSelectItems" :key="item.value" :value="item.value">
                     {{ item.label }}
                     </option>
                 </select>
             </fieldset>
-           
+            
         <fieldset>
           <div class="ticks">
              <p>

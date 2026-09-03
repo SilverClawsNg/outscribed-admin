@@ -2,18 +2,18 @@
 // -- IMPORTS --
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { getValidGeneralSortType, getValidDateScope, getValidLimitedContentType } from '@/utils/validators'; 
+import { getValidGeneralSortType, getValidDateScope, 
+  getValidAccountStatus, getValidCountry
+} from '@/utils/validators'; 
 
-export const useFavoriteListFilterStore = defineStore('favoriteListFilter', () => {
+export const useUserSuspensionListFilterStore = defineStore('userSuspensionListFilter', () => {
   
 // State
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
-const isactive = ref<string | null>(null)
-const contentid = ref<string | null>(null)
-const favoriterid = ref<string | null>(null)
-const contenttype = ref<string | null>(null)
+const status = ref<string | null>(null)
+const accountid = ref<string | null>(null)
 const username = ref<string | null>(null)
 const bypasscache = ref<string | null>(null)
 const sort = ref<string | null>(null)
@@ -30,10 +30,8 @@ function parseValue(value: any): string | null {
 
 function reset() {
   sort.value = '-1'
-  isactive.value = ''
-  contenttype.value = '-1'
-  contentid.value = ''
-  favoriterid.value = ''
+  status.value = '-1'
+  accountid.value = ''
   username.value = ''
   startdate.value = ''
   enddate.value = ''
@@ -59,16 +57,8 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     username.value = parseValue(queryParameters.username)
   }
 
-  if(queryParameters.contentid){
-    contentid.value = parseValue(queryParameters.contentid)
-  }
-
-  if(queryParameters.favoriterid){
-    favoriterid.value = parseValue(queryParameters.favoriterid)
-  }
-
-  if(queryParameters.isactive){
-    isactive.value = parseValue(queryParameters.isactive)
+  if(queryParameters.accountid){
+    accountid.value = parseValue(queryParameters.accountid)
   }
 
   if(queryParameters.enddate){
@@ -91,12 +81,11 @@ if (queryParameters && Object.keys(queryParameters).length > 0) {
     if(!validatedSort) wasClean = false
   }
 
- if(queryParameters.contenttype){
-    const validatedContent = getValidLimitedContentType(queryParameters.contenttype)
-    contenttype.value = validatedContent || '-1'
-    if(!validatedContent) wasClean = false
+  if(queryParameters.status){
+    const validatedStatus = getValidAccountStatus(queryParameters.status)
+    status.value = validatedStatus || '-1'
+    if(!validatedStatus) wasClean = false
   }
-
 
 }
 
@@ -112,10 +101,8 @@ function getAsDictionary(): Record<string, string> {
       startdate: startdate.value,
       bypasscache:bypasscache.value,
       username: username.value,
-      contentid: contentid.value,
-      favoriterid: favoriterid.value,
-      contenttype: contenttype.value,
-      isactive: isactive.value,
+      accountid: accountid.value,
+      status: status.value,
       enddate: enddate.value,
       scope: scope.value,
       sort: sort.value,
@@ -159,8 +146,8 @@ function getAsDictionary(): Record<string, string> {
     if (sort.value && sort.value !== '-1') 
       urlParams.append('sort', sort.value);
 
-     if (contenttype.value && contenttype.value !== '-1') 
-      urlParams.append('contenttype', contenttype.value);
+       if (status.value && status.value !== '-1') 
+      urlParams.append('status', status.value);
 
        if (scope.value && scope.value !== '-1') {
         
@@ -170,9 +157,6 @@ function getAsDictionary(): Record<string, string> {
       if (scope.value == 'On' && startdate.value && startdate.value.trim() !== '') 
       urlParams.append('enddate', startdate.value);
      }
-
-     if (isactive.value && isactive.value.trim() !== '') 
-      urlParams.append('startdate', isactive.value);
 
      if (startdate.value && startdate.value.trim() !== '') 
       urlParams.append('startdate', startdate.value);
@@ -186,11 +170,8 @@ function getAsDictionary(): Record<string, string> {
         if (username.value && username.value.trim() !== '') 
       urlParams.append('username', username.value);
 
-         if (contentid.value && contentid.value.trim() !== '') 
-      urlParams.append('contentid', contentid.value);
-
-          if (favoriterid.value && favoriterid.value.trim() !== '') 
-      urlParams.append('favoriterid', favoriterid.value);
+         if (accountid.value && accountid.value.trim() !== '') 
+      urlParams.append('accountid', accountid.value);
 
     const currentPointer = overridePointer ? String(overridePointer) : String(pointer.value);
       urlParams.append('pointer', currentPointer);
@@ -203,7 +184,7 @@ function getAsDictionary(): Record<string, string> {
   }
 
   return {
-    sort, startdate, enddate, scope, pointer, username, bypasscache, contenttype, favoriterid, contentid, isactive,
+    sort, startdate, enddate, scope, pointer, username, bypasscache, accountid, status,
     reset, rehydrate, getAsDictionary, buildApiPath
   };
 });

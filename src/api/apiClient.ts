@@ -3,27 +3,6 @@ import axiosRetry from 'axios-retry'
 import { APIError } from './apiTypes'
 import { useGatekeeperStore } from '@/features/gatekeeper/stores/GatekeeperStore'
 
-/**
- * 🔒 Private internal utility to extract device tracking context safely from cookies.
- * Contains safety fallbacks for Server-Side Rendering (SSR) or browser environments with disabled cookies.
- */
-function getDeviceIdInternal(): string | null {
-  if (typeof document === 'undefined' || !document.cookie) return null
-
-  try {
-    const name = "DeviceId="
-    const decodedCookie = decodeURIComponent(document.cookie)
-    const ca = decodedCookie.split(';')
-    for (let i = 0; i < ca.length; i++) {
-      const c = (ca[i] ?? '').trim()
-      if (c.indexOf(name) === 0) return c.substring(name.length, c.length)
-    }
-  } catch (err) {
-    console.error('[Network Engine]: Failed to decode tracking fingerprint cookies:', err)
-  }
-  return null
-}
-
 const commonConfig = {
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
@@ -79,18 +58,6 @@ axiosRetry(apiClient, {
 // 🎯 REQUEST INTERCEPTOR: Pure security token and metadata injection
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => { // 🔄 Force strict type here
-
-    // 1. AUTOMATIC DEVICE ID INJECTION
-    const authEndpoints = ['/api/login', '/api/twofactor', '/api/logout']
-    const currentUrl = config.url?.toLowerCase() || ''
-
-    if (authEndpoints.some(endpoint => currentUrl.startsWith(endpoint))) {
-      const deviceId = getDeviceIdInternal()
-      if (deviceId) {
-        config.headers['X-Device-Id'] = deviceId
-        console.log(`[Network Engine]: Fingerprint X-Device-Id attached to ${config.url}`)
-      }
-    }
 
     // 2. CRYPTOGRAPHIC ACCESS TOKEN INJECTION
     if (config.meta?.requiresAuth) {

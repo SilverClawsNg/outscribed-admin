@@ -96,13 +96,13 @@ onMounted(async () => {
 
       </template>
 
-      <template v-if="userStore.user.status === 'SuspendedByAdmin'">
+      <template v-if="userStore.user.status === 'SuspendedByAdmin' || userStore.user.status === 'HiddenByModeration'">
 
         <button 
           class="btn primary" 
-          @click="modalStore.push('ReinstateUser', 'Reinstate User', userStore.user.accountId)"
+          @click="modalStore.push('UserSuspensionDetail', 'Suspension Detail', userStore.user.accountId)"
         >
-          Reinstate
+          Suspension
         </button>
 
       </template>

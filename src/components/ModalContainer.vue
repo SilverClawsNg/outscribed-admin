@@ -14,6 +14,7 @@ import FlagListFilterModal from '@/features/engagement/modals/FlagListFilterModa
 import ShareListFilterModal from '@/features/engagement/modals/ShareListFilterModal.vue'
 import VoteListFilterModal from '@/features/engagement/modals/VoteListFilterModal.vue'
 import UserListFilterModal from '@/features/identity/modals/UserListFilterModal.vue'
+import UserSuspensionListFilterModal from '@/features/identity/modals/UserSuspensionListFilterModal.vue'
 import InsightListFilterModal from '@/features/insights/modals/InsightListFilterModal.vue'
 import TaleListFilterModal from '@/features/tales/modals/TaleListFilterModal.vue'
 import FaqListFilterModal from '@/features/support/modals/FaqListFilterModal.vue'
@@ -32,6 +33,7 @@ import VoteDetailModal from '@/features/engagement/modals/VoteDetailModal.vue'
 import FavoriteDetailModal from '@/features/engagement/modals/FavoriteDetailModal.vue'
 import ShareDetailModal from '@/features/engagement/modals/ShareDetailModal.vue'
 import UserDetailModal from '@/features/identity/modals/UserDetailModal.vue'
+import UserSuspensionDetailModal from '@/features/identity/modals/UserSuspensionDetailModal.vue'
 import WriterDetailModal from '@/features/authoring/modals/WriterDetailModal.vue'
 import SnapshotDetailModal from '@/features/engagement/modals/SnapshotDetailModal.vue'
 import SnapshotListModal from '@/features/engagement/modals/SnapshotListModal.vue'
@@ -92,6 +94,7 @@ FlagListFilter: FlagListFilterModal,
 ShareListFilter: ShareListFilterModal,
 VoteListFilter: VoteListFilterModal,
 UserListFilter: UserListFilterModal,
+UserSuspensionListFilter: UserSuspensionListFilterModal,
 InsightListFilter: InsightListFilterModal,
 TaleListFilter: TaleListFilterModal,
 FaqListFilter: FaqListFilterModal,
@@ -105,6 +108,7 @@ VoteDetail: VoteDetailModal,
 FavoriteDetail: FavoriteDetailModal,
 ShareDetail: ShareDetailModal,
 UserDetail: UserDetailModal,
+UserSuspensionDetail: UserSuspensionDetailModal,
 WriterListFilter: WriterListFilterModal,
 WriterDetail: WriterDetailModal,
 SuspendWriter: SuspendWriterModal,

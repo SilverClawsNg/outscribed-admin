@@ -10,12 +10,9 @@ export const useLogListFilterStore = defineStore('logListFilter', () => {
 const startdate = ref<string | null>(null)
 const enddate = ref<string | null>(null)
 const scope = ref<string | null>(null)
-
 const bypasscache = ref<string | null>(null)
-
 const keyword = ref<string | null>(null);
 const sort = ref<string | null>(null)
-
 const pointer = ref<string | number>('1');
 
    // --- 3. HELPER UTILITIES ---

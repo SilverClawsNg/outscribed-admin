@@ -135,6 +135,10 @@ const closeMenu = () => {
         <RouterLink to="/verifications" class="btn primary" title="Verifications Stats" @click="closeMenu">
           Verifications
         </RouterLink>
+
+         <RouterLink to="/suspensions" class="btn primary" title="Suspensions Stats" @click="closeMenu">
+          Suspensions
+        </RouterLink>
         
         <RouterLink to="/logs" class="btn primary" title="Logs Stats" @click="closeMenu">
           Logs

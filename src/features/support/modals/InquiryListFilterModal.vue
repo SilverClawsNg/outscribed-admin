@@ -59,7 +59,15 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
             placeholder="-- enter keyword --" 
           />
         </fieldset>
-        
+        <fieldset>
+          <input 
+            v-model="filterStore.emailaddress" 
+            type="text" 
+            id="Email" 
+            class="form-field" 
+            placeholder="-- enter email --" 
+          />
+        </fieldset>
       </section>
 
    <!-- 2. Dataset Result Record Filtering Parameters -->

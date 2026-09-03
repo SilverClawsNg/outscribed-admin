@@ -30,8 +30,8 @@ export interface AdminTaskListDto {
     tagsCount: number | 0;
     inquiriesCount: number | 0;
     verificationsCount: number | 0;
+    suspensionsCount: number | 0;
     snapshotsCount: number | 0;
-   
  }
 
  export interface GetStatsResponse {
