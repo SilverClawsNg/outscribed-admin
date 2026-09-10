@@ -62,7 +62,7 @@ async function onEmailSubmitted(email: string, captchaToken: string) {
   const sendTokenData = {
     emailAddress: email,
     captchaToken: captchaToken,
-    type: 1 // PreRegistrationVerification Enum Value
+    type: 3 // TwoFactorFallback Enum Value
   }
 
   const outcome = await postAsync<SendTokenResponse>('/api/token', sendTokenData, false)
@@ -162,10 +162,10 @@ function handleResendRequest() {
   <div class="form-container boxed">
 
      <template v-if="isPage">
-    <h1>Create Account</h1>
+    <h1>Login</h1>
     </template>
 
-    <h2>Get started with a free membership</h2>
+    <h2>Use Fallback login</h2>
 
   <FormProgress :progress="progressState" :is-boxed="true"/>
 
