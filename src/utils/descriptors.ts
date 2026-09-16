@@ -371,6 +371,8 @@ export const RoleTypeDescriptions: Record<RoleType, string> = {
   
   export const CategoryDescriptions: Record<Category, string> = {
   Tributuary: 'Tributuary',
+  Reflections: 'Reflections',
+  DoomsDay: 'Dooms day',
   PoliticsGovernance: 'Politics & Government',
   SportsGaming: 'Sports & Gaming',
   ScienceTechnology: 'Science & Technology',
