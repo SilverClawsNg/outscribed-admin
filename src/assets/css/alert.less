@@ -1,86 +1,119 @@
 @import "variables.less";
 
-/* Base alert */
-.alert-container {
-    position: fixed;
-    top: -100px;
-    left: 50%; /* start off-screen */
-    transform: translateX(-50%);
-    width: auto;
-    z-index: 9999;
-   
-    /*box-shadow: @box-shadow;*/
-    opacity: 0;
-    
-   /* color: var(--background-color);*/
-    transition: top 0.3s ease-in-out, opacity 0.4s ease-in-out;
+/* ==========================================================================
+   FLOATING ALERT CONTAINER (BEM)
+   ========================================================================== */
+
+.alert {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
   
-   
+  /* Enforce width bounds: capped at @min-width, guaranteed at least 20px shorter than viewport */
+  width: min(@min-width, calc(100vw - 20px));
+  max-width: calc(100vw - 20px);
+  box-sizing: border-box;
 
-    &.slide-in {
-        top: 20px; /* Slide in by its width + margin */
-        opacity: 1;
-        //animation: pulse-border 1.5s infinite alternate;
-    }
-    /* Optional slide-out class */
-    &.slide-out {
-        top: -100px;
-        opacity: 0;
-    }
-}
-
-.alert-wrapper {
-    width: @min-width;
+  &__wrapper {
+    width: 100%;
     height: auto;
-    max-width: calc(100% - 20px);
-    margin: 0 auto;
-    padding: 0.5rem;
+    padding: 0.5rem 0.75rem;
     display: flex;
+    align-items: center;
     border-radius: 8px;
     box-shadow: var(--box-shadow);
-    background-color: var(--herobackground-color);
-}
+    background-color: var(--hero-background-color);
+    box-sizing: border-box;
+  }
 
-.alert-icon-container {
+  &__icon-container {
     width: 30px;
-   
-    & span {
-        border: none;
-    }
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
 
-.alert-close-container {
-    width: 30px;
+  &__icon {
+    border: none;
+    font-size: 1.1rem;
+  }
 
-   & .alert-close {
-        border-radius: 100%;
-        font-size: 1.2rem;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        &:hover {
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-    }
-}
-
-.alert-content {
-    -webkit-flex-grow: 1;
+  &__body {
     flex-grow: 1;
-    width: auto;
-    padding: 0 0.25rem;
+    padding: 0 0.5rem;
     text-align: center;
+  }
 
-    & .alert-text {
-        font-size: 0.9rem;
-        line-height: 1rem;
-    }
+  &__text {
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    margin: 0;
+  }
 
-    & button.btn.primary {
-        margin-top: 0.25rem;
+  &__action-btn {
+    margin-top: 0.35rem;
+  }
+
+  &__close-container {
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+
+  &__close-btn {
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: var(--background-color);
+      color: var(--text-color);
     }
+  }
+
+  /* Variant Modifiers */
+  &--success {
+    /* Style hooks for success */
+  }
+
+  &--warning {
+    /* Style hooks for warning */
+  }
+
+  &--danger {
+    /* Style hooks for danger */
+  }
+
+  &--info {
+    /* Style hooks for info */
+  }
+
+  &--loading {
+    /* Style hooks for loading state */
+  }
+}
+
+/* Slide Transition Animations */
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translate(-50%, -100%);
+  opacity: 0;
 }
