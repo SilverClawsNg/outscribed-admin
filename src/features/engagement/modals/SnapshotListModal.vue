@@ -7,7 +7,7 @@ import { useSnapshotStore } from '../stores/SnapshotStore';
 import { useSnapshotListFilterStore } from '../stores/SnapshotListFilterStore'; 
 import DisplayComponent from '@/components/DisplayTable.vue';
 import InfiniteScroller from '@/components/InfiniteScroller.vue';
-import PageStatusMessage from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue'
 import { APIError } from '@/api/apiTypes';
 import { useModalStore } from '@/stores/modalStore'
 import { toShortDate } from '@/utils/dateExtensions'
@@ -95,13 +95,13 @@ const handleKeyPress = (event: KeyboardEvent, item: any) => {
 
  <template v-else-if="loadingError">
 
-      <PageMessageStatus 
+      <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
       :message="loadingError.detail || 'An unexpected error occurred.'">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+        <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
       </template>
-    </PageMessageStatus>
+    </PageStatusMessage>
 
   </template>
 

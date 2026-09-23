@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import PageMessageStatus from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue';
 import { useFlagStore } from '../stores/FlagStore';
 import { toLongDate } from '@/utils/dateExtensions'
 import { APIError } from '@/api/apiTypes';
@@ -65,13 +65,13 @@ onMounted(async () => {
 
  <template v-else-if="loadingError">
 
-    <PageMessageStatus 
+    <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
       :message="loadingError.detail || 'An unexpected error occurred.'">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+        <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
       </template>
-    </PageMessageStatus>
+    </PageStatusMessage>
 
   </template>
 

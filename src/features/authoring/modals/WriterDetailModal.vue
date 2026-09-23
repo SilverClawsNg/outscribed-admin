@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import PageMessageStatus from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue';
 import { useWriterStore } from '../stores/WriterStore';
 import { toLongDate } from '@/utils/dateExtensions'
 import { APIError } from '@/api/apiTypes';
@@ -64,13 +64,13 @@ onMounted(async () => {
 
  <template v-else-if="loadingError">
 
-    <PageMessageStatus 
+    <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
       :message="loadingError.detail || 'An unexpected error occurred.'">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+        <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
       </template>
-    </PageMessageStatus>
+    </PageStatusMessage>
 
   </template>
 
@@ -81,7 +81,7 @@ onMounted(async () => {
 
       <template v-if="writerStore.writer.status === 'Active'">
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('SuspendWriter', 'Suspend Writer', writerStore.writer.writerId)"
         >
           Suspend
@@ -91,7 +91,7 @@ onMounted(async () => {
 
       <template v-if="writerStore.writer.status === 'Suspended'">
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('ReinstateWriter', 'Reinstate Writer', writerStore.writer.writerId)"
         >
           Reinstate

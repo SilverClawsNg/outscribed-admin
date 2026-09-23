@@ -152,7 +152,7 @@ async function handleFormSubmission() {
    <div class="button-holder">
           <button 
             type="submit" 
-            class="btn primary" 
+            class="btn btn--primary" 
               :disabled="progressState.type === 'Loading' || lockSubmission"
           >
             {{ progressState.type === 'Loading' ? 'Submitting...' : 'Reset' }}

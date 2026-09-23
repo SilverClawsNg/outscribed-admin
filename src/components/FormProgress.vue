@@ -57,7 +57,7 @@ function redirectToRegister() {
       <p class="error">{{ progress.message ?? 'An unexpected error occurred.' }}</p>
       
       <div class="error-actions"  v-if="progress.error">
-        <button class="btn primary" @click="modalStore.push('ProblemDefinition', 'Problem Detail', progress.error)">
+        <button class="btn btn--primary" @click="modalStore.push('ProblemDefinition', 'Problem Detail', progress.error)">
           More Details
         </button>
       </div>
@@ -66,7 +66,7 @@ function redirectToRegister() {
     <div v-else-if="progress.type === 'Login'" class="form-message-contents unauthorized" :class="{ boxed: isBoxed }">
       <h3><span class="form-message-icon">⛔</span> 401: Unauthorized!</h3>
       <p class="error">Login is required to continue.</p>
-      <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+      <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
     </div>
 
 </template>

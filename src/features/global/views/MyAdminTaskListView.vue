@@ -7,7 +7,7 @@ import { useMyAdminTaskStore } from '../stores/MyAdminTaskStore';
 import { useMyAdminTaskListFilterStore } from '../stores/MyAdminTaskListFilterStore'; 
 import DisplayComponent from '@/components/DisplayTable.vue';
 import InfiniteScroller from '@/components/InfiniteScroller.vue';
-import PageStatusMessage from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue'
 import { APIError } from '@/api/apiTypes';
 import { useModalStore } from '@/stores/modalStore'
 import { toLongDate } from '@/utils/dateExtensions'
@@ -141,10 +141,9 @@ const reset = async () => {
 
  <template v-if="isLoading">
 
-   <div class="shared__page-title">
-    <h1>Loading Tasks... </h1>
-      <p class="shared__loader"></p>
-    </div>
+  <div class="loader" role="status" aria-label="Loading tasks">
+    <p class="loader__dot"></p>
+  </div>
 
   </template>
 
@@ -152,10 +151,17 @@ const reset = async () => {
 
     <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
-      :message="loadingError.detail || 'An unexpected error occurred.'">
+      :message="loadingError.detail || 'An unexpected error occurred.'"
+      icon="warning"
+      :is-standalone="true">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="redirectToRegister">Login</button>
+        <button class="btn btn--primary"  @click="redirectToRegister">Login</button>
       </template>
+        <template v-else-if="loadingError.definition" #actions>
+           <button class="btn btn--primary"  @click="modalStore.push('ProblemDefinition', 'Problem Detail', loadingError)"  >
+            More Details
+          </button>
+        </template>
     </PageStatusMessage>
 
   </template>
@@ -163,10 +169,12 @@ const reset = async () => {
   <template v-else-if="!taskStore.tasks || taskStore.tasks.length === 0">
 
     <PageStatusMessage 
-    title="No Content!"
-    message="Sorry. No tasks were found matching your filter requirements. ">
+        title="No Task Found!"
+        message="Sorry. No task were found matching your filter requirements."
+        icon="inbox"
+        :is-standalone="true">
        <template #actions>
-      <button class="btn primary" @click="reset">Reset</button>
+      <button class="btn btn--primary" @click="reset">Reset</button>
     </template>
     </PageStatusMessage>
 
@@ -174,11 +182,13 @@ const reset = async () => {
 
   <template v-else>
 
-    <div class="shared__page-title">
-      <h1>Tasks </h1>
-      <button class="btn secondary" @click="triggerFilterModal">Filter</button>
-    </div>
-
+     <header class="page-header container">
+      <h1 class="page-header__title">
+          Tasks
+        </h1>
+        <button class="btn btn--primary" @click="modalStore.push('AdminTaskListFilter', 'Filter Tasks')">Filter</button>
+    </header>
+   
       <InfiniteScroller
         :has-next="taskStore.hasNext"
         :is-fetching="taskStore.isFetchingMore"

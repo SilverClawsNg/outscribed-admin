@@ -19,34 +19,34 @@ async function handleActionClick() {
   }
 }
 </script>
-
 <template>
   <Transition name="slide">
     <div 
       v-if="alert.show" 
-      class="alert-container" 
-      :class="`alert-type-${alert.type.toLowerCase()}`"
+      class="alert" 
+      :class="`alert--${alert.type.toLowerCase()}`"
       role="status" 
       aria-live="polite"
     >
-      <div class="alert-wrapper">
-        <p class="alert-icon">
-          <span v-if="alert.type === 'Success'">✔️</span>
-          <span v-else-if="alert.type === 'Warning'">⚠️</span>
-          <span v-else-if="alert.type === 'Danger'">⛔</span>
-          <span v-else-if="alert.type === 'Info'">ℹ️</span>
-        </p>
+      <div class="alert__wrapper">
+        <div class="alert__icon-container">
+          <span v-if="alert.type === 'Success'" class="alert__icon">✔️</span>
+          <span v-else-if="alert.type === 'Warning'" class="alert__icon">⚠️</span>
+          <span v-else-if="alert.type === 'Danger'" class="alert__icon">⛔</span>
+          <span v-else-if="alert.type === 'Info'" class="alert__icon">ℹ️</span>
+        </div>
 
-        <div class="alert-content">
-          <p class="alert-text">
+        <div class="alert__body">
+          <p class="alert__text">
             {{ alert.message }}
           </p>
 
-          <div v-if="alert.type === 'Loading'" class="loader"></div>
+          <div v-if="alert.type === 'Loading'" class="alert__loader"></div>
 
           <button 
             v-if="alert.onActionClick" 
-            class="btn primary" 
+            type="button"
+            class="btn btn--primary alert__action-btn" 
             :disabled="isExecutingAction"
             @click="handleActionClick"
           >
@@ -54,31 +54,17 @@ async function handleActionClick() {
           </button>
         </div>
 
-        <button 
-          v-if="alert.type !== 'Loading'" 
-          class="alert-close" 
-          aria-label="Dismiss alert"
-          @click="alert.close"
-        >×</button>
+        <div v-if="alert.type !== 'Loading'" class="alert__close-container">
+          <button 
+            type="button"
+            class="alert__close-btn" 
+            aria-label="Dismiss alert"
+            @click="alert.close"
+          >
+            ×
+          </button>
+        </div>
       </div>
     </div>
   </Transition>
 </template>
-
-<style scoped>
-/* Scoped layout animations mimicking your Blazor classes */
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
-}
-
-.slide-enter-from {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-
-.slide-leave-to {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-</style>

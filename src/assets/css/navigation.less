@@ -1,92 +1,52 @@
-/*@import "variables.less";
+@import "variables.less";
 
-nav {
-    height: auto;
-    width: 100%;
-
-    & ul {
-
-        & li {
-            height: auto;
-
-            & button,
-            & a {
-                display: inline-block;
-                font-weight: 400;
-                padding: 12px 0;
-                color: var(--text-color);
-                text-transform: uppercase;
-                text-transform: capitalize;
-                font-size: clamp(1.1rem, 3vw + 1rem, 1.4rem);
-                line-height: clamp(1.1rem, 3vw + 1rem, 1.4rem);
-
-                &:hover, &.active {
-                    color: @form-text-color;
-                }
-            }
-        }
-    }
-
-    & hr {
-        width: 40px;
-        height: 3px;
-        background-color: var(--text-color);
-        border: none;
-    }
-
-    & .search {
-        height: 40px;
-        width: auto;
-        display: flex;
-        align-items: center;
-        padding: 0 1.5rem;
-        border-radius: 8px;
-        border: 1px solid @link-color;
-        color: @link-color;
-        background: transparent;
-        margin-bottom: 1.5rem;
-
-        & span {
-            text-align: center;
-            color: var(--text-color);
-            padding: 0 12px;
-            color: @link-color;
-        }
-
-        & svg {
-
-            & path {
-                fill: none;
-                stroke: @link-color;
-                stroke-miterlimit: 10;
-                stroke-width: 48px
-            }
-
-            & line {
-                fill: none;
-                stroke: @link-color;
-                stroke-linecap: round;
-                stroke-miterlimit: 10;
-                stroke-width: 48px
-            }
-        }
-    }
-
-    & .link {
-        color: @white-color;
-        font-weight: 500;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        padding: 0 1.5rem;
-        border-radius: 8px;
-        transition: background 0.3s;
-        background-color: @link-color;
-
-        &:hover {
-            background: #f3f4f6;
-        }
-    }
+/* Hide the accessibility toggle checkbox */
+.dashboard__toggle {
+  display: none;
 }
 
-*/
+/* ==========================================================================
+   Block 1: Left-hand Fixed Navigation Sidebar
+   ========================================================================== */
+.nav-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  padding: 2rem 0;
+  max-width: 100%;
+  height: 100lvh;
+  background-color: @link-color;
+  color: @white-color;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+    
+    &__menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    height: calc(100lvh - 4rem);
+    overflow-y:auto;
+    }
+
+    &__item {
+    border-bottom: 1px solid #4D84F1; /* Subtle color delimitation */
+    }
+
+    
+    &__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    color: @white-color;
+    }
+
+    /* Hover and Active Modifiers */
+    &__link:hover,
+    &__link--active {
+    background-color: @link-alt-color;
+    }
+
+}

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import PageMessageStatus from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue';
 import { useCommentStore } from '../stores/CommentStore';
 import { sanitizeHtml } from '@/utils/markupHelper';
 import { formatAddendum, formatCounts } from '@/utils/stringHelpers'
@@ -76,13 +76,13 @@ onMounted(async () => {
 
  <template v-else-if="loadingError">
 
-    <PageMessageStatus 
+    <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
       :message="loadingError.detail || 'An unexpected error occurred.'">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+        <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
       </template>
-    </PageMessageStatus>
+    </PageStatusMessage>
 
   </template>
 
@@ -91,7 +91,7 @@ onMounted(async () => {
     <div class="btn-group">
       <template v-if="localComment.status !== 'ArchivedByAdmin'">
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('ArchiveComment', 'Archive Comment', localComment.commentId)"
         >
           Archive
@@ -103,7 +103,7 @@ onMounted(async () => {
         ">
           <button 
             v-if="localComment.status !== 'HiddenByAdmin' && localComment.status !== 'HiddenByModeration'"
-            class="btn primary" 
+            class="btn btn--primary" 
             @click="modalStore.push('HideComment', 'Hide Comment', localComment.commentId)"
           >
             Hide
@@ -111,7 +111,7 @@ onMounted(async () => {
           
           <button 
             v-else 
-            class="btn primary" 
+            class="btn btn--primary" 
             @click="modalStore.push('CertifyComment', 'Certify Comment', localComment.commentId)"
           >
             Certify

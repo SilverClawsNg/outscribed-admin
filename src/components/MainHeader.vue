@@ -37,12 +37,13 @@ const closeMenu = () => {
           <h1 class="logo">
            <SvgIcons name="logo" />
           </h1>
+          
         </div>
 
         <div class="main-header__top-navigation-right">
           <RouterLink 
             to="/my/tasks" 
-            class="btn primary" 
+            class="btn btn--primary" 
             title="My Tasks Stats"
             @click="closeMenu"
           >
@@ -51,7 +52,7 @@ const closeMenu = () => {
           
           <RouterLink 
             to="/logout" 
-            class="btn secondary" 
+            class="btn btn--secondary" 
             title="Logout"
             @click="closeMenu"
           >
@@ -68,7 +69,7 @@ const closeMenu = () => {
         
         <RouterLink 
           to="/" 
-          class="btn primary" 
+          class="btn btn--primary" 
           exact-active-class="active" 
           title="Admin Tasks" 
           @click="closeMenu"
@@ -76,75 +77,75 @@ const closeMenu = () => {
           Tasks
         </RouterLink>
         
-        <RouterLink to="/tales" class="btn primary" title="Tales Stats" @click="closeMenu">
+        <RouterLink to="/tales" class="btn btn--primary" title="Tales Stats" @click="closeMenu">
           Tales
         </RouterLink>
         
-        <RouterLink to="/insights" class="btn primary" title="Insights Stats" @click="closeMenu">
+        <RouterLink to="/insights" class="btn btn--primary" title="Insights Stats" @click="closeMenu">
           Insights
         </RouterLink>
         
-        <RouterLink to="/comments" class="btn primary" title="Comments Stats" @click="closeMenu">
+        <RouterLink to="/comments" class="btn btn--primary" title="Comments Stats" @click="closeMenu">
           Comments
         </RouterLink>
         
-        <RouterLink to="/favorites" class="btn primary" title="Favorites Stats" @click="closeMenu">
+        <RouterLink to="/favorites" class="btn btn--primary" title="Favorites Stats" @click="closeMenu">
           Favorites
         </RouterLink>
         
-        <RouterLink to="/flags" class="btn primary" title="Flags Stats" @click="closeMenu">
+        <RouterLink to="/flags" class="btn btn--primary" title="Flags Stats" @click="closeMenu">
           Flags
         </RouterLink>
         
-        <RouterLink to="/shares" class="btn primary" title="Shares Stats" @click="closeMenu">
+        <RouterLink to="/shares" class="btn btn--primary" title="Shares Stats" @click="closeMenu">
           Shares
         </RouterLink>
         
-        <RouterLink to="/votes" class="btn primary" title="Votes Stats" @click="closeMenu">
+        <RouterLink to="/votes" class="btn btn--primary" title="Votes Stats" @click="closeMenu">
           Votes
         </RouterLink>
         
-        <RouterLink to="/admins" class="btn primary" title="Admins Stats" @click="closeMenu">
+        <RouterLink to="/admins" class="btn btn--primary" title="Admins Stats" @click="closeMenu">
           Admins
         </RouterLink>
         
-        <RouterLink to="/writers" class="btn primary" title="Writers Stats" @click="closeMenu">
+        <RouterLink to="/writers" class="btn btn--primary" title="Writers Stats" @click="closeMenu">
           Writers
         </RouterLink>
         
-        <RouterLink to="/users" class="btn primary" title="Users Stats" @click="closeMenu">
+        <RouterLink to="/users" class="btn btn--primary" title="Users Stats" @click="closeMenu">
           Users
         </RouterLink>
         
-        <RouterLink to="/engagements" class="btn primary" title="Engagements Stats" @click="closeMenu">
+        <RouterLink to="/engagements" class="btn btn--primary" title="Engagements Stats" @click="closeMenu">
           Stats
         </RouterLink>
         
-        <RouterLink to="/faqs" class="btn primary" title="Faqs Stats" @click="closeMenu">
+        <RouterLink to="/faqs" class="btn btn--primary" title="Faqs Stats" @click="closeMenu">
           FAQs
         </RouterLink>
         
-        <RouterLink to="/inquiries" class="btn primary" title="Inquiries Stats" @click="closeMenu">
+        <RouterLink to="/inquiries" class="btn btn--primary" title="Inquiries Stats" @click="closeMenu">
           Inquiries
         </RouterLink>
         
-        <RouterLink to="/tags" class="btn primary" title="Tags Stats" @click="closeMenu">
+        <RouterLink to="/tags" class="btn btn--primary" title="Tags Stats" @click="closeMenu">
           Tags
         </RouterLink>
         
-        <RouterLink to="/verifications" class="btn primary" title="Verifications Stats" @click="closeMenu">
+        <RouterLink to="/verifications" class="btn btn--primary" title="Verifications Stats" @click="closeMenu">
           Verifications
         </RouterLink>
 
-         <RouterLink to="/suspensions" class="btn primary" title="Suspensions Stats" @click="closeMenu">
+         <RouterLink to="/suspensions" class="btn btn--primary" title="Suspensions Stats" @click="closeMenu">
           Suspensions
         </RouterLink>
         
-        <RouterLink to="/logs" class="btn primary" title="Logs Stats" @click="closeMenu">
+        <RouterLink to="/logs" class="btn btn--primary" title="Logs Stats" @click="closeMenu">
           Logs
         </RouterLink>
         
-        <RouterLink to="/analytics" class="btn primary" title="Analytics Stats" @click="closeMenu">
+        <RouterLink to="/analytics" class="btn btn--primary" title="Analytics Stats" @click="closeMenu">
           Analytics
         </RouterLink>
       </nav>

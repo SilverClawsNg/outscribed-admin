@@ -10,9 +10,11 @@
     justify-content: center;
     padding: 0 0.6rem;
     border-radius: 99999px;
+    border-radius: 4px;
     text-transform: capitalize;
     color: var(--text-color);
     border: 1px solid transparent;
+    //text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.4);
     
     // Modifier: Has icon layout adjustment
     &--has-icon {
@@ -30,20 +32,22 @@
     &--primary {
         background-color: inherit;
         border-color: var(--text-color);
-        border-color:  #00A0EB;
-        color:  #00A0EB;
+        border-color:  @link-color;
+        color:  @link-color;
        
         &:hover {
             background-color: var(--background-hover-color);
+            color: @link-alt-color;
         }
         
     }
 
     &--secondary {
-        background-color:  #00A0EB;
+        background-color:  @link-color;
         color: @white-color;
         &:hover {
             background-color: @link-alt-color;
+            color: @white-color;
         }
 
         & svg{
@@ -52,18 +56,17 @@
     }
 
     &--contrast {
-        background-color: var(--text-color);
-        color: var(--background-color);
-        border-color: var(--text-color);
+       background-color: @link-color;
+        border-color: transparent;
+        color:@white-color;
 
         &:hover {
-            background-color: var(--hover-color);
+            background-color: @link-alt-color;
         }
     }
 }
 
 .btn-group {
-   
     display: flex;
     flex-wrap: wrap;
     gap: 1rem 0.25rem;

@@ -172,7 +172,7 @@ watch(() => filterStore.scope, (newScope, oldScope) => {
 
       <!-- 5. Form Actions Layout Triggers -->
       <div class="filter-buttons">
-        <button type="button" @click="filterStore.reset()" class="btn primary">Reset</button>
+        <button type="button" @click="filterStore.reset()" class="btn btn--primary">Reset</button>
         <button type="submit" class="btn secondary">Filter</button>
       </div>
 

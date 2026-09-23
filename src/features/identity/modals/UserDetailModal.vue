@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import PageMessageStatus from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue';
 import { useUserStore } from '../stores/UserStore';
 import { type UserDetailDto } from '../types/IdentityTypes';
 import { formatAddendum, formatCounts } from '@/utils/stringHelpers'
@@ -68,13 +68,13 @@ onMounted(async () => {
 
  <template v-else-if="loadingError">
 
-    <PageMessageStatus 
+    <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
       :message="loadingError.detail || 'An unexpected error occurred.'">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="modalStore.push('Register', 'Register')">Login</button>
+        <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
       </template>
-    </PageMessageStatus>
+    </PageStatusMessage>
 
   </template>
 
@@ -88,7 +88,7 @@ onMounted(async () => {
       <template v-if="userStore.user.role === 'None'">
 
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('AssignRole', 'Assign Role', userStore.user.accountId)"
         >
           Assign
@@ -99,7 +99,7 @@ onMounted(async () => {
       <template v-if="userStore.user.status === 'SuspendedByAdmin' || userStore.user.status === 'HiddenByModeration'">
 
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('UserSuspensionDetail', 'Suspension Detail', userStore.user.accountId)"
         >
           Suspension
@@ -109,7 +109,7 @@ onMounted(async () => {
 
        <template v-else>
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('SuspendUser', 'Suspend User', userStore.user.accountId)"
         >
           Suspend
@@ -118,7 +118,7 @@ onMounted(async () => {
       </template>
 
         <button 
-          class="btn primary" 
+          class="btn btn--primary" 
           @click="modalStore.push('BanUser', 'Ban User', userStore.user.accountId)"
         >
           Ban

@@ -3,12 +3,14 @@ import { ref, onMounted } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 
 import { APIError } from '@/api/apiTypes';
-import PageStatusMessage from '@/components/PageMessageStatus.vue';
+import PageStatusMessage from '@/components/PageStatusMessage.vue'
 import { toLongDate } from '@/utils/dateExtensions';
 import { formatFullCounts } from '@/utils/stringHelpers';
 import { useStatsStore } from '../stores/StatsStore';
+import { useModalStore } from '@/stores/modalStore'
 
 const statsStore = useStatsStore();
+const modalStore = useModalStore()
 
 // --- DEFINE & INITIALIZE LOCAL VARIABLES ---
 const isLoading = ref(true)
@@ -61,21 +63,27 @@ onMounted(async () => {
 
    <template v-if="isLoading">
 
-   <div class="shared__page-title">
-    <h1>Loading Metrics... </h1>
-      <p class="shared__loader"></p>
-    </div>
+  <div class="loader" role="status" aria-label="Loading metrics">
+    <p class="loader__dot"></p>
+  </div>
 
   </template>
 
  <template v-else-if="loadingError">
 
-    <PageStatusMessage 
+     <PageStatusMessage 
       :title="loadingError.title || 'Error Loading Lists'" 
-      :message="loadingError.detail || 'An unexpected error occurred.'">
+      :message="loadingError.detail || 'An unexpected error occurred.'"
+      icon="warning"
+      :is-standalone="true">
         <template v-if="loadingError.status == 401" #actions>
-        <button class="btn primary" @click="redirectToRegister">Login</button>
+        <button class="btn btn--primary"  @click="redirectToRegister">Login</button>
       </template>
+        <template v-else-if="loadingError.definition" #actions>
+           <button class="btn btn--primary"  @click="modalStore.push('ProblemDefinition', 'Problem Detail', loadingError)"  >
+            More Details
+          </button>
+        </template>
     </PageStatusMessage>
 
   </template>
@@ -93,113 +101,112 @@ onMounted(async () => {
 
      <RouterLink 
           to="/tasks" 
-          class="btn primary index-link" 
+          class="btn btn--primary index-link" 
           exact-active-class="active" 
           title="Admin Tasks" 
-          
         >
         <span class="value">{{ formatFullCounts(statsStore.stats.readStats.adminTasksCount) }}</span>
          <span class="field">Tasks</span>
           
         </RouterLink>
         
-        <RouterLink to="/tales" class="btn primary index-link" title="Tales Stats">
+        <RouterLink to="/tales" class="btn btn--primary index-link" title="Tales Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.talesCount) }}</span>
          <span class="field">Tales</span>
           
         </RouterLink>
         
-        <RouterLink to="/insights" class="btn primary index-link" title="Insights Stats">
+        <RouterLink to="/insights" class="btn btn--primary index-link" title="Insights Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.insightsCount) }}</span>
          <span class="field">Insights</span>
           
         </RouterLink>
         
-        <RouterLink to="/comments" class="btn primary index-link" title="Comments Stats">
+        <RouterLink to="/comments" class="btn btn--primary index-link" title="Comments Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.commentsCount) }}</span>
          <span class="field">Comments</span>
           
         </RouterLink>
         
-        <RouterLink to="/favorites" class="btn primary index-link" title="Favorites Stats">
+        <RouterLink to="/favorites" class="btn btn--primary index-link" title="Favorites Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.favoritesCount) }}</span>
          <span class="field">Favorites</span>
           
         </RouterLink>
         
-        <RouterLink to="/flags" class="btn primary index-link" title="Flags Stats">
+        <RouterLink to="/flags" class="btn btn--primary index-link" title="Flags Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.flagsCount) }}</span>
          <span class="field">Flags</span>
           
         </RouterLink>
         
-        <RouterLink to="/shares" class="btn primary index-link" title="Shares Stats">
+        <RouterLink to="/shares" class="btn btn--primary index-link" title="Shares Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.sharesCount) }}</span>
          <span class="field">Shares</span>
           
         </RouterLink>
         
-        <RouterLink to="/votes" class="btn primary index-link" title="Votes Stats">
+        <RouterLink to="/votes" class="btn btn--primary index-link" title="Votes Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.votesCount) }}</span>
          <span class="field">Votes</span>
           
         </RouterLink>
         
-        <RouterLink to="/admins" class="btn primary index-link" title="Admins Stats">
+        <RouterLink to="/admins" class="btn btn--primary index-link" title="Admins Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.adminsCount) }}</span>
          <span class="field">Admins</span>
           
         </RouterLink>
         
-        <RouterLink to="/writers" class="btn primary index-link" title="Writers Stats">
+        <RouterLink to="/writers" class="btn btn--primary index-link" title="Writers Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.writersCount) }}</span>
          <span class="field">Writers</span>
           
         </RouterLink>
         
-        <RouterLink to="/users" class="btn primary index-link" title="Users Stats">
+        <RouterLink to="/users" class="btn btn--primary index-link" title="Users Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.usersCount) }}</span>
          <span class="field">Users</span>
           
         </RouterLink>
         
-        <RouterLink to="/snapshots" class="btn primary index-link" title="Engagements Stats">
+        <RouterLink to="/snapshots" class="btn btn--primary index-link" title="Engagements Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.snapshotsCount) }}</span>
          <span class="field">SnapShots</span>
           
         </RouterLink>
         
-        <RouterLink to="/inquiries" class="btn primary index-link" title="Inquiries Stats">
+        <RouterLink to="/inquiries" class="btn btn--primary index-link" title="Inquiries Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.inquiriesCount) }}</span>
          <span class="field">Inquiries</span>
           
         </RouterLink>
         
-        <RouterLink to="/tags" class="btn primary index-link" title="Tags Stats">
+        <RouterLink to="/tags" class="btn btn--primary index-link" title="Tags Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.tagsCount) }}</span>
          <span class="field">Tags</span>
           
         </RouterLink>
         
-        <RouterLink to="/verifications" class="btn primary index-link" title="Verifications Stats">
+        <RouterLink to="/verifications" class="btn btn--primary index-link" title="Verifications Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.verificationsCount) }}</span>
          <span class="field">Verifications</span>
           
         </RouterLink>
 
-          <RouterLink to="/suspensions" class="btn primary index-link" title="Verifications Stats">
+          <RouterLink to="/suspensions" class="btn btn--primary index-link" title="Verifications Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.readStats.suspensionsCount) }}</span>
          <span class="field">Suspensions</span>
           
         </RouterLink>
         
-        <RouterLink to="/logs" class="btn primary index-link" title="Logs Stats">
+        <RouterLink to="/logs" class="btn btn--primary index-link" title="Logs Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.logsCount) }}</span>
          <span class="field">Logs</span>
           
         </RouterLink>
         
-        <RouterLink to="/analytics" class="btn primary index-link" title="Analytics Stats">
+        <RouterLink to="/analytics" class="btn btn--primary index-link" title="Analytics Stats">
              <span class="value">{{ formatFullCounts(statsStore.stats.analyticsCount) }}</span>
          <span class="field">Analytics</span>
           
@@ -211,10 +218,14 @@ onMounted(async () => {
   </template>
 
     <template v-else>
-    <PageStatusMessage
-      title="No Content!"
-      message="Stats could not be retrieved. Use the menu for navigation.">
+        <PageStatusMessage 
+        title="No Task Found!"
+        message="Stats could not be retrieved. Use the menu for navigation."
+        icon="inbox"
+        :is-standalone="true">
+     
     </PageStatusMessage>
+   
   </template>
 
 </template>

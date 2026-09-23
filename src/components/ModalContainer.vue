@@ -17,7 +17,6 @@ import UserListFilterModal from '@/features/identity/modals/UserListFilterModal.
 import UserSuspensionListFilterModal from '@/features/identity/modals/UserSuspensionListFilterModal.vue'
 import InsightListFilterModal from '@/features/insights/modals/InsightListFilterModal.vue'
 import TaleListFilterModal from '@/features/tales/modals/TaleListFilterModal.vue'
-import FaqListFilterModal from '@/features/support/modals/FaqListFilterModal.vue'
 import InquiryListFilterModal from '@/features/support/modals/InquiryListFilterModal.vue'
 import TagListFilterModal from '@/features/tagging/modals/TagListFilterModal.vue'
 import WriterListFilterModal from '@/features/authoring/modals/WriterListFilterModal.vue'
@@ -97,7 +96,6 @@ UserListFilter: UserListFilterModal,
 UserSuspensionListFilter: UserSuspensionListFilterModal,
 InsightListFilter: InsightListFilterModal,
 TaleListFilter: TaleListFilterModal,
-FaqListFilter: FaqListFilterModal,
 InquiryListFilter: InquiryListFilterModal,
 TagListFilter: TagListFilterModal,
 TaleDetail: TaleDetailModal,

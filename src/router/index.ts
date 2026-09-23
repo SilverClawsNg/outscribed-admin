@@ -114,12 +114,6 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
           {
-          path: 'faqs', // Renders at outscribed.com/faqs
-          name: 'FaqLists',
-          component: () => import('@/features/support/views/FaqListView.vue'),
-          meta: { requiresAuth: true }
-        },
-          {
           path: 'inquiries', // Renders at outscribed.com/inquiries
           name: 'InquiryLists',
           component: () => import('@/features/support/views/InquiryListView.vue'),
