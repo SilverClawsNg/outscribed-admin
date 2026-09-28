@@ -207,5 +207,5 @@ function handleResendRequest() {
   </div>
 </template>
 <style lang="less" scoped>
-@import "@/assets/css/mulfi-form.less";
+@import "@/assets/css/multi-form.less";
 </style>
