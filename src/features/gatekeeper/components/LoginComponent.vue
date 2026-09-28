@@ -60,8 +60,7 @@ function handleKeyDown(e: KeyboardEvent, index: number) {
 
 const formData = ref<LoginRequest>({
   accountId: props.accountId, // Hydrated directly from props
-  token: '',
-  captchaToken: ''
+  token: ''
 })
 
 // --- RUN VALIDATION ---
@@ -71,8 +70,6 @@ const formSubmitted = ref(false)
 
 // 2. Pure, derivative validation state. No tracking refs, no manual clearing.
 const validationErrors = computed(() => {
-
-const tokenText = formData.value.token || '';
 
   return {
     token: formData.value.token.length < 6 

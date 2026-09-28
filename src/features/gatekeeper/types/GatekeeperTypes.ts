@@ -16,7 +16,6 @@ export interface RegisterResponse {
 export interface LoginRequest { 
     accountId: string; 
     token: string; 
-    captchaToken: string | null;
 }
 
 // Requests
