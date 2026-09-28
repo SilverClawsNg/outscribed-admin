@@ -14,11 +14,24 @@
     text-transform: capitalize;
     color: var(--text-color);
     border: 1px solid transparent;
+    border-radius:4px;
     //text-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.4);
     
     // Modifier: Has icon layout adjustment
     &--has-icon {
         column-gap: 0.25rem; // Controls spacing between icon and text
+
+        & svg{
+            stroke-width: 2px;
+        }
+    }
+
+    &--hide-text{
+
+        
+        @media @phone {
+            display: none;
+        }
     }
 
     @media @smallDevice {
@@ -32,36 +45,33 @@
     &--primary {
         background-color: inherit;
         border-color: var(--text-color);
-        border-color:  @link-color;
-        color:  @link-color;
+        border-color:  var(--text-color);
+        color:  var(--text-color);
        
         &:hover {
-            background-color: var(--background-hover-color);
-            color: @link-alt-color;
+            color: var(--link-color);
         }
         
     }
 
     &--secondary {
-        background-color:  @link-color;
-        color: @white-color;
+        background-color:  var(--link-color);
+        color: var(--background-color);
+
         &:hover {
-            background-color: @link-alt-color;
-            color: @white-color;
+            background-color: var(--link-alt-color);
+            color: var(--background-color);
         }
 
-        & svg{
-            stroke-width: 2px;
-        }
     }
 
     &--contrast {
-       background-color: @link-color;
-        border-color: transparent;
+       background-color: @black-color;
+        border-color: @black-color;
         color:@white-color;
 
         &:hover {
-            background-color: @link-alt-color;
+            color:var(--link-color);
         }
     }
 }
@@ -69,7 +79,7 @@
 .btn-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem 0.25rem;
+    gap: 1rem;
 
     &.bordered {
          padding-bottom: 1rem;

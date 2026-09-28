@@ -22,7 +22,6 @@ import TagListFilterModal from '@/features/tagging/modals/TagListFilterModal.vue
 import WriterListFilterModal from '@/features/authoring/modals/WriterListFilterModal.vue'
 import SnapshotListFilterModal from '@/features/engagement/modals/SnapshotListFilterModal.vue'
 
-
 import AnalyticsDetailModal from '@/features/analytics/modals/AnalyticsDetailModal.vue'
 import TaleDetailModal from '@/features/tales/modals/TaleDetailModal.vue'
 import InsightDetailModal from '@/features/insights/modals/InsightDetailModal.vue'
@@ -77,6 +76,7 @@ import RegisterModal from '@/features/gatekeeper/modals/RegisterModal.vue'
 import ChallengeModal from '@/features/gatekeeper/modals/ChallengeModal.vue'
 import LoginModal from '@/features/gatekeeper/modals/LoginModal.vue'
 
+import HelpTopicsModal from '@/features/support/modals/HelpTopicsModal.vue'
 
 const modalStore = useModalStore()
 const isExpandModal = ref(false)
@@ -141,7 +141,8 @@ Register: RegisterModal,
 Challenge: ChallengeModal,
 Login: LoginModal,
 SnapshotListFilter: SnapshotListFilterModal,
-SnapshotList: SnapshotListModal
+SnapshotList: SnapshotListModal,
+HelpTopics: HelpTopicsModal
 }
 
 // Helper getter to deliver the raw payload directly without flattening

@@ -159,15 +159,15 @@ function handleResendRequest() {
 
 <template>
 
-  <div class="form-container boxed">
+  <div class="form-container">
 
-     <template v-if="isPage">
-    <h1>Login</h1>
-    </template>
+    <div class="form-header">
+       <h1 class="form-title">Login</h1>
+        <h2>Use the following fallback login</h2>
+        <HelpIcon topic="AdminAuthentication" />
+    </div>
 
-    <h2>Use Fallback login</h2>
-
-  <FormProgress :progress="progressState" :is-boxed="true"/>
+  <FormProgress :progress="progressState"/>
 
     <article class="multi-form">
       
@@ -207,7 +207,5 @@ function handleResendRequest() {
   </div>
 </template>
 <style lang="less" scoped>
-/* You can safely drop your layout timeline.less or unique home rules down here */
-@import "@/assets/css/form-container.less";
-
+@import "@/assets/css/mulfi-form.less";
 </style>

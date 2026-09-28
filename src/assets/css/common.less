@@ -31,6 +31,76 @@ main {
 
 
 
+.form-page {
+    height: auto;
+    min-height: 100lvh;
+    background-color: var(--background-color);
+    width: 100%;
+    position: relative;
+    z-index: 999;
+
+    @media @smallDevice {
+        padding-top: 2rem;
+    }
+
+    @media @largeDevice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .icon{
+        display: flex;
+        justify-content:center;
+        padding: 2rem 0;
+
+        & img{
+
+            width: 45px;
+            height: auto;
+        }
+    }
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+
+
+h1.logo {
+    z-index: 1000;
+    position: relative;
+   
+
+    & svg {
+        fill: var(--text-color);
+        //fill: @link-color;
+        width: auto;
+
+       @media @phone {
+           height: 26px;
+        }
+
+         @media @phablet {
+            height: 27px;
+        }
+
+         @media @tablet {
+            height: 29px;
+        }
+
+        @media @largeDevice {
+            height: 32px; /* Your desired height */
+        }
+    }
+
+    & a:hover svg{
+        fill: var(--hover-color);
+
+    }
+}
+
+
 /* ==========================================================================
    Page Header & Container
    ========================================================================== */
@@ -219,10 +289,6 @@ h3.modal-page-heading {
         color: var(--text-color);
         content: "\0040";
     }
-}
-
-.error {
-    font-style: italic;
 }
 
 span.divider {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { APIError } from '@/api/apiTypes'
-import { useRoute, useRouter } from 'vue-router';
-import { useModalStore } from '@/stores/modalStore'
+import { useModalStore } from '@/stores/modalStore';
 
 export type LoadingProgress = 'Idle' | 'Loading' | 'Success' | 'Error' | 'Login' | 'Warning'
 
@@ -13,9 +12,11 @@ export interface ProgressState {
 }
 
 defineProps<{
-  progress: ProgressState
-   isBoxed?: boolean
+  progress: ProgressState,
+  isBoxed?: boolean
 }>()
+
+const modalStore = useModalStore();
 
 // 🎯 Define the exact functional actions your buttons emit
 const emit = defineEmits<{
@@ -23,23 +24,12 @@ const emit = defineEmits<{
   (e: 'login'): void
 }>()
 
-const modalStore = useModalStore()
-
-// --- DEFINE ROUTE FUNCTIONS ---
-const route = useRoute();
-const router = useRouter();
-const currentPath = encodeURIComponent(route.fullPath)
-
-function redirectToRegister() {
-  router.push(`/register?returnUrl=${currentPath}`)
-}
-
 </script>
 
 <template v-if="progress.type !== 'Idle'">
-   
+
     <div v-if="progress.type === 'Loading'" class="form-loader">
-      <p class="loader"></p>
+      <p class="shared__loader"></p>
     </div>
 
     <div v-else-if="progress.type === 'Success'" class="form-message-contents success" :class="{ boxed: isBoxed }">
@@ -56,22 +46,21 @@ function redirectToRegister() {
       </h3>
       <p class="error">{{ progress.message ?? 'An unexpected error occurred.' }}</p>
       
-      <div class="error-actions"  v-if="progress.error">
-        <button class="btn btn--primary" @click="modalStore.push('ProblemDefinition', 'Problem Detail', progress.error)">
-          More Details
+      <div class="error-actions"  v-if="progress.error?.definition">
+        <button @click="modalStore.push('ProblemDefinition', 'Problem Detail', progress.error)"  >
+          [See More Details]
         </button>
       </div>
     </div>
 
-    <div v-else-if="progress.type === 'Login'" class="form-message-contents unauthorized" :class="{ boxed: isBoxed }">
-      <h3><span class="form-message-icon">⛔</span> 401: Unauthorized!</h3>
+    <div v-else-if="progress.type === 'Login'" class="form-message-contents unauthorized">
+      <h3><span class="form-message-icon">⚠️</span> 401: Login Required</h3>
       <p class="error">Login is required to continue.</p>
-      <button class="btn btn--primary" @click="modalStore.push('Register', 'Register')">Login</button>
+      <button @click="modalStore.push('LoginUser', 'Login')">[Continue to Login]</button>
     </div>
 
 </template>
 
 <style scoped>
-@import "../assets/css/form-progress.less";
-
+@import "@/assets/css/form-progress.less";
 </style>

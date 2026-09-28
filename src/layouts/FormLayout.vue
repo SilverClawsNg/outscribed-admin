@@ -17,14 +17,15 @@ watch(() => route.path, () => modalStore.closeAll())
     
   <div class="form-page">
 
-    <main class="form-layout">
-      <RouterView />
+     <main class="form-layout">
+      
+      <RouterLink to="/" title="Home" class="icon">
+        <img src="@/assets/images/icon.png" alt="OutScribed Icon" />
+      </RouterLink>
+
+         <RouterView />
     </main>
-
-    <RouterLink to="/" title="Home" class="shared__site-icon">
-      <img src="@/assets/images/icon.png" alt="OutScribed Icon" />
-    </RouterLink>
-
+ 
   </div>
 
 </template>

@@ -31,17 +31,23 @@ a {
     outline: none;
     user-select: none;
     color: var(--text-color);
-    cursor:pointer;
+    cursor: pointer;
 
-    &:hover {
-        text-decoration: none;
-        outline: none;
-        color:@link-color;
+
+    &:not(.btn) {
+        font-weight: 600;
+
+        &:hover {
+            color:  var(--link-color);
+        }
     }
 
-    &.disabled {
-        pointer-events: none;
-        cursor: vertical-text;
+
+    &.disabled,
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+        pointer-events:none;
     }
 
     &:focus {
@@ -50,34 +56,38 @@ a {
     }
 }
 
-img, picture, svg, video, canvas, object {
+img, picture, video, canvas {
     max-width: 100%;
     height: auto;
     vertical-align: middle;
     font-style: italic;
     background-repeat: no-repeat;
     background-size: cover;
-
-    &.full-width {
-        width: 100%;
-    }
 }
 
 button {
     cursor: pointer;
     border: none;
+    color: inherit;
     box-shadow: none;
     background-color: transparent;
-    line-height: 0;
     user-select: none;
     -moz-appearance: none !important;
     -webkit-appearance: none !important;
     appearance: none !important;
     outline: none;
     background: none;
+    line-height: inherit;
+    font-size: inherit;
+    font-weight: 600;
 
-    &.disabled {
-        pointer-events: none;
-        cursor: vertical-text;
+        &:hover {
+             color:  var(--link-color);
+        }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+        pointer-events:none;
     }
 }

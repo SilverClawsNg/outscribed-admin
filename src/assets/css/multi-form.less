@@ -1,0 +1,71 @@
+@import "variables.less";
+
+.form-container {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+
+}
+ 
+  .form-header{
+    margin-bottom: 2rem;
+    text-align:center;
+
+   & .form-title {
+        margin-bottom: 1rem;
+        font-size: 1.6rem;
+        font-weight:600;
+   }
+
+     & h2 {
+        margin-bottom: 0.5rem;
+    }
+  }
+
+
+.multi-form {
+    height: auto;
+
+    & > section {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px dotted var(--link-color);
+    }
+
+    .multi-form__header {
+        display: flex;
+        align-items: center;
+        padding: 0.25rem 0;
+
+        & > span {
+            font-size: 1.2rem;
+
+            &:before {
+                content: "+";
+            }
+
+            &.active {
+                &:before {
+                    content: "-";
+                }
+            }
+        }
+
+        & h3 {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .multi-form__step {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin-top: 0.5rem;
+        transition: max-height 0.6s ease-out, opacity 0.8s ease-in;
+
+        &.expanded {
+            max-height: 1000px;
+            opacity: 1;
+        }
+    }
+}

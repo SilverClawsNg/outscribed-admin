@@ -5,7 +5,7 @@ import { useFormProgress } from '@/composables/useFormProgress'
 import FormProgress from '@/components/FormProgress.vue'
 import type { LoginRequest } from '../types/GatekeeperTypes'
 import { APIError } from '@/api/apiTypes'
-import TurnstileWidget from '@/components/TurnstileWidget.vue'
+import HelpIcon from '@/components/HelpIcon.vue'
 
 // 🎯 Context provided purely via Props from Parent Wrapper
 const props = defineProps<{
@@ -21,20 +21,9 @@ const emit = defineEmits<{
 const authStore = useGatekeeperStore()
 const { progressState, startLoading, setWarning, setError, resetProgress } = useFormProgress()
 
-const siteKey = ref(import.meta.env.VITE_CLOUDFLARE_SITE_KEY)
-const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null)
-
 const inputs = ref<HTMLInputElement[]>([])
 const boxes = ref<string[]>(['', '', '', '', '', ''])
 
-function handleCaptchaSuccess(token: string) {
-  formData.value.captchaToken = token
-}
-
-function handleCaptchaError() {
-  formData.value.captchaToken = null
-  setWarning("Error occurred while verifying captcha. Refresh page and try again.")
-}
 
 function handleInput(e: Event, index: number) {
   const target = e.target as HTMLInputElement
@@ -157,11 +146,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="form-container boxed">
-    <h1>Login Verification</h1>
-    <h2>Enter your 6-digit authenticator security token</h2>
+  <div class="form-container">
 
-    <FormProgress :progress="progressState" :is-boxed="true" />
+     <div class="form-header">
+       <h1 class="form-title">Login</h1>
+        <h2>Enter your 6-digit authenticator security token</h2>
+        <HelpIcon topic="AdminAuthentication" />
+    </div>
+  
+    <FormProgress :progress="progressState" />
 
     <form @submit.prevent="handleSubmit">
 
@@ -185,18 +178,10 @@ onMounted(() => {
         {{ validationErrors.token }}
       </span>
 
-      <TurnstileWidget 
-        ref="turnstileRef"
-        :site-key="siteKey" 
-        @success="handleCaptchaSuccess"
-        @error="handleCaptchaError"
-        @expired="formData.captchaToken = null"
-      />
-
       <div class="button-holder">
         <button 
           type="submit" 
-          class="btn contrast" 
+          class="btn btn--secondary"  
           :disabled="progressState.type === 'Loading'"
         >
           {{ progressState.type === 'Loading' ? 'Verifying...' : 'Verify Token' }}
@@ -217,6 +202,5 @@ onMounted(() => {
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/css/form-container.less";
 @import "@/assets/css/form-input.less";
 </style>

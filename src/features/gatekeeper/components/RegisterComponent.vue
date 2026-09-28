@@ -6,6 +6,8 @@ import type { RegisterRequest, RegisterResponse } from '../types/GatekeeperTypes
 import { postAsync } from '@/api/apiPostServices'
 import { APIError } from '@/api/apiTypes'
 import TurnstileWidget from '@/components/TurnstileWidget.vue'
+import HelpIcon from '@/components/HelpIcon.vue'
+import PageStatusMessage from '@/components/PageStatusMessage.vue'
 
 const emit = defineEmits<{
   (e: 'success', payload: RegisterResponse): void
@@ -13,17 +15,30 @@ const emit = defineEmits<{
 
 const { progressState, startLoading, setWarning, setError, resetProgress } = useFormProgress()
 
+
 const siteKey = ref(import.meta.env.VITE_CLOUDFLARE_SITE_KEY)
-const turnstileRef = ref<InstanceType<typeof TurnstileWidget> | null>(null)
+
+// --- CAPTCHA GATE HANDLERS ---
+const captchaState = ref<string>('')
+const captchaErrorMessage = ref<string>('')
 
 function handleCaptchaSuccess(token: string) {
   formData.value.captchaToken = token
+  captchaState.value = 'VERIFIED'
 }
 
 function handleCaptchaError() {
   formData.value.captchaToken = null
-  setWarning("Error occurred while verifying captcha. Refresh page and try again.")
+  captchaState.value = 'FAILED'
+  captchaErrorMessage.value = 'Error occurred while verifying captcha. Ensure you are connected to the Internet, refresh page and try again.'
 }
+
+
+function resetCaptcha() {
+  formData.value.captchaToken = null
+  captchaState.value = 'READY'
+}
+
 
 const formData = ref<RegisterRequest>({
   username: '',
@@ -97,14 +112,29 @@ async function handleSubmit() {
   try {
     const outcome = await postAsync<RegisterResponse, any>('/api/twofactor/register', formData.value, false)
 
-    turnstileRef.value?.remove()
+    if (outcome.isFailure) {
 
-    if (outcome.isFailure || !outcome.value) {
-      setError(outcome.error || new APIError(500, 'Registration Failed', 'Unknown server error occured. Refresh page and try again.'));
-    } else {
-      // 🎯 BUBBLE UP: Hand the response payload directly to the parent handler
-      emit('success', outcome.value)
+    // 🎯 DO NOT nullify token on standard form validation errors!
+    // ONLY invalidate if backend explicitly reports a CAPTCHA verification failure:
+    if (outcome.error?.title === 'Captcha Error') {
+      formData.value.captchaToken = null
+      captchaState.value = 'FAILED'
+      captchaErrorMessage.value = 'Captcha validation failed on server. Please re-verify.'
+    }else{
+    setError(outcome.error ?? new APIError(0, 'Server Error', 'An unknown server failure occurred. Refresh page and try again.'))
     }
+    return
+  }
+
+
+  if (!outcome.value) {
+    setError(new APIError(0, 'Server Error', 'Invalid response from server.'))
+    return
+  }
+
+   // 🎯 BUBBLE UP: Hand the response payload directly to the parent handler
+      emit('success', outcome.value)
+
   } catch (err: any) {
     setError(err?.error || new APIError(500, 'Internal Client Error', err.message || 'An unexpected error occurred.', 'Client.Exception'));
   }
@@ -118,12 +148,58 @@ onMounted(() => {
 
 <template>
 
-  <div class="form-container boxed">
+  <div class="form-container">
 
-    <h1>Register</h1>
-    <h2>Enter your credentials to register for two factor authentication</h2>
+  <!-- STEP 0: CAPTCHA GATE SCREEN -->
+     <template  v-if="!formData.captchaToken">
+      
+       <template v-if="captchaState === 'FAILED'">
 
-    <FormProgress :progress="progressState" :is-boxed="true" />
+         <PageStatusMessage 
+              title="Verification Failed!" 
+              :message='captchaErrorMessage'
+              icon="shield" 
+              :is-standalone="true"
+               >
+                <template #actions>
+                <button type="button" class="btn btn--secondary" @click="resetCaptcha">
+                  Try Again
+                </button>
+              </template>
+        </PageStatusMessage>
+      
+       </template>
+
+      <template v-else>
+      
+          <PageStatusMessage 
+              title="Performing security verification!" 
+              message="This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot."
+              icon="shield" 
+              :is-standalone="true"
+            />
+
+              <TurnstileWidget 
+              :site-key="siteKey" 
+              @success="handleCaptchaSuccess"
+              @error="handleCaptchaError"
+            />
+
+      </template>
+
+     </template>
+
+     <template  v-else >
+
+    <!-- MAIN REGISTRATION ACCORDION (UNLOCKED UPON CAPTCHA SUCCESS) -->
+   
+     <div class="form-header">
+       <h1 class="form-title">Register</h1>
+        <h2>Enter your credentials to register for two factor authentication</h2>
+        <HelpIcon topic="AdminAuthentication" />
+    </div>
+   
+    <FormProgress :progress="progressState" />
 
     <form @submit.prevent="handleSubmit">
       <fieldset>
@@ -159,18 +235,10 @@ onMounted(() => {
     {{ validationErrors.password }}
   </span>
 
-      <TurnstileWidget 
-        ref="turnstileRef"
-        :site-key="siteKey" 
-        @success="handleCaptchaSuccess"
-        @error="handleCaptchaError"
-        @expired="formData.captchaToken = null"
-      />
-
       <div class="button-holder">
         <button 
           type="submit" 
-          class="btn contrast" 
+          class="btn btn--secondary"  
           :disabled="progressState.type === 'Loading'"
           :class="{ active: progressState.type === 'Loading' }"
         >
@@ -178,10 +246,12 @@ onMounted(() => {
         </button>
       </div>
     </form>
+
+     </template>
+
   </div>
 </template>
 
 <style lang="less" scoped>
-@import "@/assets/css/form-container.less";
 @import "@/assets/css/form-input.less";
 </style>

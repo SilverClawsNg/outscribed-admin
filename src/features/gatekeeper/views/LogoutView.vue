@@ -42,7 +42,7 @@ onMounted(() => {
     <h1>Logout</h1>
     <h2>Continue to close your active sessions</h2>
 
-     <FormProgress :progress="progressState" :is-boxed="true" />
+     <FormProgress :progress="progressState" />
 
     <form @submit.prevent="handleLogoutSubmission" autocomplete="off">
      
@@ -68,7 +68,7 @@ onMounted(() => {
         <div class="button-holder">
           <button 
             type="submit" 
-            class="btn contrast" 
+            class="btn btn--secondary"  
             :disabled="progressState.type === 'Loading'"
             :class="{ active: progressState.type === 'Loading' }"
           >

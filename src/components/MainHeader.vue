@@ -13,6 +13,7 @@ const toggleMenu = () => {
 const closeMenu = () => {
   showMenuClass.value = null;
 };
+
 </script>
 
 <template>

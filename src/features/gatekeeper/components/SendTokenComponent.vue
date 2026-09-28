@@ -23,7 +23,6 @@ function handleCaptchaError() {
   setWarning("Error occurred while verifying captcha. Refresh page and try again.")
 }
 
-
 // --- RUN VALIDATION ---
 
 // 1. Tracks whether the admin has at least attempted to submit the form once
@@ -111,7 +110,7 @@ function handleSubmit() {
     <div class="button-holder">
       <button 
         type="submit" 
-        class="btn contrast" 
+        class="btn btn--secondary"  
         :disabled="isLoading || !captchaToken"
       >
         {{ isLoading ? 'Submitting...' : 'Continue' }}
@@ -121,7 +120,5 @@ function handleSubmit() {
 </template>
 
 <style lang="less" scoped>
-/* You can safely drop your layout timeline.less or unique home rules down here */
 @import "@/assets/css/form-input.less";
-
 </style>

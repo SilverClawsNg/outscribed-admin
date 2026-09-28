@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import QRCode from 'qrcode';
 import FormProgress from '@/components/FormProgress.vue'
 import { useFormProgress } from '@/composables/useFormProgress'
+import HelpIcon from '@/components/HelpIcon.vue'
 
 // 🎯 Context completely supplied via Props from Parent
 const props = defineProps<{
@@ -51,11 +52,15 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="form-container boxed">
-    <h1>Scan Code</h1>
-    <h2>Open Google Authenticator app and scan the QR code below</h2>
+  <div class="form-container">
 
-    <FormProgress :progress="progressState" :is-boxed="true" />
+       <div class="form-header">
+       <h1 class="form-title">Scan Code</h1>
+        <h2>Open Google Authenticator app and scan the QR code below</h2>
+        <HelpIcon topic="AdminAuthentication" />
+    </div>
+
+    <FormProgress :progress="progressState" />
 
     <form @submit.prevent="handleSubmit">
       <div class="qr-container">
@@ -68,7 +73,7 @@ const handleSubmit = () => {
       <div class="button-holder">
         <button 
           type="submit" 
-          class="btn contrast" 
+          class="btn btn--secondary"  
           :disabled="progressState.type === 'Loading'"
           :class="{ active: progressState.type === 'Loading' }"
         >
@@ -81,5 +86,4 @@ const handleSubmit = () => {
 
 <style lang="less" scoped>
 @import "@/assets/css/form-input.less";
-@import "@/assets/css/form-container.less";
 </style>

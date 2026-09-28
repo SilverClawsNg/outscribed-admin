@@ -3,6 +3,7 @@
 /* Outer Wrapper for Full-Page Layout Control */
 .page-status-message-container {
  width: 100%;
+ padding: 1rem 0;
 
   &--standalone {
     display: flex;
@@ -11,7 +12,7 @@
     justify-content: center;
     padding-top: 5rem;
      max-width: calc(100% - 20px);
-     width: 450px;
+     width: @min-width;
      margin: 0 auto 1rem auto;
   }
 }
@@ -27,7 +28,7 @@
   &--bordered {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px dotted var(--link-color);
   }
 
   // Standalone Full-Page Centered Variant
@@ -97,7 +98,6 @@
   &__text {
     font-size: 0.9rem;
     line-height: 1.4;
-    color: var(--muted-text-color);
     margin: 0;
   }
 

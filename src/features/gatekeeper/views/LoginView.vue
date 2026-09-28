@@ -21,7 +21,7 @@ function handleFallback() {
   <main class="page-auth-layout">
     <LoginComponent 
       :account-id="accountId" 
-      :is-boxed="true" 
+      
       @success="handleSuccess"
       @fallback="handleFallback"
     />
